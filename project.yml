@@ -1,0 +1,84 @@
+# Social Time Monitor — XcodeGen project definition
+# Session 0 scaffold. Replace YOURORG once (here and in the .entitlements files),
+# after registering the bundle IDs and App Group in the Apple Developer portal.
+# Generate with: xcodegen generate
+
+name: SocialTimeMonitor
+options:
+  bundleIdPrefix: com.YOURORG
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "17.4"
+
+packages:
+  Core:
+    path: Packages/Core
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.4"
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  SocialTimeMonitor:
+    type: application
+    platform: iOS
+    sources:
+      - App
+    dependencies:
+      - package: Core
+      - target: UsageReport
+      - target: UsageMonitor
+    info:
+      path: Config/App-Info.plist
+      properties:
+        CFBundleDisplayName: Social Time Monitor
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        ITSAppUsesNonExemptEncryption: false
+    entitlements:
+      path: Config/SocialTimeMonitor.entitlements
+
+  UsageReport:
+    type: app-extension
+    platform: iOS
+    sources:
+      - UsageReport
+    dependencies:
+      - package: Core
+    info:
+      path: Config/UsageReport-Info.plist
+      properties:
+        CFBundleDisplayName: UsageReport
+        EXAppExtensionAttributes:
+          EXExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
+    entitlements:
+      path: Config/UsageReport.entitlements
+    settings:
+      base:
+        # ExtensionKit extension: skip the classic extension lifecycle check
+        ENABLE_EMBEDDED_CONTENT_PLUGINS: YES
+
+  UsageMonitor:
+    type: app-extension
+    platform: iOS
+    sources:
+      - UsageMonitor
+    dependencies:
+      - package: Core
+    info:
+      path: Config/UsageMonitor-Info.plist
+      properties:
+        CFBundleDisplayName: UsageMonitor
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).UsageMonitor
+    entitlements:
+      path: Config/UsageMonitor.entitlements
+
+# Note (Session 0): if XcodeGen rejects `app-extension` for the report
+# extension, try type `extension-kit-extension` and record the change in
+# PROGRESS.md. Apple's own template (File > New > Target > Device Activity
+# Report Extension) is the authority on these plist keys.
