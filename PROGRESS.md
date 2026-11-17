@@ -6,84 +6,139 @@ before the next one starts.
 
 ---
 
-## Session 0 — Scaffold (GLM: done, person: blocked — see below) · 17 Nov 2026
+## Session 1 — Core logic and tests (GLM: done) · 17 Nov 2026
 
 ### Done
 
-- Version-1 plan files (`Social Time Monitor — iPhone App Build Plan.md`
-  and its PDF) moved to `archive/`. One live spec now: `01-BUILD-SPEC-v2.md`.
-- Pack review fixes applied to v2 (GLM, this session):
-  - `01-BUILD-SPEC-v2.md` visual rules + `02-SESSION-TASKS.md` Session 2 row:
-    `ZoneStyle` now uses **semantic system colours** (`Color(.systemGreen) /
-  .systemOrange / .systemRed)`), not hard-coded hex. Hex silently loses
-    dark-mode and Increase Contrast variants. Amber = orange, not yellow.
-  - Spec visual rules: Dynamic Type + VoiceOver from the first pass
-    (retrofitting inside the report extension is the expensive path).
-  - Spec risks: re-added the "Distribution entitlement denied outright" row.
-- Scaffold created exactly per `02-SESSION-TASKS.md`:
-  - `project.yml` (XcodeGen, three targets + `Core` package, iOS 17.4)
-  - `Packages/Core/` (`Package.swift`, placeholder source + test so the
-    package builds; Session 1 replaces them)
-  - `Config/` — entitlements for all three targets (Family Controls + App
-    Group `group.com.YOURORG.socialtimemonitor`), `UsageReport-Info.plist`
-    (`EXAppExtensionAttributes` / `com.apple.deviceactivityui.report-extension`),
-    `UsageMonitor-Info.plist` (`NSExtension` /
-    `com.apple.deviceactivity.monitor-extension` / principal class), minimal
-    `App-Info.plist`
-  - Placeholder sources: `App/SocialTimeMonitorApp.swift` ("Scaffold"),
-    `UsageReport/UsageReportExtension.swift` (empty scene),
-    `UsageMonitor/UsageMonitor.swift` (empty subclass)
-  - `.gitignore`; `git init`; first commit
+All six sources in `Packages/Core/Sources/Core/`, Foundation only, Swift
+5.7-compatible (no 5.9 features) so they build on this Mac:
+
+- `Zone.swift` — `Zone` enum + the spec's `zone(usedMinutes:allowanceMinutes:amberFraction:)`
+- `TargetMath.swift` — `TargetMode`, `AllowanceView` (the spec's six views),
+  daily↔weekly conversion (× 7, ÷ 7), `allowanceMinutes(view:mode:targetMinutes:)`
+  implementing every row of the spec's allowance table, `weekToDateAverage`
+- `PeriodMath.swift` — `Period` enum + `dateInterval(for:offset:calendar:weekStartsOn:now:)`
+- `DurationFormat.swift` — `short(minutes:)` and `left(minutes:)`
+- `Checkpoint.swift` — `Checkpoint` struct with statics used by Session 6:
+  `checkpointPercents`, `thresholdMinutes(percent:targetMinutes:)`,
+  `isPlausible(percent:targetMinutes:minutesSinceIntervalStart:)` (the sanity guard)
+- `SettingsKeys.swift` — all ten App Group keys, exact spec strings
+
+Tests in `Packages/Core/Tests/CoreTests/CoreTests.swift` — 19 tests covering
+the session's minimum list: zone boundaries (0, 74.9%, 75%, 100%, 100.1%,
+zero allowance), conversions round-trip, the full allowance table in both
+modes, week-to-date average, day intervals across both 2026 London clock
+changes (23 h / 25 h), Monday and Sunday week starts, month lengths 28–31,
+offsets −1/−12 (day, hour, week, month), duration strings (0, 59, 60, 134,
+600), sanity guard (3-hour target at 01:00 → implausible, 15:00 → plausible),
+Checkpoint Codable round-trip, key uniqueness.
+
+Placeholder `Core.swift` and its placeholder test removed.
 
 ### Verified and how
 
-- `DeviceActivityReportExtension` shape (protocol, `body: some
-  DeviceActivityReportScene`, one scene per context) read from Apple's
-  documentation via the `.md` trick — rule 8 of the README — and
-  cross-checked against Apple's WWDC22 sample. Placeholder follows it.
-- Extension plist keys written per the session file. **Not yet compared with
-  Apple's own Xcode templates** — that needs a machine with Xcode 15+
-  (see below); the session file's engineering note still applies.
+`swift test --package-path Packages/Core` on this Mac (Swift 5.7.2, macOS 12):
 
-### Waiting on the person
+```
+Test Suite 'All tests' passed at 2026-11-17 23:22:47.393.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 0.020 (0.022) seconds
+```
 
-1. **Toolchain upgrade (blocker):** this Mac runs Xcode 14.2 / Swift 5.7.2 on
-   macOS 12. The spec needs Swift 5.9 and the iOS 17.4 SDK, so it needs
-   Xcode 15 or later, which needs macOS 13 or later. Until then
-   `xcodegen generate`, `swift test` and device builds cannot run here.
-2. Install XcodeGen (`brew install xcodegen`) after the upgrade, then run
-   `xcodegen generate` in this folder. If XcodeGen rejects `app-extension`
-   for the report extension, switch that target to
-   `extension-kit-extension` and record it here.
-3. Apple portal (start today; review has its own timetable): register the
-   three bundle IDs and the App Group; enable Family Controls (Development)
-   on all three; submit the Family Controls (Distribution) request for each.
-   Replace `YOURORG` in `project.yml` and the three `.entitlements` files
-   with the real organisation identifier.
-4. One iPhone on iOS 17.4+, ideally a second on the newest iOS.
-5. Session 0 closes when: `xcodegen generate` succeeds, signing team
-   selected, app installs on the iPhone showing "Scaffold". Record it here.
-
-### Open questions
-
-- The v1 PDF in `archive/` **cannot be read by GLM** (this model does not
-  accept PDF input). It is archived unread and assumed identical to the v1
-  markdown. If it contains anything the markdown lacks, paste the text.
-- Product-owner decisions still open (spec §Open decisions): amber zone,
-  app name/icon, pricing, websites in scope, launch countries, recap default.
-- `zai.rtf` sits in this folder and contains a credential. It is excluded
-  from git by `.gitignore`, but it should really be moved out of the project
-  folder entirely.
+Two fixes during the run, for the record: removed an unnecessary `DateString`
+wrapper (string literals wouldn't convert), and NSObject's legacy `zone`
+instance method shadows the global `zone()` inside XCTestCase subclasses —
+tests call `Core.zone(...)`.
 
 ### Decisions
 
-- One spec (v2); v1 archived rather than deleted.
-- Semantic system colours over hex (GLM review, re-applied to v2).
-- Generated `.xcodeproj` is gitignored — regenerate with `xcodegen generate`.
-- `Packages/Core` placeholder source + test exist only so Session 0 is
-  buildable; Session 1 owns the real contents.
+- **Package on Swift 5.7 tools, platforms iOS 16 / macOS 12** (per product
+  owner, 17 Nov) so Core builds and tests on this 2016 Intel Mac tonight.
+  Supersedes the `02-SESSION-TASKS.md` line "platforms iOS 17 and macOS 13"
+  for the package only; app targets in `project.yml` keep iOS 17.4. Core
+  stays Foundation-only regardless.
+- **DurationFormat whole hours drop the minutes**: 60 → "1h", 600 → "10h";
+  mixed keeps both (134 → "2h 14m"); below an hour minutes only; 0 → "0m".
+- Sanity guard compares rounded threshold minutes against elapsed minutes
+  (spec wording: threshold minutes must be ≤ minutes elapsed).
 
-### Session 1 preview (starts only after Session 0 is closed by the person)
+### Waiting on the person — nothing new from Session 1 (pure logic)
 
-Core logic + tests per `02-SESSION-TASKS.md` — Zone, TargetMath, PeriodMath,
-DurationFormat, Checkpoint, SettingsKeys, all proven by `swift test`.
+---
+
+## Session 0 — Scaffold (GLM: done; device leg blocked on a build Mac) · 17 Nov 2026
+
+### Done
+
+- Version-1 plan files (markdown + PDF) moved to `archive/`; one live spec.
+- Pack review fixes: semantic system colours in spec + Session 2 `ZoneStyle`
+  row; Dynamic Type/VoiceOver first-pass rule; entitlement-denied risk row.
+- Scaffold per `02-SESSION-TASKS.md`: `project.yml` (XcodeGen, three targets
+  + Core package, iOS 17.4), `Packages/Core`, `Config/` entitlements and
+  extension plists, placeholder sources for app/report/monitor, `.gitignore`,
+  git repo pushed to github.com/SnoopyGOGO14/SMAPP (`main`).
+- `README.md` written as the repo front door.
+
+### Verified and how
+
+- `DeviceActivityReportExtension` protocol shape read from Apple's
+  documentation (`.md` trick, README rule 8) and matched against Apple's
+  WWDC22 sample; placeholder follows it.
+- Extension plist keys per the session file; still to be compared with
+  Apple's Xcode templates when a build Mac exists (engineering note stands).
+
+### The build Mac (corrected 17 Nov after the Mac report — replaces the earlier Xcode 15 advice)
+
+Facts, from `sw_vers`, `sysctl hw.model` and
+`softwareupdate --list-full-installers`:
+
+- **Model: MacBookPro13,2 — 13-inch MacBook Pro, 2016** (i7-6567U)
+- macOS 12.7.6 Monterey; the newest full installer offered **is Monterey** —
+  this model's official ceiling
+- Therefore: no Ventura → no Xcode 15 → **cannot build the iOS 17.4 app
+  target at all**, and no Sequoia → no Xcode 26 → **cannot ever upload from
+  this Mac** (uploads have required Xcode 26+ since 28 April 2026; from
+  April 2027, Xcode 27 — Apple silicon only)
+
+**Conclusion: this Mac writes code and runs `swift test`, nothing more.**
+Every Xcode build, every device gate and the release upload need a 2018+
+Intel Mac (until April 2027) or, for the long run, any Apple silicon Mac.
+Spec risk row added accordingly. Options and portal steps: `docs/portal-steps.md` §6.
+
+### Waiting on the person
+
+1. **Arrange the build Mac** (see above) — blocks Session 0's device leg,
+   Gate A and all later gates.
+2. Apple Developer Program membership (Account Holder).
+3. Portal: three bundle IDs, App Group, Family Controls (Development) on
+   all three — click-by-click in `docs/portal-steps.md`; then the three
+   Family Controls (Distribution) requests using
+   `docs/AppStore/family-controls-request.md`. Record dates here.
+4. Give GLM the real organisation identifier to replace `YOURORG`.
+5. Install XcodeGen on the build Mac; `xcodegen generate`; sign; install on
+   a physical iPhone showing "Scaffold"; record the pass here.
+6. Move `zai.rtf` out of the folder (credential; gitignored but still parked
+   in the project directory).
+
+### Open questions
+
+- The v1 PDF in `archive/` cannot be read by GLM (no PDF input support);
+  archived unread, assumed identical to the v1 markdown. Paste text if it
+  differs.
+- Product-owner decisions (spec §Open decisions): amber zone, app name/icon,
+  pricing, websites in scope, launch countries, recap default.
+
+---
+
+## Decisions (project-wide)
+
+- One spec (v2); v1 archived, not deleted.
+- Semantic system colours over hard-coded hex.
+- Generated `.xcodeproj` gitignored — regenerate with `xcodegen generate`.
+- Package `Core` stays Foundation-only and 5.7-compatible for this Mac.
+- Git remote: `git@github.com:SnoopyGOGO14/SMAPP.git` (SSH key
+  `SMAPP-build-mac`, added 17 Nov). Push after every session.
+
+## Session 2 — next, but blocked
+
+GATE A needs a device build. Do not start until Session 0's device leg is
+recorded as passed here and the build Mac exists.

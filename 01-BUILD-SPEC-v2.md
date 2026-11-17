@@ -259,6 +259,7 @@ Total: roughly 5 to 7 working weeks of development.
 | Developer builds against the EU-only direct-data route by mistake | Low | Capability stays switched off; rule stated in every session brief |
 | Extension cannot read App Group settings on a future iOS release | Low | Fallback: pass target and switches through the report filter and context name |
 | Family Controls (Distribution) entitlement denied outright | Low | Self-monitoring with `.individual` authorisation is an accepted pattern, so denial is unlikely; if it happens, decide early between appealing and pivoting to a manual-timer companion app — a major scope change |
+| No build Mac: release uploads require Xcode this hardware cannot run | High | App Store uploads require Xcode 26+ (Xcode 26.3 needs macOS Sequoia 15.6+), and from April 2027 uploads require Xcode 27, which installs only on Apple silicon Macs. The 2016 Intel MacBook Pro used for coding tops out at macOS 12 / Xcode 14.2, so it writes code and runs `swift test` only. Every Xcode build, device gate and upload needs a 2018+ or Apple silicon Mac |
 
 **Open decisions for the product owner**
 

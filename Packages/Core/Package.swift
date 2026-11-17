@@ -1,17 +1,17 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.7
 // Core — pure logic shared by the app and both extensions.
-// Foundation only, so it runs under `swift test` on macOS.
-// Filled in Session 1 (Zone, TargetMath, PeriodMath, DurationFormat,
-// Checkpoint, SettingsKeys). This placeholder keeps the package buildable
-// from Session 0.
+// Foundation only, so it runs under `swift test` on the 2016 Intel
+// build Mac (Swift 5.7.2, macOS 12). No Swift 5.9 features.
+// The app targets in project.yml keep iOS 17.4; the package only sets
+// the *minimum* it is willing to run on (iOS 16 / macOS 12).
 
 import PackageDescription
 
 let package = Package(
     name: "Core",
     platforms: [
-        .iOS(.v17),
-        .macOS(.v13)
+        .iOS(.v16),
+        .macOS(.v12)
     ],
     products: [
         .library(name: "Core", targets: ["Core"])
