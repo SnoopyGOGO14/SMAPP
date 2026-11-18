@@ -20,7 +20,7 @@ struct AllAppsScreen: View {
 
                 #if DEBUG
                 if DemoMode.isEnabled {
-                    DonutView(configuration: DemoData.allApps)
+                    DonutView(configuration: DemoData.allApps(period: DemoMode.period ?? .today))
                         .frame(height: 250)
                         .frame(maxWidth: .infinity)
                     VStack(spacing: 0) {
@@ -33,7 +33,7 @@ struct AllAppsScreen: View {
                                     .font(.subheadline.weight(.semibold))
                                     .foregroundStyle(Color("PrimaryText"))
                                 Spacer()
-                                AppTimeView(configuration: DemoData.appTime(app))
+                                AppTimeView(configuration: DemoData.appTime(app, period: DemoMode.period ?? .today))
                                     .frame(width: 120)
                             }
                             .padding(.horizontal, 18)
@@ -73,7 +73,29 @@ struct AllAppsScreen: View {
         }
     }
 
+    @ViewBuilder
     private var periodSwitch: some View {
+        #if DEBUG
+        if DemoMode.isEnabled {
+            Picker("Period", selection: Binding(
+                get: { DemoMode.period ?? .today },
+                set: { _ in }
+            )) {
+                Text("Today").tag(DemoMode.DemoPeriod.today)
+                Text("7 days").tag(DemoMode.DemoPeriod.week)
+                Text("Month").tag(DemoMode.DemoPeriod.month)
+            }
+            .pickerStyle(.segmented)
+            .frame(height: 40)
+        } else {
+            livePeriodSwitch
+        }
+        #else
+        livePeriodSwitch
+        #endif
+    }
+
+    private var livePeriodSwitch: some View {
         Picker("Period", selection: Binding(
             get: { appState.statsPeriod },
             set: { appState.setStatsPeriod($0) }

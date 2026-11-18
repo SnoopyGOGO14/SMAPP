@@ -1,5 +1,6 @@
 // DemoDetailScreen — the App detail screen fed from DemoData, for
-// screenshot capture. Debug builds only.
+// screenshot capture. Honours -period and -sheet target (Part 2).
+// Debug builds only.
 
 #if DEBUG
 import SwiftUI
@@ -7,31 +8,23 @@ import Core
 
 struct DemoDetailScreen: View {
 
-    @State private var period = 1
+    @State private var period: DemoMode.DemoPeriod
+    @State private var showTargetSheet = false
+
+    init() {
+        _period = State(initialValue: DemoMode.period ?? .week)
+        _showTargetSheet = State(initialValue: DemoMode.sheet == "target")
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Spacer()
-                    Toggle("Monitor", isOn: .constant(true))
-                        .toggleStyle(.switch)
-                .tint(.green)
-                        .labelsHidden()
-                }
-                .padding(.trailing, 4)
+                periodSwitch
 
-                Picker("Period", selection: $period) {
-                    Text("Today").tag(0)
-                    Text("7 days").tag(1)
-                    Text("Month").tag(2)
-                }
-                .pickerStyle(.segmented)
-                .frame(height: 40)
-
-                AppDetailCardView(configuration: DemoData.appDetail)
+                AppDetailCardView(configuration: DemoData.appDetail(period: period))
 
                 Button {
+                    showTargetSheet = true
                 } label: {
                     Text("Target 1h a day · Change")
                         .font(.subheadline.weight(.semibold))
@@ -48,10 +41,9 @@ struct DemoDetailScreen: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 10) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color("BarTrack"))
+                    Image("DemoIcon01Solid")
+                        .resizable()
                         .frame(width: 32, height: 32)
-                        .overlay(Text("Ti").font(.footnote.weight(.bold)).foregroundStyle(Color("SecondaryText")))
                     Text("TikTok")
                         .font(.headline)
                         .foregroundStyle(Color("PrimaryText"))
@@ -66,10 +58,59 @@ struct DemoDetailScreen: View {
                 }
                 .accessibilityLabel("Back")
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Toggle("Monitor", isOn: .constant(true))
+                    .toggleStyle(.switch)
+                    .tint(.green)
+                    .labelsHidden()
+            }
         }
-        #if DEBUG
         .onAppear { DemoMarker.mark("detail") }
-        #endif
+        .sheet(isPresented: $showTargetSheet) {
+            DemoTargetSheet()
+                .presentationDetents([.medium])
+        }
+    }
+
+    private var periodSwitch: some View {
+        Picker("Period", selection: $period) {
+            Text("Today").tag(DemoMode.DemoPeriod.today)
+            Text("7 days").tag(DemoMode.DemoPeriod.week)
+            Text("Month").tag(DemoMode.DemoPeriod.month)
+        }
+        .pickerStyle(.segmented)
+        .frame(height: 40)
+    }
+}
+
+/// The per-app target sheet over demo detail (read-only sample).
+private struct DemoTargetSheet: View {
+    @State private var minutes = 60
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text("Daily target")
+                .font(.headline)
+                .foregroundStyle(Color("PrimaryText"))
+
+            HStack(spacing: 8) {
+                ForEach(Array([30, 45, 60, 90].enumerated()), id: \.offset) { index, preset in
+                    Button(["30m", "45m", "1h", "1h 30m"][index]) {
+                        minutes = preset
+                    }
+                    .buttonStyle(.preset(minutes == preset))
+                }
+            }
+
+            Stepper(DurationFormat.short(minutes: minutes), value: $minutes, in: 15...480, step: 15)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(Color("PrimaryText"))
+
+            Text("Remove target")
+                .font(.subheadline)
+                .foregroundStyle(Color.red)
+        }
+        .padding(24)
     }
 }
 #endif

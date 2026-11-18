@@ -1,13 +1,31 @@
 // DemoMode — debug builds only. `-demo` replaces every embedded report
-// with the matching SharedUI view fed from DemoData (Screen Time data
-// never appears in a simulator); `-screen <name>` opens one screen
-// directly for screenshot capture; `-card 1…4` picks the onboarding
-// card. DemoMarker lets the capture workflow verify the screen it
-// photographed. Release builds contain none of this.
+// with the matching SharedUI view fed from DemoData; `-screen <name>`
+// opens one screen directly; `-card 1…4` picks the onboarding card;
+// `-state` and `-period` choose the situation shown (Part 2);
+// `-sheet target` opens the per-app target sheet. DemoMarker lets the
+// capture workflow verify the screen it photographed, including the
+// state and period suffixes. Release builds contain none of this.
 
 import Foundation
 
 enum DemoMode {
+
+    enum DemoState: String {
+        case `default`
+        case over
+        case comfortable
+        case paused
+        case noapps
+        case notarget
+        case noaccess
+    }
+
+    enum DemoPeriod: String {
+        case today
+        case week
+        case month
+    }
+
     static var isEnabled: Bool {
         #if DEBUG
         return CommandLine.arguments.contains("-demo")
@@ -16,7 +34,6 @@ enum DemoMode {
         #endif
     }
 
-    /// "home", "allapps", "detail", "target", "onboarding", or nil.
     static var screen: String? {
         #if DEBUG
         return value(after: "-screen")
@@ -32,6 +49,46 @@ enum DemoMode {
         #else
         return nil
         #endif
+    }
+
+    static var state: DemoState {
+        #if DEBUG
+        return value(after: "-state").flatMap(DemoState.init(rawValue:)) ?? .default
+        #else
+        return .default
+        #endif
+    }
+
+    static var period: DemoPeriod? {
+        #if DEBUG
+        return value(after: "-period").flatMap(DemoPeriod.init(rawValue:))
+        #else
+        return nil
+        #endif
+    }
+
+    /// "target" opens the per-app target sheet over App detail.
+    static var sheet: String? {
+        #if DEBUG
+        return value(after: "-sheet")
+        #else
+        return nil
+        #endif
+    }
+
+    /// The marker a screen writes: "<screen>[/state][/period][/sheet]".
+    static func markerFor(_ screen: String) -> String {
+        var parts = [screen]
+        if state != .default {
+            parts.append(state.rawValue)
+        }
+        if let period {
+            parts.append(period.rawValue)
+        }
+        if sheet != nil {
+            parts.append("sheet")
+        }
+        return parts.joined(separator: "/")
     }
 
     private static func value(after flag: String) -> String? {
@@ -50,7 +107,7 @@ enum DemoMarker {
         guard DemoMode.isEnabled else { return }
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("demo-screen.txt")
-        try? screen.write(to: url, atomically: true, encoding: .utf8)
+        try? DemoMode.markerFor(screen).write(to: url, atomically: true, encoding: .utf8)
     }
 }
 #endif

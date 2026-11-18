@@ -127,23 +127,13 @@ struct TargetScreen: View {
                 ForEach(Array(Self.dailyPresets.enumerated()), id: \.offset) { index, preset in
                     // V7: selected preset filled, others outlined; demo
                     // mode shows the demo state (Daily, 3h).
-                    let isSelected: Bool
-                    #if DEBUG
-                    if DemoMode.isEnabled {
-                        isSelected = preset == 180
-                    } else {
-                        isSelected = appState.targetMinutes == presetValue(preset)
-                    }
-                    #else
-                    isSelected = appState.targetMinutes == presetValue(preset)
-                    #endif
                     Button(Self.dailyPresetTitles[index]) {
                         let weekly = appState.targetMode == .weekly
                         let value = weekly ? Core.TargetMath.toWeekly(fromDailyMinutes: preset) : preset
                         appState.setTargetMinutes(value)
                         customMinutes = value
                     }
-                    .buttonStyle(.preset(isSelected))
+                    .buttonStyle(.preset(isSelected(preset: preset)))
                 }
             }
 
@@ -170,6 +160,17 @@ struct TargetScreen: View {
         }
         #endif
         return appState.targetMinutes.map { DurationFormat.short(minutes: $0) } ?? "No target"
+    }
+
+    /// V7: which preset reads as selected — demo mode shows the demo
+    /// state (Daily, 3h) regardless of the stored target.
+    private func isSelected(preset: Int) -> Bool {
+        #if DEBUG
+        if DemoMode.isEnabled {
+            return preset == 180
+        }
+        #endif
+        return appState.targetMinutes == presetValue(preset)
     }
 
     private func presetValue(_ dailyMinutes: Int) -> Int? {

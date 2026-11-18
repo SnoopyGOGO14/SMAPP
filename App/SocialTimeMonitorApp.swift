@@ -47,10 +47,32 @@ struct SocialTimeMonitorApp: App {
                 DemoDetailScreen()
             }
             .environment(appState)
+        case "settings":
+            NavigationStack {
+                SettingsScreen()
+            }
+            .environment(appState)
         default:
-            RootTabs(initialTab: tabForScreen(DemoMode.screen))
-                .environment(appState)
+            demoRoot
         }
+    }
+
+    /// Home/All apps/Target in demo mode, with the access banner only in
+    /// the noaccess state (Part 2).
+    private var demoRoot: some View {
+        ZStack(alignment: .top) {
+            RootTabs(initialTab: tabForScreen(DemoMode.screen))
+            if DemoMode.state == .noaccess {
+                AccessBanner(
+                    message: "Screen Time access is off",
+                    actionTitle: "Allow",
+                    action: {}
+                )
+                .padding(.horizontal, 20)
+            }
+        }
+        .environment(appState)
+        .background(Color("Ground").ignoresSafeArea())
     }
 
     private func tabForScreen(_ screen: String?) -> Int {

@@ -22,8 +22,15 @@ struct HomeScreen: View {
                 if appState.monitoringEnabled {
                     homeCard
                     #if DEBUG
-                    // V1: demo mode has a target; the button is real-state only.
-                    if !DemoMode.isEnabled && appState.targetMinutes == nil {
+                    // V1/Part 2: demo states drive the branches — notarget
+                    // shows the button; paused/noapps are handled below.
+                    let showSetTarget: Bool
+                    if DemoMode.isEnabled {
+                        showSetTarget = DemoMode.state == .notarget
+                    } else {
+                        showSetTarget = appState.targetMinutes == nil
+                    }
+                    if showSetTarget {
                         Button("Set a target") {
                             NotificationCenter.default.post(name: AppState.openTargetTab, object: nil)
                         }
@@ -44,8 +51,15 @@ struct HomeScreen: View {
                 }
 
                 #if DEBUG
-                // V1: demo mode always shows the five sample rows.
-                if DemoMode.isEnabled || !appState.orderedTokens.isEmpty {
+                // V1/Part 2: demo mode always shows the five sample rows
+                // except in the noapps state.
+                if DemoMode.isEnabled {
+                    if DemoMode.state == .noapps {
+                        emptyAppsCard
+                    } else {
+                        appsCard
+                    }
+                } else if !appState.orderedTokens.isEmpty {
                     appsCard
                 } else {
                     emptyAppsCard
@@ -92,10 +106,12 @@ struct HomeScreen: View {
     private var homeCard: some View {
         #if DEBUG
         if DemoMode.isEnabled {
-            HeroCardView(configuration: DemoData.homeTotal)
-                .frame(height: 168)
-                .accessibilityLabel("Today's total")
-                .padding(0)
+            if DemoMode.state == .paused {
+                pausedCard
+            } else {
+                HeroCardView(configuration: DemoData.homeTotal)
+                    .accessibilityLabel("Today's total")
+            }
         } else {
             reportHomeCard
         }

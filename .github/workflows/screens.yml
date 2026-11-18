@@ -48,50 +48,79 @@ jobs:
           xcrun simctl install "$UDID" "$APP"
           mkdir -p shots
 
-          # expected marker -> capture name
+          # capture <expected-marker> <file-name> [extra launch args...]
+          # Expected markers mirror DemoMode.markerFor: screen[/state][/period][/sheet].
           capture() {
-            local screen="$1"; shift
+            local expected="$1"; shift
             local name="$1"; shift
-            for appearance in light dark; do
-              xcrun simctl ui "$UDID" appearance "$appearance"
-              xcrun simctl terminate "$UDID" "$BUNDLE" || true
-              xcrun simctl launch "$UDID" "$BUNDLE" -demo -screen "$screen" "$@" || {
-                echo "LAUNCH-FAILED $name-$appearance" >> shots/NOTE.txt
-                continue
-              }
-              sleep 4
+            local appearance="$1"; shift
+            xcrun simctl ui "$UDID" appearance "$appearance"
+            xcrun simctl terminate "$UDID" "$BUNDLE" || true
+            xcrun simctl launch "$UDID" "$BUNDLE" -demo "$@" || {
+              echo "LAUNCH-FAILED $name" >> shots/NOTE.txt
+              return
+            }
+            sleep 4
 
-              # F2: app must still be alive.
-              if ! pgrep -qf "SocialTimeMonitor.app/SocialTimeMonitor"; then
-                echo "CRASHED $name-$appearance" >> shots/NOTE.txt
-                newest=$(ls -t ~/Library/Logs/DiagnosticReports/*SocialTimeMonitor* 2>/dev/null | head -1)
-                [ -n "$newest" ] && cp "$newest" "shots/crash-$name-$appearance.plist" || true
-                continue
-              fi
+            # F2: app must still be alive.
+            if ! pgrep -qf "SocialTimeMonitor.app/SocialTimeMonitor"; then
+              echo "CRASHED $name" >> shots/NOTE.txt
+              newest=$(ls -t ~/Library/Logs/DiagnosticReports/*SocialTimeMonitor* 2>/dev/null | head -1)
+              [ -n "$newest" ] && cp "$newest" "shots/crash-$name.plist" || true
+              return
+            fi
 
-              # F2: the app must name the screen it is showing.
-              CONTAINER=$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data 2>/dev/null || true)
-              MARKER="unreadable"
-              if [ -n "$CONTAINER" ] && [ -f "$CONTAINER/Documents/demo-screen.txt" ]; then
-                MARKER=$(cat "$CONTAINER/Documents/demo-screen.txt" | tr -d '[:space:]')
-              fi
-              if [ "$MARKER" != "$screen" ] && { [ "$screen" != "onboarding" ] || [ "$MARKER" != "onboarding" ]; }; then
-                echo "MISMATCH $name-$appearance expected=$screen marker=$MARKER" >> shots/NOTE.txt
-              fi
+            # F2: the app must name the screen it is showing.
+            CONTAINER=$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data 2>/dev/null || true)
+            MARKER="unreadable"
+            if [ -n "$CONTAINER" ] && [ -f "$CONTAINER/Documents/demo-screen.txt" ]; then
+              MARKER=$(cat "$CONTAINER/Documents/demo-screen.txt" | tr -d '[:space:]')
+            fi
+            if [ "$MARKER" != "$expected" ]; then
+              echo "MISMATCH $name expected=$expected marker=$MARKER" >> shots/NOTE.txt
+            fi
 
-              xcrun simctl io "$UDID" screenshot "shots/$name-$appearance.png" || \
-                echo "CAPTURE-FAILED $name-$appearance" >> shots/NOTE.txt
-              echo "$name-$appearance marker=$MARKER" >> shots/NOTE.txt
-            done
+            xcrun simctl io "$UDID" screenshot "shots/$name.png" || \
+              echo "CAPTURE-FAILED $name" >> shots/NOTE.txt
+            echo "$name marker=$MARKER" >> shots/NOTE.txt
           }
 
-          capture home home
-          capture allapps allapps
-          capture detail detail
-          capture target target
-          for card in 1 2 3 4; do
-            capture onboarding "onboarding-card$card" -card "$card"
+          # Base 16: five screens x light and dark.
+          for appearance in light dark; do
+            capture home home-$appearance $appearance -screen home
+            capture allapps allapps-$appearance $appearance -screen allapps
+            capture detail detail-$appearance $appearance -screen detail
+            capture target target-$appearance $appearance -screen target
+            for card in 1 2 3 4; do
+              capture onboarding onboarding-card$card-$appearance $appearance -screen onboarding -card "$card"
+            done
           done
+
+          # Part 2 states and periods (dark unless noted).
+          capture home/over home-over-dark dark -screen home -state over
+          capture home/comfortable home-comfortable-dark dark -screen home -state comfortable
+          capture home/paused home-paused-dark dark -screen home -state paused
+          capture home/noapps home-noapps-dark dark -screen home -state noapps
+          capture home/notarget home-notarget-dark dark -screen home -state notarget
+          capture home/noaccess home-noaccess-dark dark -screen home -state noaccess
+          capture detail/today detail-today-dark dark -screen detail -period today
+          capture detail/month detail-month-dark dark -screen detail -period month
+          capture detail/sheet detail-sheet-dark dark -screen detail -sheet target
+          capture allapps/week allapps-week-dark dark -screen allapps -period week
+          capture allapps/month allapps-month-dark dark -screen allapps -period month
+          capture settings settings-light light -screen settings
+          capture settings settings-dark dark -screen settings
+
+          # Large text (accessibility): check the option exists, capture
+          # home and detail once more, then reset.
+          xcrun simctl ui --help 2>&1 | tee -a ci-screens-build.log || true
+          if xcrun simctl ui "$UDID" content_size accessibility-extra-large 2>>ci-screens-build.log; then
+            capture home home-a11y-dark dark -screen home
+            capture detail detail-a11y-dark dark -screen detail
+            xcrun simctl ui "$UDID" content_size large || true
+          else
+            echo "SKIPPED large-text capture: content_size unavailable" >> shots/NOTE.txt
+          fi
 
           # F2: checksums; duplicates fail the job.
           dup=0
