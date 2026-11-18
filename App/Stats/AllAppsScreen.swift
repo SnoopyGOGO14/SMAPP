@@ -45,7 +45,8 @@ struct AllAppsScreen: View {
                 }
                 #else
                 reportDonutAndRows
-                #endif            }
+                #endif
+            }
             .padding(.horizontal, 20)
             .padding(.top, 24)
         }
