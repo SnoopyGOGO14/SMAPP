@@ -77,7 +77,7 @@ struct SocialTimeMonitorApp: App {
 
     private func tabForScreen(_ screen: String?) -> Int {
         switch screen {
-        case "allapps": return 1
+        case "allapps", "summary": return 1
         case "target": return 2
         default: return 0
         }

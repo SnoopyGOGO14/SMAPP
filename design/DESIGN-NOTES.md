@@ -1,14 +1,35 @@
-# Social Time Monitor — approved screen designs (18 November 2026, simplified)
+# Social Time Monitor — approved screen designs (18 November 2026, simplified; updated for the Summary page, DRAFT)
 
-Three screens. The product owner's instruction: **simple and uncluttered on every page**. One big number, one bar, short rows. When in doubt, leave it out.
+Three tabs plus a draft fourth design. The product owner's instruction: **simple and uncluttered on every page**. One big number, one bar, short rows. When in doubt, leave it out.
 
-The HTML files in `design/reference/` are the source of the mock-ups: read them for exact sizes, spacing, copy and colours. They are reference only (they need the design canvas to render); build the screens in SwiftUI.
+## Summary page (Stats tab) — DRAFT, pending product-owner confirmation
+
+The owner-designed page (`SKINS/*/code.html`, specification in
+`08-SUMMARY-PAGE-PLAN.md`): period tabs with an elapsed underline, day
+pills, a continuous ranked donut with a three-line centre, and app
+cards with share + hairline bar. It replaces the All-apps screen.
+Key rules from the plan:
+
+- Colour by rank (largest app = rank colour 1), never by app identity —
+  iOS never names the apps.
+- Skin tokens (section 5 of the plan) apply to every screen; zone
+  colours stay semantic system colours and appear only on target bars
+  and status words.
+- The focus effect (plan section 6) is the motion language everywhere:
+  tap to emphasise one item, dim siblings, swap linked text; gold
+  (`Focus`) outline; Reduce Motion replaces size/glow with a fast fade.
+- Decimal hours on this page (`37 hrs`, `99.5 hrs`); other screens keep
+  "2h 46m".
+- Yearly is built but hidden until a device proves a year of history.
+
+The HTML files in `design/reference/` are the source of the original
+mock-ups. Read them for exact sizes, spacing, copy and colours; build in SwiftUI.
 
 | Screen | Reference file | Reached from |
 | --- | --- | --- |
 | Home (today) | `reference/Main.dc.html` | Apps tab |
-| App detail | `reference/AppDetail.dc.html` | tapping a Home row or an All-apps row |
-| All apps (overall time, donut) | `reference/AllApps.dc.html` | Stats tab |
+| App detail | `reference/AppDetail.dc.html` | tapping a Home row |
+| Summary (draft) | `SKINS/social_monitoring_usage_Dark/code.html` + light skin | Stats tab |
 
 All figures in the mock-ups are sample data. App tiles show initials because the mock cannot use brand artwork; the app shows real icons and names through `Label(token)`.
 

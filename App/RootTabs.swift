@@ -23,9 +23,9 @@ struct RootTabs: View {
             .tag(0)
 
             NavigationStack {
-                AllAppsScreen()
+                SummaryScreen()
             }
-            .tabItem { Label("Stats", systemImage: "circle.circle") }
+            .tabItem { Label("Summary", systemImage: "chart.donut") }
             .tag(1)
 
             NavigationStack {

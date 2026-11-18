@@ -10,61 +10,41 @@ import Core
 
 struct AppUsageRow: View {
 
-    enum Style {
-        /// Home row: icon, name, time + thin bar report.
-        case bar
-        /// All-apps row: palette dot, name, time-only report.
-        case timeOnly
-    }
-
     let token: ApplicationToken
-    var style: Style = .bar
     var dimmed: Bool = false
 
     var body: some View {
         NavigationLink(value: token) {
             HStack(spacing: 14) {
-                leading
-                report
+                Label(token)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Color("PrimaryText"))
+                    .labelStyle(.titleAndIcon)
+                    .frame(minWidth: 96, alignment: .leading)
+
+                DeviceActivityReport(
+                    .appRow,
+                    filter: Filters.appRow(token: token)
+                )
+                .allowsHitTesting(false)
             }
             .padding(.horizontal, 16)
-            .frame(height: style == .bar ? 64 : 50)
+            .frame(height: 64)
             .opacity(dimmed ? 0.45 : 1)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(HomeRowStyle())
     }
+}
 
-    @ViewBuilder
-    private var leading: some View {
-        switch style {
-        case .bar:
-            Label(token)
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(Color("PrimaryText"))
-                .labelStyle(.titleAndIcon)
-                .frame(minWidth: 96, alignment: .leading)
-        case .timeOnly:
-            Circle()
-                .fill(PaletteColors.color(at: SharedSettings().paletteIndex(for: token)))
-                .frame(width: 14, height: 14)
-        }
-    }
-
-    @ViewBuilder
-    private var report: some View {
-        switch style {
-        case .bar:
-            DeviceActivityReport(
-                .appRow,
-                filter: Filters.appRow(token: token)
+/// Home rows: a gold Focus border while pressed (08 plan §6).
+struct HomeRowStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color("Focus"), lineWidth: configuration.isPressed ? 1.5 : 0)
+                    .opacity(configuration.isPressed ? 1 : 0)
             )
-            .allowsHitTesting(false)
-        case .timeOnly:
-            DeviceActivityReport(
-                .appTime,
-                filter: Filters.appTime(token: token, period: SharedSettings().statsPeriod)
-            )
-            .allowsHitTesting(false)
-        }
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
     }
 }

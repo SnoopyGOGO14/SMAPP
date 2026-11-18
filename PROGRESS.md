@@ -204,6 +204,8 @@ commit pushed; gates audit below.
 
 | Task | What was tried | Why blocked | Needed from whom |
 | --- | --- | --- | --- |
+| **07 P9 capture verification + 08 P9 captures** | Pushed `0dd5508` with `[screens]`; polled `ci-logs` for 40+ minutes across two pollers | GitHub Actions runs neither start nor fail — the free macOS minutes look exhausted (private repo, 10× multiplier, ~20 runs tonight). No SUMMARY, no STATUS line, no failure | Person: check the Actions tab / billing; make the repo public (no cap) or wait for the monthly allowance. Any later `[screens]` push then delivers the full manifest |
+| **07 P4 / 08 P12 level updates** | — | Depend on the blocked captures' `NOTE.txt` | Same as above |
 | L6 compare screenshots with mocks | — | GLM has no image input (same for the v1 PDF and the jpg render) | Product owner: compare `ci-logs/screenshots` with `design/reference/` |
 | Eye-check of `smartphone-dashallstats.jpg` | — | No image input | Product owner |
 | Reading `archive/*.pdf` | — | No PDF input | — (markdown twin archived alongside) |

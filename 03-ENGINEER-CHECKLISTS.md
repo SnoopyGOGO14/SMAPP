@@ -47,7 +47,7 @@ Lists to consider and implement. Tick items as they land; add the session number
 - [ ] Reads the App Group; never writes to it
 - [ ] Filter limited to iPhone and to enabled tokens
 - [ ] All totals computed in `makeConfiguration` via `Aggregator`; views only render
-- [ ] Five contexts: `homeTotal`, `appRow`, `appTime`, `appDetail`, `allApps`
+**Report contexts**: `homeTotal`, `appRow`, `appDetail` (the former `appTime` and `allApps` were replaced by `summary` — see `08-SUMMARY-PAGE-PLAN.md`).
 - [ ] One embedded `appRow`/`appTime` report per row, hit testing off; fallback documented if performance is poor
 - [ ] Donut drawn with `SectorMark`, palette colour by `orderedTokens` index
 - [ ] Allowance from the overall target (`homeTotal`, `allApps`) or the per-app target (`appRow`, `appDetail`); no target → neutral

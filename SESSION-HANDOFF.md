@@ -2,32 +2,36 @@
 
 Written 17 November 2026, 23:20 UK time; updated after each run. Read this first when picking the project up, then `PROGRESS.md`.
 
-## Todos — state at this handoff (18 November, mid-run)
+## Todos — state at this handoff (18 November, end of the 08 code run)
 
-1. **`07-NEXT-TASKS.md` run, nearly done.** Parts 1–2 pushed as
-   `0dd5508` (V1–V10 fixes + `-state/-period/-sheet` demo routes +
-   31-capture manifest). The final screenshot run (3 of 3) is in
-   flight; when its `NOTE.txt` lands, close Parts 3–4: push the held
-   device-checks edit (`docs/device-checks.md` A11–A13), update
-   `REVIEW.md`/`PROGRESS.md`, and run the `GATES.md` audit.
-2. **`08-SUMMARY-PAGE-PLAN.md` run, starting.** SKINS + plan are read
-   (light skin = warm-paper palette, soft shadows, 12 pt cards; dark =
-   hairlines, 8 pt cards; `SKINS/social_monitoring_usage_-2 dark/` is a
-   byte-identical copy — ignore). Build P1–P12, budget 6 builds +
-   3 screenshot runs. Draft status: the product owner may still
-   overrule the section-11 defaults.
-3. **Standing cautions learned the hard way:**
+1. **BLOCKED: GitHub Actions macOS minutes appear exhausted.** The
+   `0dd5508` runs (07 Parts 1–2 captures) and every later push neither
+   start nor fail — the classic billing-queue signature after tonight's
+   ~20 runs. **The person must check the repo's Actions tab and billing
+   (or make the repo public — public repos have no minutes cap).** Once
+   minutes exist, push any commit with `[screens]` and the manifest
+   delivers everything: the 07 captures plus the new Summary set.
+2. **07-NEXT-TASKS Parts 1–2: code complete and pushed** (`0dd5508`),
+   capture verification pending item 1. Parts 3–4 documents are done;
+   REVIEW/PROGRESS level updates wait on the same captures.
+3. **08-SUMMARY-PAGE-PLAN P1–P8, P10, P11: built and committed** —
+   Summary page (ranked donut, share cards, period tabs with elapsed
+   underline, day pills), skin tokens app-wide, FocusGroup motion on
+   Summary/detail/Home/presets, demo routes + capture manifest
+   (08 build budget untouched: 0 of 6 runs used while blocked).
+   P9 (captures) and P12 (level updates) are blocked on item 1.
+4. **Standing cautions learned the hard way:**
    - Never push to `main` while a `[screens]` run is in flight — the
      concurrency group cancels it, even for a docs-only push.
    - Always `grep -rn "import SharedUI"` before pushing: SharedUI is a
      source group, not a module; the phantom import has slipped in
-     twice.
+     three times now.
    - Deferred `let` initialisation inside ViewBuilder closures fails
      (`buildExpression`); use a helper function.
    - In extension targets, `ApplicationToken` needs
      `import ManagedSettings`, and DeviceActivity overlay types need
      `import SwiftUI` alongside `import DeviceActivity`.
-4. `zai.rtf` still in the folder (credential; gitignored) — the person
+5. `zai.rtf` still in the folder (credential; gitignored) — the person
    means to move it.
 
 ## 1. What this is

@@ -8,10 +8,12 @@ import Core
 public struct AppDetailCardView: View {
     let configuration: AppDetailConfiguration
     let amberFraction: Double
+    var initialFocus: Int? = nil
 
-    public init(configuration: AppDetailConfiguration, amberFraction: Double = 0.75) {
+    public init(configuration: AppDetailConfiguration, amberFraction: Double = 0.75, initialFocus: Int? = nil) {
         self.configuration = configuration
         self.amberFraction = amberFraction
+        self.initialFocus = initialFocus
     }
 
     public var body: some View {
@@ -25,7 +27,11 @@ public struct AppDetailCardView: View {
                 amberFraction: amberFraction
             )
 
-            PeriodCardView(configuration: configuration, amberFraction: amberFraction)
+            PeriodCardView(
+                configuration: configuration,
+                amberFraction: amberFraction,
+                initialFocus: initialFocus
+            )
 
             HStack(spacing: 12) {
                 StatCard(label: "Daily average", value: DurationFormat.short(minutes: configuration.dailyAverageMinutes))

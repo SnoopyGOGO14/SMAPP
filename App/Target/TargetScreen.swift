@@ -134,6 +134,7 @@ struct TargetScreen: View {
                         customMinutes = value
                     }
                     .buttonStyle(.preset(isSelected(preset: preset)))
+                    .animation(.easeInOut(duration: 0.3), value: isSelected(preset: preset))
                 }
             }
 

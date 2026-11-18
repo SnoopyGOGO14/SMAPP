@@ -15,14 +15,11 @@ struct UsageReportExtension: DeviceActivityReportExtension {
         AppRowScene { configuration in
             AppRowReportView(configuration: configuration)
         }
-        AppTimeScene { configuration in
-            AppTimeView(configuration: configuration)
-        }
         AppDetailScene { configuration in
             AppDetailCardView(configuration: configuration)
         }
-        AllAppsScene { configuration in
-            DonutView(configuration: configuration)
+        SummaryScene { configuration in
+            SummaryView(configuration: configuration)
         }
     }
 }

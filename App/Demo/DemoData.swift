@@ -53,9 +53,6 @@ enum DemoData {
         )
     }
 
-    static func appTime(_ app: DemoApp, period: DemoMode.DemoPeriod = .today) -> AppTimeConfiguration {
-        return AppTimeConfiguration(usedMinutes: periodMinutes(app, period: period))
-    }
 
     /// A per-app total over a period: today as-is; week and month from
     /// the deterministic series so charts and rows agree.
@@ -126,19 +123,46 @@ enum DemoData {
 
     // MARK: - All apps by period
 
-    static func allApps(period: DemoMode.DemoPeriod = .today) -> AllAppsConfiguration {
-        let segments = apps.map { app in
-            AllAppsConfiguration.Segment(
-                paletteIndex: app.paletteIndex,
-                minutes: periodMinutes(app, period: period)
+
+    // MARK: - Summary (08 plan §9)
+
+    /// The mock's six figures: weekly 37/29/19/8/6/0.5 hrs (total
+    /// 99.5), monthly 148/116/76/32/24/2, daily the shared five only
+    /// (total 2h 46m), ranked largest-first.
+    static func summary(period: DemoMode.DemoPeriod) -> SummaryConfiguration {
+        let names = ["TikTok", "WhatsApp", "Facebook", "YouTube", "X", "Instagram"]
+        let daily = [58.0, 52.0, 31.0, 14.0, 11.0]
+        let weekly = [2220.0, 1740.0, 1140.0, 480.0, 360.0, 30.0]
+        let monthly = [8880.0, 6960.0, 4560.0, 1920.0, 1440.0, 120.0]
+
+        let minutes: [Double]
+        let label: String
+        switch period {
+        case .today:
+            minutes = daily
+            label = "Daily usage"
+        case .week:
+            minutes = weekly
+            label = "Weekly usage"
+        case .month:
+            minutes = monthly
+            label = "Monthly usage"
+        }
+
+        let total = minutes.reduce(0, +)
+        let items = minutes.enumerated().map { index, value in
+            SummaryItem(
+                id: index,
+                rank: index,
+                minutes: value,
+                sharePercent: (value / total * 1000).rounded() / 10,
+                demoName: names[index]
             )
         }
-        .filter { $0.minutes > 0 }
-        let total = segments.reduce(0.0) { $0 + $1.minutes }
-        return AllAppsConfiguration(
-            totalMinutes: period == .today ? 166 : total,
-            allowanceMinutes: 180,
-            segments: segments
+        return SummaryConfiguration(
+            periodLabel: label,
+            totalMinutes: total,
+            items: items
         )
     }
 

@@ -221,6 +221,8 @@ final class SettingsKeysTests: XCTestCase {
         XCTAssertEqual(SettingsKeys.appTargets, "appTargets")
         XCTAssertEqual(SettingsKeys.detailToken, "detailToken")
         XCTAssertEqual(SettingsKeys.statsPeriod, "statsPeriod")
+        XCTAssertEqual(SettingsKeys.summaryPeriod, "summaryPeriod")
+        XCTAssertEqual(SettingsKeys.summaryDay, "summaryDay")
         XCTAssertEqual(SettingsKeys.lastMonitoringError, "lastMonitoringError")
         XCTAssertEqual(SettingsKeys.lastAlert, "lastAlert")
     }
@@ -232,9 +234,9 @@ final class SettingsKeysTests: XCTestCase {
             SettingsKeys.alertsEnabled, SettingsKeys.weekStartsOn, SettingsKeys.recapsEnabled,
             SettingsKeys.lastCheckpoint, SettingsKeys.orderedTokens, SettingsKeys.appTargets,
             SettingsKeys.detailToken, SettingsKeys.statsPeriod, SettingsKeys.lastMonitoringError,
-            SettingsKeys.lastAlert
+            SettingsKeys.lastAlert, SettingsKeys.summaryPeriod, SettingsKeys.summaryDay
         ]
-        XCTAssertEqual(Set(all).count, 16)
-        XCTAssertEqual(all.count, 16)
+        XCTAssertEqual(Set(all).count, 18)
+        XCTAssertEqual(all.count, 18)
     }
 }

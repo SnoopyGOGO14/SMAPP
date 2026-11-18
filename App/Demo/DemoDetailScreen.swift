@@ -10,10 +10,12 @@ struct DemoDetailScreen: View {
 
     @State private var period: DemoMode.DemoPeriod
     @State private var showTargetSheet = false
+    private let demoFocus: Int?
 
     init() {
         _period = State(initialValue: DemoMode.period ?? .week)
         _showTargetSheet = State(initialValue: DemoMode.sheet == "target")
+        demoFocus = DemoMode.focus
     }
 
     var body: some View {
@@ -21,7 +23,7 @@ struct DemoDetailScreen: View {
             VStack(alignment: .leading, spacing: 12) {
                 periodSwitch
 
-                AppDetailCardView(configuration: DemoData.appDetail(period: period))
+                AppDetailCardView(configuration: DemoData.appDetail(period: period), initialFocus: demoFocus)
 
                 Button {
                     showTargetSheet = true

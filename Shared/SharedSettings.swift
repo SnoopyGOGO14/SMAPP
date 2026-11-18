@@ -109,6 +109,33 @@ public final class SharedSettings {
         }
     }
 
+    // MARK: - Summary period (08 plan)
+
+    public var summaryPeriod: Core.SummaryPeriod {
+        get {
+            let raw = defaults.string(forKey: SettingsKeys.summaryPeriod) ?? "weekly"
+            return Core.SummaryPeriod.from(rawValue: raw)
+        }
+        set {
+            defaults.set(newValue.rawValueString, forKey: SettingsKeys.summaryPeriod)
+        }
+    }
+
+    public var summaryDay: Date? {
+        get {
+            guard let days = defaults.object(forKey: SettingsKeys.summaryDay) as? Double else { return nil }
+            return Date(timeIntervalSince1970: days * 86_400)
+        }
+        set {
+            guard let newValue else {
+                defaults.removeObject(forKey: SettingsKeys.summaryDay)
+                return
+            }
+            let days = newValue.timeIntervalSince1970 / 86_400
+            defaults.set(days, forKey: SettingsKeys.summaryDay)
+        }
+    }
+
     // MARK: - Onboarding and checkpoint
 
     public var onboardingCompleted: Bool {

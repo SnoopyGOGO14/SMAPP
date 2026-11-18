@@ -1,10 +1,11 @@
-// AppRowScene + AppTimeScene — per-row reports. The app filters each
+// AppRowScene — the per-row report for Home. The app filters each
 // report to a single app; the data itself names the app, so the scene
 // looks up that token's per-app target and palette slot.
 
 import DeviceActivity
 import SwiftUI
 import FamilyControls
+import ManagedSettings
 import Core
 
 struct AppRowScene: DeviceActivityReportScene {
@@ -28,18 +29,5 @@ struct AppRowScene: DeviceActivityReportScene {
             targetMinutes: token.flatMap { settings.target(for: $0) },
             largestAppMinutes: 60
         )
-    }
-}
-
-struct AppTimeScene: DeviceActivityReportScene {
-
-    let context: DeviceActivityReport.Context = .appTime
-    let content: (AppTimeConfiguration) -> AppTimeView
-
-    func makeConfiguration(
-        representing data: DeviceActivityResults<DeviceActivityData>
-    ) async -> AppTimeConfiguration {
-        let seconds = await Aggregator.totalSeconds(data)
-        return AppTimeConfiguration(usedMinutes: seconds / 60)
     }
 }

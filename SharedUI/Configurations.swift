@@ -31,13 +31,6 @@ public struct AppRowConfiguration: Equatable {
     }
 }
 
-public struct AppTimeConfiguration: Equatable {
-    public let usedMinutes: Double
-
-    public init(usedMinutes: Double) {
-        self.usedMinutes = usedMinutes
-    }
-}
 
 public struct AppDetailConfiguration: Equatable {
     public struct DayValue: Equatable, Identifiable {
@@ -88,25 +81,3 @@ public struct AppDetailConfiguration: Equatable {
     }
 }
 
-public struct AllAppsConfiguration: Equatable {
-    public struct Segment: Equatable {
-        public let paletteIndex: Int
-        public let minutes: Double
-
-        public init(paletteIndex: Int, minutes: Double) {
-            self.paletteIndex = paletteIndex
-            self.minutes = minutes
-        }
-    }
-
-    public let totalMinutes: Double
-    /// Overall allowance for the "of 3h" caption; nil hides it.
-    public let allowanceMinutes: Int?
-    public let segments: [Segment]
-
-    public init(totalMinutes: Double, allowanceMinutes: Int?, segments: [Segment]) {
-        self.totalMinutes = totalMinutes
-        self.allowanceMinutes = allowanceMinutes
-        self.segments = segments
-    }
-}

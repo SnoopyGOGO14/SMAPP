@@ -79,18 +79,24 @@ enum Filters {
         return make(segment: .daily(during: interval(for: .day)), tokens: [token])
     }
 
-    /// One All-apps row: that app over the chosen period.
-    static func appTime(token: ApplicationToken, period: Core.Period) -> DeviceActivityFilter {
-        return make(segment: .daily(during: interval(for: period)), tokens: [token])
-    }
 
     /// App detail: that app, daily segments over the chosen period.
     static func appDetail(token: ApplicationToken, period: Core.Period) -> DeviceActivityFilter {
         return make(segment: .daily(during: interval(for: period)), tokens: [token])
     }
 
-    /// All apps donut: enabled apps over the chosen period.
-    static func allApps(enabled: [ApplicationToken], period: Core.Period) -> DeviceActivityFilter {
-        return make(segment: .daily(during: interval(for: period)), tokens: enabled)
+
+    /// Summary: enabled apps over a Summary period (08 plan §7).
+    static func summary(
+        enabled: [ApplicationToken],
+        period: Core.SummaryPeriod,
+        weekStartsOn: Int
+    ) -> DeviceActivityFilter {
+        let interval = period.interval(
+            calendar: .current,
+            weekStartsOn: weekStartsOn,
+            now: Date()
+        )
+        return make(segment: .daily(during: interval), tokens: enabled)
     }
 }

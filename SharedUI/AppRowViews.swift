@@ -58,19 +58,3 @@ public struct AppRowReportView: View {
     }
 }
 
-/// All-apps row: bold time only.
-public struct AppTimeView: View {
-    let configuration: AppTimeConfiguration
-
-    public init(configuration: AppTimeConfiguration) {
-        self.configuration = configuration
-    }
-
-    public var body: some View {
-        Text(DurationFormat.short(minutes: Int(configuration.usedMinutes.rounded())))
-            .font(.subheadline.weight(.bold))
-            .foregroundStyle(Color("PrimaryText"))
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .accessibilityLabel("\(Int(configuration.usedMinutes.rounded())) minutes")
-    }
-}

@@ -5,26 +5,36 @@
 // outline and the single rule are exact.
 
 import SwiftUI
+import UIKit
 import Core
 
 public struct PeriodCardView: View {
     let configuration: AppDetailConfiguration
     let amberFraction: Double
+    /// Day index pre-focused (demo `-focus n`).
+    var initialFocus: Int? = nil
 
     @ScaledMetric(relativeTo: .title) private var totalSize: CGFloat = 30
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var focusedDayID: Int?
+    @State private var appliedInitialFocus = false
 
-    public init(configuration: AppDetailConfiguration, amberFraction: Double = 0.75) {
+    public init(configuration: AppDetailConfiguration, amberFraction: Double = 0.75, initialFocus: Int? = nil) {
         self.configuration = configuration
         self.amberFraction = amberFraction
+        self.initialFocus = initialFocus
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text(DurationParts(seconds: configuration.periodTotalSeconds).line)
+            // Linked text: the total, or the focused day ("Thu · 1h 01m").
+            Text(linkedText)
                 .font(.system(size: totalSize, weight: .bold))
                 .foregroundStyle(Color("PrimaryText"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
+                .contentTransition(.numericText())
+                .animation(.easeInOut(duration: reduceMotion ? 0.15 : 0.3), value: focusedDayID)
 
             bars
 
@@ -32,8 +42,25 @@ public struct PeriodCardView: View {
         }
         .padding(20)
         .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
+        .onAppear {
+            if !appliedInitialFocus {
+                appliedInitialFocus = true
+                if let initialFocus, initialFocus < configuration.periodDays.count {
+                    focusedDayID = initialFocus
+                }
+            }
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityText)
+    }
+
+    private var linkedText: String {
+        if let id = focusedDayID,
+           let day = configuration.periodDays.first(where: { $0.id == id }) {
+            let weekday = day.label.isEmpty ? "Day" : day.label
+            return "\(weekday) · \(DurationFormat.short(minutes: Int(day.minutes.rounded())))"
+        }
+        return DurationParts(seconds: configuration.periodTotalSeconds).line
     }
 
     private var bars: some View {
@@ -55,22 +82,37 @@ public struct PeriodCardView: View {
             )
 
             ZStack(alignment: .bottom) {
-                // Bars share the baseline at the bottom of the chart.
+                // Bars share the baseline; tapping one focuses it (08 §6).
                 HStack(alignment: .bottom, spacing: 0) {
                     ForEach(configuration.periodDays) { day in
                         let fraction = Core.ChartGeometry.heightFraction(
                             minutes: day.minutes,
                             maximum: maximum
                         )
+                        let focused = focusedDayID == day.id
                         RoundedRectangle(cornerRadius: 7)
                             .fill(barColor(for: day))
                             .frame(width: barWidth, height: max(fraction * height, day.minutes > 0 ? 3 : 0))
                             .overlay(
-                                // Today's bar outlined (design reference).
-                                RoundedRectangle(cornerRadius: 7)
-                                    .stroke(Color("PrimaryText"), lineWidth: day.isToday ? 2 : 0)
+                                Group {
+                                    if focused {
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color("Focus"), lineWidth: 2)
+                                    } else if day.isToday {
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color("PrimaryText"), lineWidth: 2)
+                                    }
+                                }
                             )
+                            .opacity(focusedDayID == nil || focused ? 1 : 0.22)
                             .frame(maxWidth: .infinity)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation(.easeInOut(duration: reduceMotion ? 0.15 : 0.3)) {
+                                    focusedDayID = Core.FocusState.next(current: focusedDayID, tapped: day.id)
+                                }
+                            }
                     }
                 }
 

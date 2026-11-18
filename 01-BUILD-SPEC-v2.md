@@ -35,7 +35,8 @@ Three consequences for the brief:
 | R13 | Recaps | Optional evening and Sunday notification inviting the user to view the day or week. |
 | R14 | Per-app target | Optional daily target per app, alongside the overall target. An app with no target shows a neutral bar. Set from App detail. |
 | R15 | App detail screen | As `design/DESIGN-NOTES.md`: today card, period switch (Today / 7 days / Month), period card with the days-hours-minutes-seconds line and daily bars, two stats, one target button. The app's on/off switch lives here. |
-| R16 | All apps screen | As `design/DESIGN-NOTES.md`: donut of time per platform with the total in the centre, one row per platform with its colour dot. Replaces the earlier Stats tab layout. |
+| R16 | Summary page | As `08-SUMMARY-PAGE-PLAN.md`: period tabs with elapsed underline, day pills, ranked donut with three-line centre, app cards with share and hairline bar. Replaces the earlier All apps screen. Draft. |
+| R17 | Focus effect and motion | Tap-to-focus on Summary (donut + cards), App detail bars (linked day text) and Home rows (press state); rings and bars draw in on appear; Reduce Motion honoured. Unproven on device. |
 
 **Zone thresholds (default, adjustable in one constants file)**
 
@@ -136,7 +137,7 @@ Swift and SwiftUI throughout, minimum iOS 17.4, one Xcode project with three tar
 8. When a checkpoint is crossed, `UsageMonitor.eventDidReachThreshold` saves `lastCheckpoint` and, at 75% and 100%, posts a local notification.
 9. Every time the app returns to the foreground it re-checks authorisation and shows the access banner if needed.
 
-**Report contexts** (one `DeviceActivityReportScene` each): `homeTotal`, `appRow`, `appTime`, `appDetail`, `allApps`. `homeTotal` and `appRow` use `.daily(during: today)`; `appDetail` and `allApps` use the interval for the chosen `statsPeriod` (`.daily` segments for the 7-day and month views). See `design/DESIGN-NOTES.md` § "What draws what" for which element each context covers.
+**Report contexts** (one `DeviceActivityReportScene` each): `homeTotal`, `appRow`, `appDetail`, `summary`. `homeTotal` and `appRow` use `.daily(during: today)`; `appDetail` and `summary` use the interval for the chosen period (`.daily` segments for the 7-day and month views). The `summary` context draws the ranked donut, centre text and app cards in one report.
 
 **Storage:** App Group `UserDefaults` only. No database and no network layer are needed in version 1.
 
@@ -158,7 +159,9 @@ Swift and SwiftUI throughout, minimum iOS 17.4, one Xcode project with three tar
 | `orderedTokens` | `Data` (encoded `[ApplicationToken]`) | Row order and donut colour index |
 | `appTargets` | `Data` (encoded array of token + minutes) | Optional daily target per app |
 | `detailToken` | `Data` (encoded `ApplicationToken`) | App whose detail screen is open |
-| `statsPeriod` | `String` (`today`, `week`, `month`) | Period chosen on All apps and App detail |
+| `statsPeriod` | `String` (`today`, `week`, `month`) | Period chosen on App detail |
+| `summaryPeriod` | `String` (`daily`, `weekly`, `monthly`, `yearly`) | Period chosen on Summary |
+| `summaryDay` | `Double` (days since epoch at midnight) | Day pill chosen on Summary (Daily view) |
 | `lastCheckpoint` | `Data` (date + percentage) | Written by `UsageMonitor` only; approximate reading for recaps |
 
 **Zone calculator (in `Shared`, unit tested, used by both extensions)**

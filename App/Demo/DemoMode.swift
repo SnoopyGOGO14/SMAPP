@@ -76,7 +76,16 @@ enum DemoMode {
         #endif
     }
 
-    /// The marker a screen writes: "<screen>[/state][/period][/sheet]".
+    /// Rank pre-focused on Summary or App detail (e.g. `-focus 1`).
+    static var focus: Int? {
+        #if DEBUG
+        return value(after: "-focus").flatMap(Int.init)
+        #else
+        return nil
+        #endif
+    }
+
+    /// The marker a screen writes: "<screen>[/state][/period][/focus][/sheet]".
     static func markerFor(_ screen: String) -> String {
         var parts = [screen]
         if state != .default {
@@ -84,6 +93,9 @@ enum DemoMode {
         }
         if let period {
             parts.append(period.rawValue)
+        }
+        if let focus {
+            parts.append("focus\(focus)")
         }
         if sheet != nil {
             parts.append("sheet")

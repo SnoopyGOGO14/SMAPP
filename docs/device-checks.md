@@ -11,6 +11,14 @@ and the iOS version in `PROGRESS.md`.
    plus YouTube in the picker, choose a target (1 hour is fine for testing).
 2. Use one or two of the chosen apps for about five minutes.
 
+## Checks added after the Summary page plan (08)
+
+| # | Check | Expected | Result |
+| --- | --- | --- | --- |
+| A14 | Taps and animation inside the embedded report | On Summary, tap a donut segment and a card: the segment thickens with the gold outline, siblings dim, the centre text swaps; tap again to clear. If taps never arrive in the extension, record it — the demo-only focus fallback applies until a host-driven design exists | |
+| A15 | History depth for Monthly and Yearly | Note how far back iOS returns data on the device; if less than a month, Monthly shows the available days with a note; Yearly stays hidden unless a year exists | |
+| A16 | Focus with real data | Focus state survives a period change when the app is still present; centre figures match that app's card | |
+
 ## Checks added after the November visual review
 
 | # | Check | Expected | Result |

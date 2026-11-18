@@ -37,6 +37,10 @@ public enum SettingsKeys {
     public static let appTargets = "appTargets"
     /// Data — encoded ApplicationToken. App whose detail screen is open.
     public static let detailToken = "detailToken"
-    /// String — "today" | "week" | "month". Period on All apps and App detail.
+    /// String — "today" | "week" | "month". Period on App detail.
     public static let statsPeriod = "statsPeriod"
+    /// String — "daily" | "weekly" | "monthly" | "yearly". Summary tab.
+    public static let summaryPeriod = "summaryPeriod"
+    /// Double — days since epoch at midnight; the chosen day pill.
+    public static let summaryDay = "summaryDay"
 }

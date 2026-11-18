@@ -85,16 +85,23 @@ jobs:
             echo "$name marker=$MARKER" >> shots/NOTE.txt
           }
 
-          # Base 16: five screens x light and dark.
+          # Base screens: five screens x light and dark (08: Summary
+          # replaces All apps). Expected markers mirror DemoMode.markerFor.
           for appearance in light dark; do
             capture home home-$appearance $appearance -screen home
-            capture allapps allapps-$appearance $appearance -screen allapps
+            capture summary/weekly summary-weekly-$appearance $appearance -screen summary -period weekly
+            capture summary/weekly/focus1 summary-weekly-focus1-$appearance $appearance -screen summary -period weekly -focus 1
+            capture summary/daily summary-daily-$appearance $appearance -screen summary -period daily
+            capture summary/monthly summary-monthly-$appearance $appearance -screen summary -period monthly
             capture detail detail-$appearance $appearance -screen detail
             capture target target-$appearance $appearance -screen target
             for card in 1 2 3 4; do
               capture onboarding onboarding-card$card-$appearance $appearance -screen onboarding -card "$card"
             done
           done
+
+          # 08 plan section 9: Summary focus on a day bar.
+          capture detail/week/focus4 detail-focus4-dark dark -screen detail -period week -focus 4
 
           # Part 2 states and periods (dark unless noted).
           capture home/over home-over-dark dark -screen home -state over
@@ -106,8 +113,6 @@ jobs:
           capture detail/today detail-today-dark dark -screen detail -period today
           capture detail/month detail-month-dark dark -screen detail -period month
           capture detail/sheet detail-sheet-dark dark -screen detail -sheet target
-          capture allapps/week allapps-week-dark dark -screen allapps -period week
-          capture allapps/month allapps-month-dark dark -screen allapps -period month
           capture settings settings-light light -screen settings
           capture settings settings-dark dark -screen settings
 
