@@ -5,10 +5,16 @@ import Foundation
 
 public enum TokenCleanup {
 
-    public struct Result<T: Hashable>: Equatable {
+    public struct Result<T: Hashable> {
         public let ordered: [T]
         public let enabled: [T]
         public let targets: [(token: T, minutes: Int)]
+
+        public init(ordered: [T], enabled: [T], targets: [(token: T, minutes: Int)]) {
+            self.ordered = ordered
+            self.enabled = enabled
+            self.targets = targets
+        }
     }
 
     /// Removes every token not present in `available` from the ordered

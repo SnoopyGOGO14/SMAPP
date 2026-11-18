@@ -6,23 +6,31 @@ import FamilyControls
 
 struct RootTabs: View {
 
+    @State private var selection = 0
+
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             NavigationStack {
                 HomeScreen()
             }
             .tabItem { Label("Apps", systemImage: "square.grid.2x2") }
+            .tag(0)
 
             NavigationStack {
                 AllAppsScreen()
             }
             .tabItem { Label("Stats", systemImage: "circle.circle") }
+            .tag(1)
 
             NavigationStack {
                 TargetScreen()
             }
             .tabItem { Label("Target", systemImage: "flag") }
+            .tag(2)
         }
         .tint(Color("PrimaryText"))
+        .onReceive(NotificationCenter.default.publisher(for: NotificationManager.openAppsTab)) { _ in
+            selection = 0
+        }
     }
 }

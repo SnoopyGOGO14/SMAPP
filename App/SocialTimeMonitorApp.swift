@@ -11,6 +11,7 @@ struct SocialTimeMonitorApp: App {
 
     @State private var appState = AppState()
     @Environment(\.scenePhase) private var scenePhase
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
         WindowGroup {
@@ -35,6 +36,9 @@ struct SocialTimeMonitorApp: App {
             .task {
                 appState.refreshAuthorizationStatus()
                 appState.startDayRolloverWatch()
+                if !appState.showOnboarding {
+                    MonitoringScheduler.shared.restartDebounced()
+                }
             }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active {

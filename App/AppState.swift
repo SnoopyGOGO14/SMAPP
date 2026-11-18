@@ -9,6 +9,7 @@ import DeviceActivity
 import Core
 import SharedUI
 
+@MainActor
 @Observable
 final class AppState {
 
@@ -100,6 +101,7 @@ final class AppState {
             enabledTokens.removeAll { $0 == token }
         }
         settings.enabledTokens = enabledTokens
+        MonitoringScheduler.shared.restartDebounced()
     }
 
     func target(for token: ApplicationToken) -> Int? {
@@ -128,11 +130,13 @@ final class AppState {
         targetMode = mode
         settings.targetMode = mode
         settings.targetMinutes = targetMinutes
+        MonitoringScheduler.shared.restartDebounced()
     }
 
     func setTargetMinutes(_ minutes: Int?) {
         targetMinutes = minutes
         settings.targetMinutes = minutes
+        MonitoringScheduler.shared.restartDebounced()
     }
 
     // MARK: - Period
