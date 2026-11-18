@@ -36,16 +36,13 @@ extension SharedSettings {
         }
     }
 
-    /// The whole picker selection. Decoded selections lose
-    /// includeEntireCategory, so it is set again here.
+    /// The whole picker selection, as saved. Note: the saved copy loses
+    /// includeEntireCategory; the app re-establishes the flag when it
+    /// presents the picker (AppState holds the live selection).
     public var selection: FamilyActivitySelection? {
         get {
             guard let data = defaults.data(forKey: SettingsKeys.selection) else { return nil }
-            let decoded = try? PropertyListDecoder().decode(FamilyActivitySelection.self, from: data)
-            if let decoded {
-                return FamilyActivitySelection(includeEntireCategory: true).union(decoded)
-            }
-            return nil
+            return try? PropertyListDecoder().decode(FamilyActivitySelection.self, from: data)
         }
         set {
             guard let newValue = newValue else { return }
@@ -69,7 +66,7 @@ extension SharedSettings {
 
     // MARK: - Per-app targets
 
-    public struct AppTarget: Equatable {
+    public struct AppTarget: Codable, Equatable {
         public let token: ApplicationToken
         public let minutes: Int
         public init(token: ApplicationToken, minutes: Int) {

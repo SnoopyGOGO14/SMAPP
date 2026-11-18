@@ -52,7 +52,6 @@ struct AppDetailScene: DeviceActivityReportScene {
             targetMinutes: target ?? Int.max
         )
 
-        let formatter = DateFormatter()
         let initials = calendar.veryShortWeekdaySymbols.map { symbol in
             String(symbol.prefix(1))
         }

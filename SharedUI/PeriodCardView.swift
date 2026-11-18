@@ -27,13 +27,11 @@ public struct PeriodCardView: View {
 
             Chart(configuration.periodDays, id: \.label) { day in
                 BarMark(
-                    value: .value("Minutes", day.minutes),
                     x: .value("Day", day.label),
                     y: .value("Minutes", day.minutes)
                 )
                 .foregroundStyle(barColor(for: day))
                 .cornerRadius(4)
-                .annotation(hidden: true)
 
                 if let target = configuration.periodTargetMinutes {
                     RuleMark(y: .value("Target", target))

@@ -33,7 +33,8 @@ enum Aggregator {
             for await segment in device.activitySegments {
                 for await category in segment.categories {
                     for await app in category.applications {
-                        result[app.application.token, default: 0] += app.totalActivityDuration
+                        guard let token = app.application.token else { continue }
+                        result[token, default: 0] += app.totalActivityDuration
                     }
                 }
             }
@@ -51,7 +52,8 @@ enum Aggregator {
                 let day = segment.dateInterval.start
                 for await category in segment.categories {
                     for await app in category.applications {
-                        result[app.application.token, default: []]
+                        guard let token = app.application.token else { continue }
+                        result[token, default: []]
                             .append(DayTotal(dayStart: day, seconds: app.totalActivityDuration))
                     }
                 }
