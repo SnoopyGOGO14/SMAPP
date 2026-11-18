@@ -3,8 +3,13 @@
 // structures. Verified against Apple's documentation pages for
 // DeviceActivityResults, DeviceActivityData, ActivitySegment,
 // CategoryActivity and ApplicationActivity.
+//
+// SwiftUI import is required: in explicit-module extension builds the
+// DeviceActivity SwiftUI overlay types (DeviceActivityResults and
+// friends) are only visible with both imports.
 
 import Foundation
+import SwiftUI
 import DeviceActivity
 import FamilyControls
 import os

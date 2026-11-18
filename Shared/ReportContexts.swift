@@ -1,6 +1,8 @@
 // ReportContexts — the five report contexts. Compiled into the app and
-// UsageReport only.
+// UsageReport only. DeviceActivityReport is a SwiftUI overlay type, so
+// SwiftUI must be imported alongside DeviceActivity.
 
+import SwiftUI
 import DeviceActivity
 
 extension DeviceActivityReport.Context {
