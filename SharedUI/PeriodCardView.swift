@@ -18,12 +18,6 @@ public struct PeriodCardView: View {
         self.amberFraction = amberFraction
     }
 
-    private var chartScale: Double {
-        let maxMinutes = configuration.periodDays.map(\.minutes).max() ?? 0
-        let target = Double(configuration.periodTargetMinutes ?? 0)
-        return max(max(maxMinutes, target) * 1.1, 1)
-    }
-
     public var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(DurationParts(seconds: configuration.periodTotalSeconds).line)
@@ -49,15 +43,28 @@ public struct PeriodCardView: View {
             let count = max(configuration.periodDays.count, 1)
             let slot = width / Double(count)
             let barWidth = min(slot * 0.44, 22)
-            let ruleY = height - (Double(configuration.periodTargetMinutes ?? 0) / chartScale) * height
+
+            // V3: one scale maximum; every bar rises from the baseline.
+            let maximum = Core.ChartGeometry.maximum(
+                targetMinutes: configuration.periodTargetMinutes,
+                tallestMinutes: configuration.periodDays.map(\.minutes).max() ?? 0
+            )
+            let ruleFraction = Core.ChartGeometry.ruleFraction(
+                targetMinutes: configuration.periodTargetMinutes,
+                maximum: maximum
+            )
 
             ZStack(alignment: .bottom) {
-                HStack(spacing: 0) {
+                // Bars share the baseline at the bottom of the chart.
+                HStack(alignment: .bottom, spacing: 0) {
                     ForEach(configuration.periodDays) { day in
-                        let barHeight = (day.minutes / chartScale) * height
+                        let fraction = Core.ChartGeometry.heightFraction(
+                            minutes: day.minutes,
+                            maximum: maximum
+                        )
                         RoundedRectangle(cornerRadius: 7)
                             .fill(barColor(for: day))
-                            .frame(width: barWidth, height: max(barHeight, day.minutes > 0 ? 3 : 0))
+                            .frame(width: barWidth, height: max(fraction * height, day.minutes > 0 ? 3 : 0))
                             .overlay(
                                 // Today's bar outlined (design reference).
                                 RoundedRectangle(cornerRadius: 7)
@@ -67,11 +74,13 @@ public struct PeriodCardView: View {
                     }
                 }
 
-                if configuration.periodTargetMinutes != nil {
-                    // One dashed rule across the whole chart, drawn once.
+                if let ruleFraction {
+                    // One dashed rule across the whole chart, at the
+                    // target's height above the shared baseline.
                     Path { path in
-                        path.move(to: CGPoint(x: 0, y: ruleY))
-                        path.addLine(to: CGPoint(x: width, y: ruleY))
+                        let y = height - ruleFraction * height
+                        path.move(to: CGPoint(x: 0, y: y))
+                        path.addLine(to: CGPoint(x: width, y: y))
                     }
                     .stroke(
                         Color("PrimaryText"),

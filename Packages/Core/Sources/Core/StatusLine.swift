@@ -11,18 +11,13 @@ public func statusLine(
     targetMinutes: Int?,
     amberFraction: Double
 ) -> String {
-    guard let target = targetMinutes, target > 0 else { return "" }
-    let zone = Core.zone(
+    let parts = statusParts(
         usedMinutes: usedMinutes,
-        allowanceMinutes: Double(target),
+        targetMinutes: targetMinutes,
         amberFraction: amberFraction
     )
-    switch zone {
-    case .green:
-        return "Comfortable · \(DurationFormat.left(minutes: Int((Double(target) - usedMinutes).rounded())))"
-    case .amber:
-        return "Getting close · \(DurationFormat.left(minutes: Int((Double(target) - usedMinutes).rounded())))"
-    case .red:
-        return "Over target · by \(DurationFormat.short(minutes: Int((usedMinutes - Double(target)).rounded())))"
+    if parts.remainder.isEmpty {
+        return parts.word
     }
+    return "\(parts.word) · \(parts.remainder)"
 }

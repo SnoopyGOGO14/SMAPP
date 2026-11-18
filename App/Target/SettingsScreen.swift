@@ -76,9 +76,7 @@ struct SettingsScreen: View {
                                 Button("Try again") {
                                     MonitoringScheduler.shared.restart()
                                 }
-                                .font(.footnote.weight(.semibold))
-                                .buttonStyle(.bordered)
-                                .controlSize(.small)
+                                .buttonStyle(.primaryActionCompact)
                             }
                         } else {
                             Text("Running")
@@ -92,6 +90,7 @@ struct SettingsScreen: View {
 
                     Button("Add or remove apps") { showPicker = true }
                         .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Color("PrimaryText"))
                         .frame(maxWidth: .infinity, minHeight: 44)
                         .padding(.horizontal, 16)
                         .onChange(of: appState.selection) { _, _ in

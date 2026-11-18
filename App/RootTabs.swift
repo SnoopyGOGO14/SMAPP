@@ -34,7 +34,8 @@ struct RootTabs: View {
             .tabItem { Label("Target", systemImage: "flag") }
             .tag(2)
         }
-        .tint(Color("PrimaryText"))
+        // V2/V6: no global tint — primary buttons use PrimaryButtonStyle,
+        // switches keep the system green.
         .onReceive(NotificationCenter.default.publisher(for: NotificationManager.openAppsTab)) { _ in
             selection = 0
         }

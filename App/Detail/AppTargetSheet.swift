@@ -27,9 +27,7 @@ struct AppTargetSheet: View {
                     Button(Self.presetTitles[index]) {
                         minutes = preset
                     }
-                    .font(.subheadline.weight(.semibold))
-                    .buttonStyle(.bordered)
-                    .tint(minutes == preset ? Color.accentColor : Color("SecondaryText"))
+                    .buttonStyle(.preset(minutes == preset))
                 }
             }
 
@@ -55,7 +53,7 @@ struct AppTargetSheet: View {
             }
             .font(.headline)
             .frame(maxWidth: .infinity, minHeight: 44)
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(.primaryAction)
         }
         .padding(24)
         .presentationDetents([.medium])

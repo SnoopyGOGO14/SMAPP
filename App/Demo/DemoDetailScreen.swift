@@ -16,6 +16,7 @@ struct DemoDetailScreen: View {
                     Spacer()
                     Toggle("Monitor", isOn: .constant(true))
                         .toggleStyle(.switch)
+                .tint(.green)
                         .labelsHidden()
                 }
                 .padding(.trailing, 4)

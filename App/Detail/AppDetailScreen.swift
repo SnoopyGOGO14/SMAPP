@@ -17,8 +17,6 @@ struct AppDetailScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                header
-
                 periodSwitch
 
                 DeviceActivityReport(
@@ -36,6 +34,17 @@ struct AppDetailScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) { toolbarTitle }
+            // V5: the on/off switch belongs on the title line, not in a
+            // stranded band below the navigation bar.
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Toggle("Monitor", isOn: Binding(
+                    get: { appState.isEnabled(token) },
+                    set: { appState.setEnabled(token, $0) }
+                ))
+                .toggleStyle(.switch)
+                .tint(.green)
+                .labelsHidden()
+            }
         }
         .onAppear {
             appState.settings.detailToken = token
@@ -47,23 +56,25 @@ struct AppDetailScreen: View {
 
     private var toolbarTitle: some View {
         HStack(spacing: 10) {
+            #if DEBUG
+            if DemoMode.isEnabled {
+                Image("DemoIcon01Solid")
+                    .resizable()
+                    .frame(width: 32, height: 32)
+                Text("TikTok")
+                    .font(.headline)
+                    .foregroundStyle(Color("PrimaryText"))
+            } else {
+                Label(token)
+                    .font(.headline)
+                    .foregroundStyle(Color("PrimaryText"))
+            }
+            #else
             Label(token)
                 .font(.headline)
                 .foregroundStyle(Color("PrimaryText"))
+            #endif
         }
-    }
-
-    private var header: some View {
-        HStack {
-            Spacer()
-            Toggle("Monitor", isOn: Binding(
-                get: { appState.isEnabled(token) },
-                set: { appState.setEnabled(token, $0) }
-            ))
-            .toggleStyle(.switch)
-            .labelsHidden()
-        }
-        .padding(.trailing, 4)
     }
 
     private var periodSwitch: some View {

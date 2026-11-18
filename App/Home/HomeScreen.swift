@@ -21,22 +21,42 @@ struct HomeScreen: View {
 
                 if appState.monitoringEnabled {
                     homeCard
+                    #if DEBUG
+                    // V1: demo mode has a target; the button is real-state only.
+                    if !DemoMode.isEnabled && appState.targetMinutes == nil {
+                        Button("Set a target") {
+                            NotificationCenter.default.post(name: AppState.openTargetTab, object: nil)
+                        }
+                        .buttonStyle(.primaryAction)
+                        .padding(.horizontal, 20)
+                    }
+                    #else
                     if appState.targetMinutes == nil {
                         Button("Set a target") {
                             NotificationCenter.default.post(name: AppState.openTargetTab, object: nil)
                         }
-                        .font(.subheadline.weight(.semibold))
-                        .buttonStyle(.borderedProminent)
+                        .buttonStyle(.primaryAction)
+                        .padding(.horizontal, 20)
                     }
+                    #endif
                 } else {
                     pausedCard
                 }
 
-                if appState.orderedTokens.isEmpty {
-                    emptyAppsCard
-                } else {
+                #if DEBUG
+                // V1: demo mode always shows the five sample rows.
+                if DemoMode.isEnabled || !appState.orderedTokens.isEmpty {
                     appsCard
+                } else {
+                    emptyAppsCard
                 }
+                #else
+                if !appState.orderedTokens.isEmpty {
+                    appsCard
+                } else {
+                    emptyAppsCard
+                }
+                #endif
             }
             .padding(.horizontal, 20)
             .padding(.top, 24)
@@ -108,11 +128,10 @@ struct HomeScreen: View {
                 .font(.subheadline)
                 .foregroundStyle(Color("SecondaryText"))
             Button("Choose apps") { showPicker = true }
-                .font(.subheadline.weight(.semibold))
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.primaryActionCompact)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 32)
+        .padding(20)
         .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
     }
 
@@ -145,10 +164,10 @@ struct HomeScreen: View {
     #if DEBUG
     private func demoRow(_ app: DemoData.DemoApp) -> some View {
         HStack(spacing: 14) {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color("BarTrack"))
+            // V9: the original tile set, palette-matched to the donut.
+            Image("DemoIcon0\(app.paletteIndex + 1)Solid")
+                .resizable()
                 .frame(width: 36, height: 36)
-                .overlay(Text(app.initials).font(.footnote.weight(.bold)).foregroundStyle(Color("SecondaryText")))
             Text(app.name)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Color("PrimaryText"))

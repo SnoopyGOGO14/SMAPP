@@ -17,7 +17,7 @@ struct AccessBanner: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             Button(actionTitle, action: action)
                 .font(.footnote.weight(.semibold))
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.primaryAction)
                 .controlSize(.small)
         }
         .padding(.horizontal, 16)

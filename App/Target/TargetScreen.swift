@@ -24,10 +24,7 @@ struct TargetScreen: View {
                     .foregroundStyle(Color("PrimaryText"))
                     .padding(.top, 24)
 
-                Picker("Mode", selection: Binding(
-                    get: { appState.targetMode },
-                    set: { appState.setTargetMode($0) }
-                )) {
+                Picker("Mode", selection: modeBinding) {
                     Text("Daily").tag(Core.TargetMode.daily)
                     Text("Weekly").tag(Core.TargetMode.weekly)
                 }
@@ -41,6 +38,7 @@ struct TargetScreen: View {
                         Text("Monitoring")
                             .font(.subheadline.weight(.semibold))
                     }
+                    .tint(.green)
                     .padding(16)
                     .onChange(of: appState.monitoringEnabled) { _, on in
                         appState.settings.monitoringEnabled = on
@@ -52,6 +50,7 @@ struct TargetScreen: View {
                         Text("Zone alerts")
                             .font(.subheadline.weight(.semibold))
                     }
+                    .tint(.green)
                     .padding(16)
                     .onChange(of: appState.alertsEnabled) { _, on in
                         if on { NotificationManager.shared.requestPermissionIfNeeded() }
@@ -64,6 +63,7 @@ struct TargetScreen: View {
                         Text("Recaps")
                             .font(.subheadline.weight(.semibold))
                     }
+                    .tint(.green)
                     .padding(16)
                     .onChange(of: appState.recapsEnabled) { _, on in
                         if on { NotificationManager.shared.requestPermissionIfNeeded() }
@@ -102,33 +102,57 @@ struct TargetScreen: View {
         #endif
     }
 
+    #if DEBUG
+    private var modeBinding: Binding<Core.TargetMode> {
+        if DemoMode.isEnabled {
+            return .constant(.daily)
+        }
+        return Binding(
+            get: { appState.targetMode },
+            set: { appState.setTargetMode($0) }
+        )
+    }
+    #else
+    private var modeBinding: Binding<Core.TargetMode> {
+        Binding(
+            get: { appState.targetMode },
+            set: { appState.setTargetMode($0) }
+        )
+    }
+    #endif
+
     private var targetCard: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(spacing: 8) {
                 ForEach(Array(Self.dailyPresets.enumerated()), id: \.offset) { index, preset in
+                    // V7: selected preset filled, others outlined; demo
+                    // mode shows the demo state (Daily, 3h).
+                    let isSelected: Bool
+                    #if DEBUG
+                    if DemoMode.isEnabled {
+                        isSelected = preset == 180
+                    } else {
+                        isSelected = appState.targetMinutes == presetValue(preset)
+                    }
+                    #else
+                    isSelected = appState.targetMinutes == presetValue(preset)
+                    #endif
                     Button(Self.dailyPresetTitles[index]) {
                         let weekly = appState.targetMode == .weekly
                         let value = weekly ? Core.TargetMath.toWeekly(fromDailyMinutes: preset) : preset
                         appState.setTargetMinutes(value)
                         customMinutes = value
                     }
-                    .font(.subheadline.weight(.semibold))
-                    .buttonStyle(.bordered)
-                    .tint(appState.targetMinutes == presetValue(preset) ? Color.accentColor : Color("SecondaryText"))
+                    .buttonStyle(.preset(isSelected))
                 }
             }
 
-            Stepper(
-                appState.targetMinutes.map { DurationFormat.short(minutes: $0) } ?? "No target",
-                value: $customMinutes,
-                in: 15...5040,
-                step: 15
-            )
-            .font(.title3.weight(.semibold))
-            .foregroundStyle(Color("PrimaryText"))
-            .onChange(of: customMinutes) { _, newValue in
-                appState.setTargetMinutes(newValue)
-            }
+            Stepper(stepperLabel, value: $customMinutes, in: 15...5040, step: 15)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(Color("PrimaryText"))
+                .onChange(of: customMinutes) { _, newValue in
+                    appState.setTargetMinutes(newValue)
+                }
 
             Text(zonePreviewLine)
                 .font(.footnote)
@@ -136,6 +160,16 @@ struct TargetScreen: View {
         }
         .padding(22)
         .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
+    }
+
+    private var stepperLabel: String {
+        #if DEBUG
+        // V7: demo shows the demo figure ("3h a day"), not "No target".
+        if DemoMode.isEnabled {
+            return "3h a day"
+        }
+        #endif
+        return appState.targetMinutes.map { DurationFormat.short(minutes: $0) } ?? "No target"
     }
 
     private func presetValue(_ dailyMinutes: Int) -> Int? {
