@@ -1,0 +1,83 @@
+name: screens
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: screens-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  screens:
+    if: contains(github.event.head_commit.message, '[screens]') || github.event_name == 'workflow_dispatch'
+    runs-on: macos-26
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          xcodebuild -version | tee ci-screens-toolchain.log
+          brew install xcodegen
+
+      - name: Generate project
+        run: xcodegen generate
+
+      - name: Build app for simulator
+        run: |
+          set -o pipefail
+          xcodebuild build -project SocialTimeMonitor.xcodeproj -scheme SocialTimeMonitor \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO \
+            2>&1 | tee ci-screens-build.log
+
+      - name: Boot simulator and capture screenshots
+        run: |
+          set -o pipefail
+          APP="build/DerivedData/Build/Products/Debug-iphonesimulator/SocialTimeMonitor.app"
+          echo "APP exists: $(test -d "$APP" && echo yes || echo no)" | tee -a ci-screens-build.log
+          UDID=$(xcrun simctl list devices available | grep -E "iPhone" | head -1 | grep -oE "[0-9A-Fa-f-]{36}")
+          echo "UDID=$UDID" | tee -a ci-screens-build.log
+          xcrun simctl boot "$UDID" || true
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl install "$UDID" "$APP"
+          mkdir -p shots
+          for appearance in light dark; do
+            xcrun simctl ui "$UDID" appearance "$appearance"
+            for screen in home allapps detail target onboarding; do
+              xcrun simctl terminate "$UDID" com.YOURORG.socialtimemonitor || true
+              xcrun simctl launch "$UDID" com.YOURORG.socialtimemonitor -demo -screen "$screen"
+              sleep 4
+              xcrun simctl io "$UDID" screenshot "shots/${screen}-${appearance}.png" || true
+            done
+          done
+          xcrun simctl shutdown "$UDID" || true
+          ls -la shots >> ci-screens-build.log
+
+      - name: Publish to ci-logs/screenshots
+        if: always()
+        run: |
+          REPO="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          if git fetch origin ci-logs; then
+            git clone -q --branch ci-logs --single-branch "$REPO" out
+          else
+            mkdir out
+            cd out
+            git init -q -b ci-logs
+            git remote add origin "$REPO"
+            cd ..
+          fi
+          mkdir -p out/screenshots
+          cp shots/*.png out/screenshots/ 2>/dev/null || echo "no screenshots" >> out/screenshots/NOTE.txt
+          echo "screens run for $GITHUB_SHA" >> out/screenshots/NOTE.txt
+          cd out
+          git config user.name ci
+          git config user.email ci@users.noreply.github.com
+          git add screenshots
+          git commit -qm "screenshots for $GITHUB_SHA"
+          git push -f origin ci-logs

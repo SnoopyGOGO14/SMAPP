@@ -157,6 +157,7 @@ final class AppState {
     // MARK: - Access banner (Block I2)
 
     static let openAppPicker = Notification.Name("openAppPicker")
+    static let openTargetTab = Notification.Name("openTargetTab")
 
     var showAccessBanner: Bool {
         if showOnboarding { return false }

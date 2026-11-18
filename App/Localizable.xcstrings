@@ -1,0 +1,19 @@
+{
+  "sourceLanguage" : "en-GB",
+  "strings" : {
+    "Apps" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Apps" } },
+    "Stats" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+    "Target" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Target" } },
+    "Today" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Today" } },
+    "All apps" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "All apps" } },
+    "Choose apps" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Choose apps" } },
+    "Set a target" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Set a target" } },
+    "Monitoring" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Monitoring" } },
+    "Zone alerts" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Zone alerts" } },
+    "Recaps" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Recaps" } },
+    "Settings" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Settings" } },
+    "No time recorded" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "No time recorded" } },
+    "Paused" : { "localizationState" : "translated", "stringUnit" : { "state" : "translated", "value" : "Paused" } }
+  },
+  "version" : "1.0"
+}

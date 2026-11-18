@@ -32,5 +32,8 @@ struct RootTabs: View {
         .onReceive(NotificationCenter.default.publisher(for: NotificationManager.openAppsTab)) { _ in
             selection = 0
         }
+        .onReceive(NotificationCenter.default.publisher(for: AppState.openTargetTab)) { _ in
+            selection = 2
+        }
     }
 }

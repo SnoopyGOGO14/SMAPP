@@ -17,28 +17,35 @@ struct AllAppsScreen: View {
 
                 periodSwitch
 
-                DeviceActivityReport(
-                    .allApps,
-                    filter: Filters.allApps(enabled: appState.enabledTokens, period: appState.statsPeriod)
-                )
-                .frame(height: 250)
-                .frame(maxWidth: .infinity)
-
-                if appState.orderedTokens.isEmpty {
-                    Text("No apps chosen")
-                        .font(.subheadline)
-                        .foregroundStyle(Color("SecondaryText"))
+                #if DEBUG
+                if DemoMode.isEnabled {
+                    DonutView(configuration: DemoData.allApps)
+                        .frame(height: 250)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 32)
-                } else {
                     VStack(spacing: 0) {
-                        ForEach(appState.orderedTokens, id: \.self) { token in
-                            AppUsageRow(token: token, style: .timeOnly)
+                        ForEach(Array(DemoData.apps.enumerated()), id: \.offset) { _, app in
+                            HStack(spacing: 14) {
+                                Circle()
+                                    .fill(PaletteColors.color(at: app.paletteIndex))
+                                    .frame(width: 14, height: 14)
+                                Text(app.name)
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundStyle(Color("PrimaryText"))
+                                Spacer()
+                                AppTimeView(configuration: DemoData.appTime(app))
+                                    .frame(width: 120)
+                            }
+                            .padding(.horizontal, 18)
+                            .frame(height: 50)
                         }
                     }
                     .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
+                } else {
+                    reportDonutAndRows
                 }
-            }
+                #else
+                reportDonutAndRows
+                #endif            }
             .padding(.horizontal, 20)
             .padding(.top, 24)
         }
@@ -72,5 +79,31 @@ struct AllAppsScreen: View {
         }
         .pickerStyle(.segmented)
         .frame(height: 40)
+    }
+
+    private var reportDonutAndRows: some View {
+        VStack(spacing: 16) {
+            DeviceActivityReport(
+                .allApps,
+                filter: Filters.allApps(enabled: appState.enabledTokens, period: appState.statsPeriod)
+            )
+            .frame(height: 250)
+            .frame(maxWidth: .infinity)
+
+            if appState.orderedTokens.isEmpty {
+                Text("No apps chosen")
+                    .font(.subheadline)
+                    .foregroundStyle(Color("SecondaryText"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 32)
+            } else {
+                VStack(spacing: 0) {
+                    ForEach(appState.orderedTokens, id: \.self) { token in
+                        AppUsageRow(token: token, style: .timeOnly)
+                    }
+                }
+                .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
+            }
+        }
     }
 }

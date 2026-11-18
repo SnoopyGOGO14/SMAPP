@@ -21,6 +21,13 @@ struct HomeScreen: View {
 
                 if appState.monitoringEnabled {
                     homeCard
+                    if appState.targetMinutes == nil {
+                        Button("Set a target") {
+                            NotificationCenter.default.post(name: AppState.openTargetTab, object: nil)
+                        }
+                        .font(.subheadline.weight(.semibold))
+                        .buttonStyle(.borderedProminent)
+                    }
                 } else {
                     pausedCard
                 }
@@ -59,6 +66,21 @@ struct HomeScreen: View {
     }
 
     private var homeCard: some View {
+        #if DEBUG
+        if DemoMode.isEnabled {
+            HeroCardView(configuration: DemoData.homeTotal)
+                .frame(height: 168)
+                .accessibilityLabel("Today's total")
+                .padding(0)
+        } else {
+            reportHomeCard
+        }
+        #else
+        reportHomeCard
+        #endif
+    }
+
+    private var reportHomeCard: some View {
         DeviceActivityReport(
             .homeTotal,
             filter: Filters.homeTotal(enabled: appState.enabledTokens, mode: appState.targetMode)
@@ -92,15 +114,48 @@ struct HomeScreen: View {
 
     private var appsCard: some View {
         VStack(spacing: 0) {
-            ForEach(Array(appState.orderedTokens.enumerated()), id: \.element) { _, token in
-                AppUsageRow(token: token, dimmed: !appState.isEnabled(token) || !appState.monitoringEnabled)
+            #if DEBUG
+            if DemoMode.isEnabled {
+                ForEach(Array(DemoData.apps.enumerated()), id: \.offset) { _, app in
+                    demoRow(app)
+                }
+            } else {
+                tokensRows
             }
+            #else
+            tokensRows
+            #endif
         }
         .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
         .onChange(of: appState.selection) { _, _ in
             appState.syncFromSelection()
         }
     }
+
+    private var tokensRows: some View {
+        ForEach(Array(appState.orderedTokens.enumerated()), id: \.element) { _, token in
+            AppUsageRow(token: token, dimmed: !appState.isEnabled(token) || !appState.monitoringEnabled)
+        }
+    }
+
+    #if DEBUG
+    private func demoRow(_ app: DemoData.DemoApp) -> some View {
+        HStack(spacing: 14) {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color("BarTrack"))
+                .frame(width: 36, height: 36)
+                .overlay(Text(app.initials).font(.footnote.weight(.bold)).foregroundStyle(Color("SecondaryText")))
+            Text(app.name)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(Color("PrimaryText"))
+            Spacer()
+            AppRowReportView(configuration: DemoData.appRow(app))
+                .frame(width: 150)
+        }
+        .padding(.horizontal, 16)
+        .frame(height: 64)
+    }
+    #endif
 
     static var dateLine: String {
         let formatter = DateFormatter()

@@ -15,35 +15,50 @@ struct SocialTimeMonitorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack(alignment: .top) {
-                if appState.showOnboarding {
-                    OnboardingFlow()
-                } else {
-                    RootTabs()
-                }
-                if appState.showAccessBanner {
-                    AccessBanner(
-                        message: appState.bannerMessage,
-                        actionTitle: appState.bannerActionTitle,
-                        action: { appState.runBannerAction() }
-                    )
-                    .padding(.horizontal, 20)
-                }
+            #if DEBUG
+            switch DemoMode.screen {
+            case "onboarding":
+                OnboardingFlow()
+            case "detail":
+                DemoDetailScreen()
+            default:
+                mainContent
             }
-            .environment(appState)
-            .background(Color("Ground").ignoresSafeArea())
-            .preferredColorScheme(nil)
-            .task {
+            #else
+            mainContent
+            #endif
+        }
+    }
+
+    private var mainContent: some View {
+        ZStack(alignment: .top) {
+            if appState.showOnboarding {
+                OnboardingFlow()
+            } else {
+                RootTabs()
+            }
+            if appState.showAccessBanner {
+                AccessBanner(
+                    message: appState.bannerMessage,
+                    actionTitle: appState.bannerActionTitle,
+                    action: { appState.runBannerAction() }
+                )
+                .padding(.horizontal, 20)
+            }
+        }
+        .environment(appState)
+        .background(Color("Ground").ignoresSafeArea())
+        .preferredColorScheme(nil)
+        .task {
+            appState.refreshAuthorizationStatus()
+            appState.startDayRolloverWatch()
+            if !appState.showOnboarding {
+                MonitoringScheduler.shared.restartDebounced()
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
                 appState.refreshAuthorizationStatus()
-                appState.startDayRolloverWatch()
-                if !appState.showOnboarding {
-                    MonitoringScheduler.shared.restartDebounced()
-                }
-            }
-            .onChange(of: scenePhase) { _, phase in
-                if phase == .active {
-                    appState.refreshAuthorizationStatus()
-                }
             }
         }
     }
