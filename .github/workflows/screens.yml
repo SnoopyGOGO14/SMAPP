@@ -116,6 +116,9 @@ jobs:
           REPO="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           publish() {
             git clone -q --branch ci-logs --single-branch "$REPO" out_repo 2>/dev/null || { mkdir out_repo; cd out_repo; git init -q -b ci-logs; git remote add origin "$REPO"; cd ..; }
+            # F9: wipe old captures first — a failed run must never leave
+            # stale images that could be mistaken for new ones.
+            rm -rf out_repo/screenshots
             mkdir -p out_repo/screenshots
             cp shots/* out_repo/screenshots/ 2>/dev/null || echo "no screenshots" >> out_repo/screenshots/NOTE.txt
             echo "screens: $GITHUB_SHA ${{ job.status }}" >> out_repo/STATUS.txt

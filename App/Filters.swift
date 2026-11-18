@@ -59,17 +59,19 @@ enum Filters {
     /// the calendar week to date (from weekStartsOn) against the weekly
     /// target — the same interval the monitor's weekly activity uses (F5).
     static func homeTotal(enabled: [ApplicationToken], mode: Core.TargetMode) -> DeviceActivityFilter {
-        let interval: DateInterval
+        // Named `range`: a local named `interval` shadows interval(for:)
+        // and the call below fails to compile.
+        let range: DateInterval
         if mode == .weekly {
-            interval = weekToDate(
+            range = weekToDate(
                 calendar: .current,
                 weekStartsOn: SharedSettings().weekStartsOn,
                 now: Date()
             )
         } else {
-            interval = interval(for: .day)
+            range = interval(for: .day)
         }
-        return make(segment: .daily(during: interval), tokens: enabled)
+        return make(segment: .daily(during: range), tokens: enabled)
     }
 
     /// One Home row: that app today.
