@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>All apps — overall time</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#F4F6F8}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 24px 20px 0 20px; display: flex; flex-direction: column; background: #0D1014; color: #F4F6F8; font-family: 'Inter', system-ui, sans-serif">
+<header style="display: flex; align-items: baseline; justify-content: space-between">
+<h1 style="margin: 0; font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 30px; line-height: 36px; font-weight: 700">All apps</h1>
+<p style="margin: 0; font-size: 13px; line-height: 16px; color: #A3ACB9">Tue 17 Nov</p>
+</header>
+<div style="margin-top: 16px">
+<div role="group" aria-label="Period" style="height: 40px; box-sizing: border-box; padding: 3px; border-radius: 12px; background: #171B21; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px">
+<button aria-pressed="true" style="border: 0; border-radius: 9px; background: #F4F6F8; color: #0D1014; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer">Today</button>
+<button aria-pressed="false" style="border: 0; border-radius: 9px; background: transparent; color: #A3ACB9; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">7 days</button>
+<button aria-pressed="false" style="border: 0; border-radius: 9px; background: transparent; color: #A3ACB9; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">Month</button>
+</div>
+</div>
+<div style="margin-top: 24px; align-self: center; position: relative; width: 250px; height: 250px">
+<svg role="img" aria-label="Donut chart of today's 2 hours 46 minutes. TikTok 58 minutes, Instagram 52, YouTube 31, Facebook 14, X 11." width="250" height="250" viewBox="0 0 260 260">
+<g transform="rotate(-90 130 130)" fill="none" stroke-width="34">
+<circle cx="130" cy="130" r="92" stroke="#26C6C6" stroke-dasharray="198.97 578.05" stroke-dashoffset="-0.00"></circle>
+<circle cx="130" cy="130" r="92" stroke="#F0569A" stroke-dasharray="178.08 578.05" stroke-dashoffset="-201.97"></circle>
+<circle cx="130" cy="130" r="92" stroke="#4C8DFF" stroke-dasharray="104.95 578.05" stroke-dashoffset="-383.05"></circle>
+<circle cx="130" cy="130" r="92" stroke="#A47BFF" stroke-dasharray="45.75 578.05" stroke-dashoffset="-491.00"></circle>
+<circle cx="130" cy="130" r="92" stroke="#C9D2E0" stroke-dasharray="35.30 578.05" stroke-dashoffset="-539.75"></circle>
+</g>
+</svg>
+<div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<p style="margin: 0; font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 34px; line-height: 36px; font-weight: 700; letter-spacing: -0.02em">2h 46m</p>
+<p style="margin: 0; font-size: 13px; line-height: 16px; color: #A3ACB9">of 3h</p>
+</div>
+</div>
+<section aria-label="Time on each platform" style="margin-top: 24px; border-radius: 24px; background: #171B21; display: flex; flex-direction: column">
+<a href="AppDetail.dc.html" aria-label="TikTok, 58m. Open details" style="height: 50px; box-sizing: border-box; padding: 0 18px; border-bottom: 1px solid #232830; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #F4F6F8"><span aria-hidden="true" style="flex: none; width: 14px; height: 14px; border-radius: 7px; background: #26C6C6"></span><span style="flex: 1; font-size: 15px; line-height: 20px; font-weight: 600">TikTok</span><span style="font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 15px; line-height: 20px; font-weight: 700">58m</span></a>
+<a href="AppDetail.dc.html" aria-label="Instagram, 52m. Open details" style="height: 50px; box-sizing: border-box; padding: 0 18px; border-bottom: 1px solid #232830; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #F4F6F8"><span aria-hidden="true" style="flex: none; width: 14px; height: 14px; border-radius: 7px; background: #F0569A"></span><span style="flex: 1; font-size: 15px; line-height: 20px; font-weight: 600">Instagram</span><span style="font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 15px; line-height: 20px; font-weight: 700">52m</span></a>
+<a href="AppDetail.dc.html" aria-label="YouTube, 31m. Open details" style="height: 50px; box-sizing: border-box; padding: 0 18px; border-bottom: 1px solid #232830; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #F4F6F8"><span aria-hidden="true" style="flex: none; width: 14px; height: 14px; border-radius: 7px; background: #4C8DFF"></span><span style="flex: 1; font-size: 15px; line-height: 20px; font-weight: 600">YouTube</span><span style="font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 15px; line-height: 20px; font-weight: 700">31m</span></a>
+<a href="AppDetail.dc.html" aria-label="Facebook, 14m. Open details" style="height: 50px; box-sizing: border-box; padding: 0 18px; border-bottom: 1px solid #232830; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #F4F6F8"><span aria-hidden="true" style="flex: none; width: 14px; height: 14px; border-radius: 7px; background: #A47BFF"></span><span style="flex: 1; font-size: 15px; line-height: 20px; font-weight: 600">Facebook</span><span style="font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 15px; line-height: 20px; font-weight: 700">14m</span></a>
+<a href="AppDetail.dc.html" aria-label="X, 11m. Open details" style="height: 50px; box-sizing: border-box; padding: 0 18px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: #F4F6F8"><span aria-hidden="true" style="flex: none; width: 14px; height: 14px; border-radius: 7px; background: #C9D2E0"></span><span style="flex: 1; font-size: 15px; line-height: 20px; font-weight: 600">X</span><span style="font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 15px; line-height: 20px; font-weight: 700">11m</span></a>
+</section>
+<nav aria-label="Main" style="margin-top: auto; margin-left: -20px; margin-right: -20px; height: 62px; box-sizing: border-box; padding: 0 28px; border-top: 1px solid #232830; background: #12161B; display: flex; align-items: center; justify-content: space-between">
+<a href="Main.dc.html" style="width: 88px; height: 50px; color: #A3ACB9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 11px; font-weight: 600"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"></rect></svg>
+Apps</a>
+<a href="AllApps.dc.html" aria-current="page" style="width: 88px; height: 50px; color: #F4F6F8; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 11px; font-weight: 700"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+Stats</a>
+<a href="#" style="width: 88px; height: 50px; color: #A3ACB9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 11px; font-weight: 600"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="20" x2="5" y2="4"></line><polyline points="5 5 18 5 15 9 18 13 5 13"></polyline></svg>
+Target</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
