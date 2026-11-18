@@ -79,6 +79,7 @@ targets:
     sources:
       - UsageMonitor
       - Shared/SharedSettings.swift
+      - Shared/ActivityNames.swift
     dependencies:
       - package: Core
     info:

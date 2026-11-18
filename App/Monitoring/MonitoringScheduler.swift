@@ -9,11 +9,6 @@ import DeviceActivity
 import FamilyControls
 import Core
 
-extension DeviceActivityName {
-    static let daily = Self("daily")
-    static let weekly = Self("weekly")
-}
-
 @MainActor
 final class MonitoringScheduler {
 
