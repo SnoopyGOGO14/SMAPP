@@ -65,6 +65,7 @@ struct HomeScreen: View {
         }
     }
 
+    @ViewBuilder
     private var homeCard: some View {
         #if DEBUG
         if DemoMode.isEnabled {

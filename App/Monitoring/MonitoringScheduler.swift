@@ -62,8 +62,8 @@ final class MonitoringScheduler {
             let weekStart = settings.weekStartsOn
             let weekEnd = ((weekStart + 5) % 7) + 1
             let weeklySchedule = DeviceActivitySchedule(
-                intervalStart: DateComponents(weekday: weekStart, hour: 0, minute: 0),
-                intervalEnd: DateComponents(weekday: weekEnd, hour: 23, minute: 59),
+                intervalStart: DateComponents(hour: 0, minute: 0, weekday: weekStart),
+                intervalEnd: DateComponents(hour: 23, minute: 59, weekday: weekEnd),
                 repeats: true
             )
             do {

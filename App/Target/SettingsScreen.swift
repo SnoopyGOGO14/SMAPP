@@ -103,7 +103,7 @@ struct SettingsScreen: View {
             } else {
                 ForEach(Array(appState.appTargets.enumerated()), id: \.offset) { _, target in
                     HStack {
-                        Label(applicationToken: target.token)
+                        Label(target.token)
                             .font(.subheadline)
                             .foregroundStyle(Color("PrimaryText"))
                         Spacer()

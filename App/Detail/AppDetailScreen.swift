@@ -47,7 +47,7 @@ struct AppDetailScreen: View {
 
     private var toolbarTitle: some View {
         HStack(spacing: 10) {
-            Label(applicationToken: token)
+            Label(token)
                 .font(.headline)
                 .foregroundStyle(Color("PrimaryText"))
         }

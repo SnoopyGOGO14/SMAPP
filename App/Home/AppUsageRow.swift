@@ -38,7 +38,7 @@ struct AppUsageRow: View {
     private var leading: some View {
         switch style {
         case .bar:
-            Label(applicationToken: token)
+            Label(token)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Color("PrimaryText"))
                 .labelStyle(.titleAndIcon)
