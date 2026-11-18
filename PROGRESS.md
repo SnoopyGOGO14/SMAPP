@@ -160,7 +160,15 @@ Budget for this run: 7 builds, 3 screenshot runs.
 - F7 both workflows now clone `ci-logs`, replace only their own files,
   and push with fetch-rebase retry (3 attempts) + STATUS.txt lines.
 - F8 status word in the zone colour; Logger subsystems from bundle id.
-- F9 this correction plus REVIEW.md's "Corrections after review".
+- F9 record corrected (above) and re-captured. **Final verification run
+  (commit 337203d, cloud build run 19 BUILD SUCCEEDED, `screens: success`):
+  16 captures — home, allapps, detail, target, onboarding cards 1–4 ×
+  light/dark — every marker read back from the app container matched the
+  requested screen, every checksum unique, no crashes.** REVIEW.md
+  levels raised from that NOTE.txt.
+- Budget used in the fixes run: 2 of 7 builds (one failed on a shadowed
+  local in `homeTotal`, fixed), 2 of 3 screenshot runs (the first died
+  with the failed build).
 
 Core now: **58 tests, 0 failures** (DayAxis 7, AlertLedger 5, keys 16).
 

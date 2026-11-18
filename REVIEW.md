@@ -43,18 +43,18 @@ GitHub's Mac with Xcode 26.6), **screenshot** (rendered in a simulator),
 | R2 | Per-app on/off switch (App detail) | compiles; unverified on device |
 | R3 | Master switch (Target tab) | compiles; unverified on device |
 | R4 | Usage statistics per app and combined | compiles; unverified on device |
-| R5 | Charts: donut, daily bars, hero bars | compiles (an earlier build drew the daily chart with merged bars — fixed in F3; new captures pending) |
+| R5 | Charts: donut, daily bars, hero bars | screenshot — all five screens captured and verified (16/16 markers, unique checksums); bar-merge bug fixed (F3) |
 | R6 | Overall target, daily or weekly | tested (conversion logic) + compiles |
 | R7 | Colour zones green/amber/orange-red | tested (boundaries at 75%/100%) + compiles |
 | R8 | Weekly average logic | tested |
 | R9 | Zone alerts at 75%/100% | compiles (one alert per line per interval — F4); unverified on device |
 | R10 | Privacy: everything on the phone | compiles; privacy manifest + documents written |
-| R11 | One-minute setup with presets | compiles; capture pending |
+| R11 | One-minute setup with presets | screenshot — onboarding cards 1–4 captured in both appearances |
 | R12 | Access health check + banner | compiles; unverified on device |
 | R13 | Evening and Sunday recaps | compiles; unverified on device |
 | R14 | Optional per-app targets | tested (cleanup logic) + compiles |
-| R15 | App detail screen | screenshot (the one genuine capture set, close to the design) |
-| R16 | All apps donut screen | compiles; capture pending |
+| R15 | App detail screen | screenshot (genuine both times; close to the design) |
+| R16 | All apps donut screen | screenshot — captured and verified |
 
 Plus: **46 unit tests** pass (twice: on the 2016 Mac and in the cloud),
 and the cloud build compiles app + both extensions on Xcode 26.6.
