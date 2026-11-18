@@ -1,13 +1,14 @@
 // SharedSettings — the single reader/writer of App Group keys for all
-// three targets (README rule 7). Compiled into the app, UsageReport and
-// UsageMonitor. Foundation + FamilyControls only, no SwiftUI.
+// three targets (README rule 7). This base file is Foundation + Core
+// only, so it is safe to compile into UsageMonitor (which must stay
+// tiny and imports no FamilyControls/SwiftUI). Token-related keys live
+// in SharedSettings+Tokens.swift (app and UsageReport only).
 //
 // The report extension READS only (writes are blocked by the sandbox);
 // UsageMonitor writes lastCheckpoint only; the main app writes everything
 // else. Decode failures fall back to safe defaults (no force unwraps).
 
 import Foundation
-import FamilyControls
 import Core
 
 public enum AppGroupConfig {
@@ -17,7 +18,7 @@ public enum AppGroupConfig {
 
 public final class SharedSettings {
 
-    private let defaults: UserDefaults
+    let defaults: UserDefaults
 
     public init(suiteName: String = AppGroupConfig.groupID) {
         if let defaults = UserDefaults(suiteName: suiteName) {
@@ -27,99 +28,7 @@ public final class SharedSettings {
         }
     }
 
-    // MARK: - Tokens
-
-    /// Every app the user picked, in row order (also the donut colour index).
-    public var orderedTokens: [ApplicationToken] {
-        get {
-            guard let data = defaults.data(forKey: SettingsKeys.orderedTokens) else { return [] }
-            return (try? PropertyListDecoder().decode([ApplicationToken].self, from: data)) ?? []
-        }
-        set {
-            let data = (try? PropertyListEncoder().encode(newValue)) ?? Data()
-            defaults.set(data, forKey: SettingsKeys.orderedTokens)
-        }
-    }
-
-    /// Apps whose switch is on. Order follows orderedTokens.
-    public var enabledTokens: [ApplicationToken] {
-        get {
-            guard let data = defaults.data(forKey: SettingsKeys.enabledTokens) else { return orderedTokens }
-            let set = (try? PropertyListDecoder().decode(Set<ApplicationToken>.self, from: data)) ?? []
-            return orderedTokens.filter { set.contains($0) }
-        }
-        set {
-            let data = (try? PropertyListEncoder().encode(Set(newValue))) ?? Data()
-            defaults.set(data, forKey: SettingsKeys.enabledTokens)
-        }
-    }
-
-    /// The whole picker selection. Decoded selections lose
-    /// includeEntireCategory, so it is set again here.
-    public var selection: FamilyActivitySelection? {
-        get {
-            guard let data = defaults.data(forKey: SettingsKeys.selection) else { return nil }
-            var decoded = try? PropertyListDecoder().decode(FamilyActivitySelection.self, from: data)
-            if decoded != nil {
-                decoded = FamilyActivitySelection(includeEntireCategory: true)
-                    .union(decoded ?? FamilyActivitySelection())
-            }
-            return decoded
-        }
-        set {
-            guard let newValue = newValue else { return }
-            let data = (try? PropertyListEncoder().encode(newValue)) ?? Data()
-            defaults.set(data, forKey: SettingsKeys.selection)
-        }
-    }
-
-    /// The app whose detail screen is open (drives the appDetail scene).
-    public var detailToken: ApplicationToken? {
-        get {
-            guard let data = defaults.data(forKey: SettingsKeys.detailToken) else { return nil }
-            return try? PropertyListDecoder().decode(ApplicationToken.self, from: data)
-        }
-        set {
-            guard let newValue = newValue else { return }
-            let data = (try? PropertyListEncoder().encode(newValue)) ?? Data()
-            defaults.set(data, forKey: SettingsKeys.detailToken)
-        }
-    }
-
-    // MARK: - Per-app targets
-
-    public struct AppTarget: Equatable {
-        public let token: ApplicationToken
-        public let minutes: Int
-        public init(token: ApplicationToken, minutes: Int) {
-            self.token = token
-            self.minutes = minutes
-        }
-    }
-
-    public var appTargets: [AppTarget] {
-        get {
-            guard let data = defaults.data(forKey: SettingsKeys.appTargets) else { return [] }
-            return (try? PropertyListDecoder().decode([AppTarget].self, from: data)) ?? []
-        }
-        set {
-            let data = (try? PropertyListEncoder().encode(newValue)) ?? Data()
-            defaults.set(data, forKey: SettingsKeys.appTargets)
-        }
-    }
-
-    public func target(for token: ApplicationToken) -> Int? {
-        return appTargets.first { $0.token == token }?.minutes
-    }
-
-    /// Position in orderedTokens → palette slot (wraps at 8).
-    public func paletteIndex(for token: ApplicationToken) -> Int {
-        let order = orderedTokens
-        let position = order.firstIndex(of: token) ?? 0
-        return Core.Palette.index(for: position)
-    }
-
-    // MARK: - Overall target
+    // MARK: - Overall target and monitoring
 
     public var monitoringEnabled: Bool {
         get { defaults.object(forKey: SettingsKeys.monitoringEnabled) as? Bool ?? true }
