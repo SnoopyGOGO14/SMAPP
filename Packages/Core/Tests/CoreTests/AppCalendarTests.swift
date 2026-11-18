@@ -25,7 +25,7 @@ final class AppCalendarTests: XCTestCase {
         let eveningInLondon = formatter.date(from: "2026-11-18 21:30")!
 
         let uk = Core.AppCalendar.uk()
-        let sydney = Calendar(identifier: .gregorian)
+        var sydney = Calendar(identifier: .gregorian)
         sydney.timeZone = TimeZone(identifier: "Australia/Sydney")!
 
         XCTAssertEqual(uk.component(.day, from: eveningInLondon), 18)
