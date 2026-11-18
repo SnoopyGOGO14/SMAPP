@@ -5,7 +5,6 @@
 #if DEBUG
 import Foundation
 import Core
-import SharedUI
 
 enum DemoData {
 

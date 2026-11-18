@@ -5,7 +5,6 @@ import DeviceActivity
 import SwiftUI
 import FamilyControls
 import Core
-import SharedUI
 
 struct AppDetailScene: DeviceActivityReportScene {
 

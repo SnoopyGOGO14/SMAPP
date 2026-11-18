@@ -7,7 +7,6 @@ import SwiftUI
 import FamilyControls
 import DeviceActivity
 import Core
-import SharedUI
 
 @MainActor
 @Observable

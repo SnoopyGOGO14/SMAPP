@@ -5,7 +5,6 @@ import SwiftUI
 import DeviceActivity
 import FamilyControls
 import Core
-import SharedUI
 
 struct HomeScreen: View {
 

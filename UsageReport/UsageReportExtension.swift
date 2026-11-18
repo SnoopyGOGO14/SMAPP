@@ -4,7 +4,6 @@
 
 import DeviceActivity
 import SwiftUI
-import SharedUI
 
 @main
 struct UsageReportExtension: DeviceActivityReportExtension {

@@ -4,7 +4,6 @@
 #if DEBUG
 import SwiftUI
 import Core
-import SharedUI
 
 struct DemoDetailScreen: View {
 
