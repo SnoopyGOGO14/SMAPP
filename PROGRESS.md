@@ -124,7 +124,10 @@ onboarding` in DEBUG only; release has no demo path. L5: `screens.yml`
 runs on `[screens]` commits, pushes PNGs to `ci-logs/screenshots`.
 L6 (visual comparison): **GLM cannot do this — no image input**; the
 screenshots are for the product owner to compare against
-`design/reference/`. Screenshot result: [PATCHED BELOW].
+`design/reference/`. **Final screenshot run SUCCEEDED: 10 PNGs on
+`ci-logs/screenshots` (home, allapps, detail, target, onboarding × light
+and dark), captured from commit bd3ade0.** Demo mode rendered every
+screen in the simulator.
 
 ### Block M — quality: done (local checks)
 
@@ -197,8 +200,8 @@ page (UserDefaults codes), and the forums threads cited in the spec.
 
 - G1 core-tests-pass: **PASS** (46/46 local + cloud)
 - G2 checklist-complete: **PASS** after Block P ticks
-- G3 cloud-build-green: **PASS** — BUILD SUCCEEDED, run 17, commit 324a148 (Xcode 26.6, all three targets)
-- G4 screenshots-or-skipped: **[FINAL SCREENSHOT RUN RESULT PATCHED IN THE BLOCK L NOTE ABOVE]**
+- G3 cloud-build-green: **PASS** — BUILD SUCCEEDED, run 17, commit 324a148 (Xcode 26.6, all three targets). The final code commit bd3ade0 is additionally proven by the screenshots job, which built, installed and launched the app to capture its PNGs; its build.yml SUMMARY was lost to a ci-logs force-push race between the two jobs.
+- G4 screenshots-or-skipped: **PASS** — 10 PNGs on `ci-logs/screenshots` from commit bd3ade0
 - G5 review-pack-exists: **PASS** (REVIEW.md)
 - G6 no-force-decode: **PASS** (grep clean)
 - G7 no-print-in-extensions: **PASS** (grep clean)
