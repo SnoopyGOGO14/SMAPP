@@ -14,6 +14,10 @@ struct SummaryScreen: View {
     @Environment(AppState.self) private var appState
     @State private var period: Core.SummaryPeriod = .weekly
 
+    /// The UK reference calendar (AppCalendar): day pills, "today" and
+    /// elapsed fractions follow the UK day, not the device's zone.
+    private let ukCalendar = Core.AppCalendar.uk()
+
     #if DEBUG
     private let demoFocus: Int? = DemoMode.focus
     #else
@@ -113,13 +117,13 @@ struct SummaryScreen: View {
     private var elapsedFraction: Double {
         switch period {
         case .daily:
-            return Core.PeriodProgress.dayFraction()
+            return Core.PeriodProgress.dayFraction(calendar: ukCalendar)
         case .weekly:
-            return Core.PeriodProgress.weekFraction(weekStartsOn: appState.settings.weekStartsOn)
+            return Core.PeriodProgress.weekFraction(weekStartsOn: appState.settings.weekStartsOn, calendar: ukCalendar)
         case .monthly:
-            return Core.PeriodProgress.monthFraction()
+            return Core.PeriodProgress.monthFraction(calendar: ukCalendar)
         case .yearly:
-            return Core.PeriodProgress.monthFraction()
+            return Core.PeriodProgress.monthFraction(calendar: ukCalendar)
         }
     }
 
@@ -133,16 +137,16 @@ struct SummaryScreen: View {
     private var dayPills: some View {
         let weekStartsOn = appState.settings.weekStartsOn
         let todayIndex = Core.SummaryPeriod.daily(day: nil)
-            .todayPillIndex(weekStartsOn: weekStartsOn) ?? 0
+            .todayPillIndex(weekStartsOn: weekStartsOn, calendar: ukCalendar) ?? 0
         let future = Core.SummaryPeriod.daily(day: nil)
-            .futurePillIndexes(weekStartsOn: weekStartsOn)
+            .futurePillIndexes(weekStartsOn: weekStartsOn, calendar: ukCalendar)
 
         return HStack(spacing: 6) {
             ForEach(0..<7, id: \.self) { index in
                 let isToday = index == todayIndex
                 let isFuture = future.contains(index)
                 Button {
-                    period = .daily(day: Core.SummaryPeriod.pillDate(index: index, weekStartsOn: weekStartsOn))
+                    period = .daily(day: Core.SummaryPeriod.pillDate(index: index, weekStartsOn: weekStartsOn, calendar: ukCalendar))
                 } label: {
                     Text(pillTitle(index, weekStartsOn: weekStartsOn))
                         .font(.caption2.weight(isToday ? .bold : .medium))
@@ -167,7 +171,7 @@ struct SummaryScreen: View {
     }
 
     private func pillTitle(_ index: Int, weekStartsOn: Int) -> String {
-        let date = Core.SummaryPeriod.pillDate(index: index, weekStartsOn: weekStartsOn)
+        let date = Core.SummaryPeriod.pillDate(index: index, weekStartsOn: weekStartsOn, calendar: ukCalendar)
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE"
         let short = formatter.string(from: date)
