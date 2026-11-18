@@ -4,6 +4,33 @@ Written for the product owner, 18 November 2026, at the end of the
 unattended run (05-RUN-TO-REVIEW.md). One page of truth about what the
 repository contains and how sure we are about each part.
 
+## Corrections after review
+
+The first screenshot claim was wrong and is corrected here. A manual
+review of the first captures found (18 November):
+
+1. Only two of five screens were really captured — Home, All apps and
+   dark Target were identical pictures of onboarding card 1; the demo
+   routing never skipped onboarding or selected a tab.
+2. The "onboarding" captures showed the iPhone home screen: the app
+   crashed there (a missing environment in one demo route).
+3. The daily bar chart merged days that share a weekday initial
+   (T/T, S/S), drawing five bars for seven days — in the real app, not
+   just the demo.
+4. Alerts could repeat: monitoring restarted on every launch with
+   nothing recording which alert had already been sent.
+5. Weekly mode disagreed with itself: rolling 7 days on Home, a calendar
+   week in alerts, and daily alerts firing alongside weekly ones.
+6. Monitoring start-up errors were silently swallowed.
+7. The two CI workflows overwrote each other's results on `ci-logs`
+   (how one build's verdict disappeared).
+8. This file overstated three features (R5, R11, R16) as
+   screenshot-verified when only App detail (R15) had earned it.
+
+Fixes F1–F9 in `06-FIXES-AFTER-REVIEW.md` address all eight; the
+screenshot workflow now verifies every capture itself (screen marker,
+process alive, no duplicate checksums) because GLM cannot see images.
+
 ## What works, and how sure we are
 
 Levels: **tested** (unit tests pass), **compiles** (built successfully on
@@ -16,18 +43,18 @@ GitHub's Mac with Xcode 26.6), **screenshot** (rendered in a simulator),
 | R2 | Per-app on/off switch (App detail) | compiles; unverified on device |
 | R3 | Master switch (Target tab) | compiles; unverified on device |
 | R4 | Usage statistics per app and combined | compiles; unverified on device |
-| R5 | Charts: donut, daily bars, hero bars | compiles; demo mode renders the mock figures (screenshots below) |
+| R5 | Charts: donut, daily bars, hero bars | compiles (an earlier build drew the daily chart with merged bars — fixed in F3; new captures pending) |
 | R6 | Overall target, daily or weekly | tested (conversion logic) + compiles |
 | R7 | Colour zones green/amber/orange-red | tested (boundaries at 75%/100%) + compiles |
 | R8 | Weekly average logic | tested |
-| R9 | Zone alerts at 75%/100% | compiles (threshold events, sanity guard); unverified on device |
+| R9 | Zone alerts at 75%/100% | compiles (one alert per line per interval — F4); unverified on device |
 | R10 | Privacy: everything on the phone | compiles; privacy manifest + documents written |
-| R11 | One-minute setup with presets | compiles; demo screenshots show the flow |
+| R11 | One-minute setup with presets | compiles; capture pending |
 | R12 | Access health check + banner | compiles; unverified on device |
 | R13 | Evening and Sunday recaps | compiles; unverified on device |
 | R14 | Optional per-app targets | tested (cleanup logic) + compiles |
-| R15 | App detail screen | compiles; demo screenshot |
-| R16 | All apps donut screen | compiles; demo screenshot |
+| R15 | App detail screen | screenshot (the one genuine capture set, close to the design) |
+| R16 | All apps donut screen | compiles; capture pending |
 
 Plus: **46 unit tests** pass (twice: on the 2016 Mac and in the cloud),
 and the cloud build compiles app + both extensions on Xcode 26.6.

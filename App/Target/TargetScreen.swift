@@ -97,6 +97,9 @@ struct TargetScreen: View {
         .onAppear {
             customMinutes = appState.targetMinutes ?? 180
         }
+        #if DEBUG
+        .onAppear { DemoMarker.mark("target") }
+        #endif
     }
 
     private var targetCard: some View {

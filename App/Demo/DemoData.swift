@@ -48,6 +48,7 @@ enum DemoData {
         let labels = ["W", "T", "F", "S", "S", "M", "T"]
         let days = week.enumerated().map { index, minutes in
             AppDetailConfiguration.DayValue(
+                id: index,
                 label: labels[index],
                 minutes: minutes,
                 isToday: index == week.count - 1

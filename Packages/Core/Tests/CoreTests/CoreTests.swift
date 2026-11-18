@@ -221,6 +221,8 @@ final class SettingsKeysTests: XCTestCase {
         XCTAssertEqual(SettingsKeys.appTargets, "appTargets")
         XCTAssertEqual(SettingsKeys.detailToken, "detailToken")
         XCTAssertEqual(SettingsKeys.statsPeriod, "statsPeriod")
+        XCTAssertEqual(SettingsKeys.lastMonitoringError, "lastMonitoringError")
+        XCTAssertEqual(SettingsKeys.lastAlert, "lastAlert")
     }
 
     func testAllKeysUnique() {
@@ -229,9 +231,10 @@ final class SettingsKeysTests: XCTestCase {
             SettingsKeys.targetMode, SettingsKeys.targetMinutes, SettingsKeys.amberFraction,
             SettingsKeys.alertsEnabled, SettingsKeys.weekStartsOn, SettingsKeys.recapsEnabled,
             SettingsKeys.lastCheckpoint, SettingsKeys.orderedTokens, SettingsKeys.appTargets,
-            SettingsKeys.detailToken, SettingsKeys.statsPeriod
+            SettingsKeys.detailToken, SettingsKeys.statsPeriod, SettingsKeys.lastMonitoringError,
+            SettingsKeys.lastAlert
         ]
-        XCTAssertEqual(Set(all).count, 14)
-        XCTAssertEqual(all.count, 14)
+        XCTAssertEqual(Set(all).count, 16)
+        XCTAssertEqual(all.count, 16)
     }
 }

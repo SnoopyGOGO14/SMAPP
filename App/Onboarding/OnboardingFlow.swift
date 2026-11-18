@@ -8,9 +8,13 @@ import Core
 struct OnboardingFlow: View {
 
     @Environment(AppState.self) private var appState
-    @State private var page = 0
+    @State private var page: Int
     @State private var showPicker = false
     @State private var requesting = false
+
+    init(startingCard: Int = 0) {
+        _page = State(initialValue: min(max(startingCard, 0), 3))
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,6 +32,9 @@ struct OnboardingFlow: View {
         .onChange(of: appState.selection) { _, _ in
             appState.syncFromSelection()
         }
+        #if DEBUG
+        .onAppear { DemoMarker.mark("onboarding") }
+        #endif
     }
 
     private var pickerBinding: Binding<FamilyActivitySelection> {

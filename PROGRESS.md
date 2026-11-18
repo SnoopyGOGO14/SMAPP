@@ -124,10 +124,45 @@ onboarding` in DEBUG only; release has no demo path. L5: `screens.yml`
 runs on `[screens]` commits, pushes PNGs to `ci-logs/screenshots`.
 L6 (visual comparison): **GLM cannot do this — no image input**; the
 screenshots are for the product owner to compare against
-`design/reference/`. **Final screenshot run SUCCEEDED: 10 PNGs on
-`ci-logs/screenshots` (home, allapps, detail, target, onboarding × light
-and dark), captured from commit bd3ade0.** Demo mode rendered every
-screen in the simulator.
+`design/reference/`. **CORRECTION after the owner's review: only 2 of the
+first 10 captures were genuine screens (App detail light+dark); the rest
+were duplicates of onboarding card 1 or the iPhone home screen. Fixed by
+F1/F2; the workflow now verifies every capture itself. New capture
+results below under the fixes run.**
+
+## Fixes run (F1–F9, 06-FIXES-AFTER-REVIEW.md) — 18 November
+
+Budget for this run: 7 builds, 3 screenshot runs.
+
+- F1 demo routing: marker file, `-card n`, tab selection, real chrome on
+  demo detail (incl. back button), every demo branch gets the environment
+  (the onboarding crash was a missing environment).
+- F2 screenshots workflow: verifies each capture — reads
+  `Documents/demo-screen.txt` from the app container and requires it to
+  equal the requested screen; checks the process is alive (CRASHED +
+  crash-report copy otherwise); checksums every file and fails on any
+  duplicate; 16 captures (home, allapps, detail, target, onboarding
+  cards 1–4 × light/dark).
+- F3 chart identity: `Core.DayAxis` (+7 tests), `DayValue.id`, custom
+  bars replacing the Swift Charts bar chart (unique per-day identity,
+  single dashed rule, today outlined, month labels only on days
+  1/8/15/22/29). Donut keeps SectorMark.
+- F4 `Core.AlertLedger` (+5 tests): one alert per line per interval;
+  `lastAlert` in the App Group; launch now only tops up missing
+  activities instead of restarting monitoring.
+- F5 weekly consistency: week-to-date from `weekStartsOn` on Home *and*
+  in the monitor; the daily activity posts nothing in weekly mode.
+  **ASSUMED: calendar week (the alternative, a rolling 7 days, was
+  rejected because alerts can only span calendar weeks).**
+- F6 monitoring errors logged (os.Logger, subsystem from the bundle id)
+  and saved to `lastMonitoringError`; Settings shows Running / Not
+  running + Try again.
+- F7 both workflows now clone `ci-logs`, replace only their own files,
+  and push with fetch-rebase retry (3 attempts) + STATUS.txt lines.
+- F8 status word in the zone colour; Logger subsystems from bundle id.
+- F9 this correction plus REVIEW.md's "Corrections after review".
+
+Core now: **58 tests, 0 failures** (DayAxis 7, AlertLedger 5, keys 16).
 
 ### Block M — quality: done (local checks)
 

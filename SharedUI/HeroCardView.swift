@@ -44,9 +44,8 @@ public struct HeroCardView: View {
                 )
                 .frame(height: 24)
 
-                Text(statusLine(usedMinutes: configuration.usedMinutes, targetMinutes: allowance))
-                    .font(.footnote)
-                    .foregroundStyle(Color("SecondaryText"))
+                // F8: zone word in the zone colour, remainder secondary.
+                statusLineParts(allowance: allowance)
             } else {
                 // No overall target: plain bar, no marker, no status line.
                 BarView(
@@ -80,12 +79,34 @@ public struct HeroCardView: View {
         return ZoneStyle.color(for: zone == .green ? .green : (zone == .amber ? .amber : .red))
     }
 
-    private func statusLine(usedMinutes: Double, targetMinutes: Int) -> String {
-        Core.statusLine(
-            usedMinutes: usedMinutes,
-            targetMinutes: targetMinutes,
+    private func statusLineParts(allowance: Int) -> some View {
+        let zone = Core.zone(
+            usedMinutes: configuration.usedMinutes,
+            allowanceMinutes: Double(allowance),
             amberFraction: amberFraction
         )
+        let word = ZoneStyle.word(for: appZone(from: zone))
+        let full = Core.statusLine(
+            usedMinutes: configuration.usedMinutes,
+            targetMinutes: allowance,
+            amberFraction: amberFraction
+        )
+        let remainder = full == word ? "" : full.replacingOccurrences(of: word + " ", with: "· ")
+        return HStack(spacing: 4) {
+            Text(word)
+                .foregroundStyle(fill)
+            Text(remainder)
+                .foregroundStyle(Color("SecondaryText"))
+        }
+        .font(.footnote.weight(.semibold))
+    }
+
+    private func appZone(from zone: Core.Zone) -> Core.AppZone {
+        switch zone {
+        case .green: return .green
+        case .amber: return .amber
+        case .red: return .red
+        }
     }
 
     private var accessibilityText: String {

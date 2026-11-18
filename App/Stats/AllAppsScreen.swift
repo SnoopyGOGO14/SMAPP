@@ -56,6 +56,9 @@ struct AllAppsScreen: View {
         .navigationDestination(for: ApplicationToken.self) { token in
             AppDetailScreen(token: token)
         }
+        #if DEBUG
+        .onAppear { DemoMarker.mark("allapps") }
+        #endif
     }
 
     private var header: some View {

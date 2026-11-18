@@ -40,13 +40,16 @@ public struct AppTimeConfiguration: Equatable {
 }
 
 public struct AppDetailConfiguration: Equatable {
-    public struct DayValue: Equatable {
-        /// Weekday initial, e.g. "T".
+    public struct DayValue: Equatable, Identifiable {
+        /// Unique per period (0-based index) — labels repeat (T/T, S/S).
+        public let id: Int
+        /// Visible label; empty for unlabelled positions in month view.
         public let label: String
         public let minutes: Double
         public let isToday: Bool
 
-        public init(label: String, minutes: Double, isToday: Bool) {
+        public init(id: Int, label: String, minutes: Double, isToday: Bool) {
+            self.id = id
             self.label = label
             self.minutes = minutes
             self.isToday = isToday

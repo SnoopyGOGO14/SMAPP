@@ -55,10 +55,17 @@ struct AppDetailScene: DeviceActivityReportScene {
         let initials = calendar.veryShortWeekdaySymbols.map { symbol in
             String(symbol.prefix(1))
         }
+        let inWeek = settings.statsPeriod != .month
 
         let days = daySeconds.enumerated().map { index, entry in
             AppDetailConfiguration.DayValue(
-                label: initials[calendar.component(.weekday, from: entry.start) - 1],
+                id: index,
+                label: Core.DayAxis.label(
+                    for: index,
+                    inWeek: inWeek,
+                    weekdayInitials: initials,
+                    weekdayIndex: calendar.component(.weekday, from: entry.start) - 1
+                ),
                 minutes: entry.seconds / 60,
                 isToday: entry.start == todayStart
             )

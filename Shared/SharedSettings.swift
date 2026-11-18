@@ -127,4 +127,29 @@ public final class SharedSettings {
             defaults.set(data, forKey: SettingsKeys.lastCheckpoint)
         }
     }
+
+    // MARK: - Monitoring health and alert ledger (F4/F6)
+
+    public var lastMonitoringError: String? {
+        get { defaults.string(forKey: SettingsKeys.lastMonitoringError) }
+        set {
+            if let newValue {
+                defaults.set(newValue, forKey: SettingsKeys.lastMonitoringError)
+            } else {
+                defaults.removeObject(forKey: SettingsKeys.lastMonitoringError)
+            }
+        }
+    }
+
+    public var lastAlert: Core.AlertRecord? {
+        get {
+            guard let data = defaults.data(forKey: SettingsKeys.lastAlert) else { return nil }
+            return try? PropertyListDecoder().decode(Core.AlertRecord.self, from: data)
+        }
+        set {
+            guard let newValue = newValue else { return }
+            let data = (try? PropertyListEncoder().encode(newValue)) ?? Data()
+            defaults.set(data, forKey: SettingsKeys.lastAlert)
+        }
+    }
 }

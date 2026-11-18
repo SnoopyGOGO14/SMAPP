@@ -6,7 +6,13 @@ import FamilyControls
 
 struct RootTabs: View {
 
-    @State private var selection = 0
+    @State private var selection: Int
+    private let initialTab: Int
+
+    init(initialTab: Int = 0) {
+        self.initialTab = initialTab
+        _selection = State(initialValue: initialTab)
+    }
 
     var body: some View {
         TabView(selection: $selection) {

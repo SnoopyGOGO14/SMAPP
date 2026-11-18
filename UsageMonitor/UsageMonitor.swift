@@ -1,7 +1,9 @@
 // UsageMonitor — woken by the system when a checkpoint is crossed.
 // Parses the percentage from the event name, runs the sanity guard
-// (iOS 26.x early-fire issue), saves lastCheckpoint, and posts a local
-// notification at 75% and 100%. Foundation, DeviceActivity and
+// (iOS 26.x early-fire issue), saves lastCheckpoint, and posts at most
+// one alert per checkpoint line per interval (AlertLedger, F4).
+// Weekly mode: only the weekly activity posts alerts; the daily activity
+// keeps saving checkpoints (F5). Foundation, DeviceActivity and
 // UserNotifications only — the ~6 MB memory ceiling allows no more.
 
 import Foundation
@@ -12,7 +14,10 @@ import os
 
 final class UsageMonitor: DeviceActivityMonitor {
 
-    private let logger = Logger(subsystem: "com.YOURORG.socialtimemonitor", category: "UsageMonitor")
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.YOURORG.socialtimemonitor",
+        category: "UsageMonitor"
+    )
     private let settings = SharedSettings()
 
     override func eventDidReachThreshold(
@@ -28,12 +33,17 @@ final class UsageMonitor: DeviceActivityMonitor {
 
         let mode = settings.targetMode
         let isWeekly = activity == .weekly
+
+        // F5: in weekly mode the daily activity posts nothing.
+        if mode == .weekly && !isWeekly {
+            saveCheckpoint(percent: percent)
+            return
+        }
+
         guard let target = effectiveTarget(for: mode, isWeekly: isWeekly) else { return }
 
-        let elapsed = Self.minutesSinceIntervalStart(
-            weekly: isWeekly,
-            weekStartsOn: settings.weekStartsOn
-        )
+        let intervalStart = Self.intervalStart(weekly: isWeekly, weekStartsOn: settings.weekStartsOn)
+        let elapsed = Self.minutesSinceIntervalStart(weekly: isWeekly, weekStartsOn: settings.weekStartsOn)
 
         // Sanity guard: drop events that fire before real usage could have.
         guard Core.Checkpoint.isPlausible(
@@ -45,13 +55,29 @@ final class UsageMonitor: DeviceActivityMonitor {
             return
         }
 
-        settings.lastCheckpoint = Core.Checkpoint(date: Date(), percent: percent)
+        saveCheckpoint(percent: percent)
 
         guard settings.alertsEnabled, percent == 75 || percent == 100 else { return }
+
+        // F4: at most one alert per line per interval.
+        guard Core.AlertLedger.shouldSend(
+            last: settings.lastAlert,
+            interval: intervalStart,
+            percent: percent
+        ) else {
+            logger.debug("alert pct \(percent) already sent for this interval")
+            return
+        }
+
         postAlert(percent: percent, weekly: isWeekly)
+        settings.lastAlert = Core.AlertRecord(intervalStart: intervalStart, percent: percent)
     }
 
     // MARK: - Helpers
+
+    private func saveCheckpoint(percent: Int) {
+        settings.lastCheckpoint = Core.Checkpoint(date: Date(), percent: percent)
+    }
 
     private func effectiveTarget(for mode: Core.TargetMode, isWeekly: Bool) -> Int? {
         guard let target = settings.targetMinutes else { return nil }
@@ -66,8 +92,19 @@ final class UsageMonitor: DeviceActivityMonitor {
         return Int(name.dropFirst(4))
     }
 
-    /// Minutes elapsed since the interval began: midnight for the daily
-    /// schedule, the week's first day 00:00 for the weekly schedule.
+    /// The interval an alert belongs to: midnight for the daily schedule,
+    /// the week's first day 00:00 for the weekly schedule (F5).
+    static func intervalStart(weekly: Bool, weekStartsOn: Int, now: Date = Date()) -> Date {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: now)
+        guard weekly else { return today }
+        let weekday = calendar.component(.weekday, from: today)
+        var daysBack = weekday - weekStartsOn
+        if daysBack < 0 { daysBack += 7 }
+        return calendar.date(byAdding: .day, value: -daysBack, to: today) ?? today
+    }
+
+    /// Minutes elapsed since the interval began.
     private static func minutesSinceIntervalStart(weekly: Bool, weekStartsOn: Int) -> Int {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.weekday, .hour, .minute], from: Date())

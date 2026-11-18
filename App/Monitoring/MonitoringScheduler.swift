@@ -1,14 +1,17 @@
 // MonitoringScheduler — starts and restarts DeviceActivity monitoring.
 // Daily mode: one repeating midnight-to-midnight activity with the six
 // checkpoint events. Weekly mode: a second activity spanning the user's
-// week with thresholds as percentages of the weekly target (spec § Rules
-// for the monitor extension). Restarts are debounced to one second.
+// calendar week with thresholds on the weekly target (and the daily
+// activity posts no alerts — F5). Restart only when a setting that
+// affects monitoring changes, or to top up a missing activity (F4);
+// failures are logged and recorded for Settings (F6).
 
 import Foundation
 import DeviceActivity
 import FamilyControls
 import ManagedSettings
 import Core
+import os
 
 @MainActor
 final class MonitoringScheduler {
@@ -17,6 +20,10 @@ final class MonitoringScheduler {
 
     private let center = DeviceActivityCenter()
     private var restartTask: Task<Void, Never>?
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.YOURORG.socialtimemonitor",
+        category: "MonitoringScheduler"
+    )
 
     /// Coalesce several rapid settings changes into one restart.
     func restartDebounced() {
@@ -25,6 +32,19 @@ final class MonitoringScheduler {
             try? await Task.sleep(nanoseconds: 1_000_000_000)
             guard !Task.isCancelled else { return }
             self?.restart()
+        }
+    }
+
+    /// F4: on launch, only start monitoring if an expected activity is
+    /// missing — never restart unconditionally.
+    func topUpIfMissing() {
+        let settings = SharedSettings()
+        let running = (try? center.activities) ?? []
+        let expected: Set<DeviceActivityName> = settings.targetMode == .weekly
+            ? [.daily, .weekly]
+            : [.daily]
+        if !expected.isSubset(of: running) {
+            restart()
         }
     }
 
@@ -40,24 +60,17 @@ final class MonitoringScheduler {
         let mode = settings.targetMode
         let dailyTarget = mode == .daily ? target : Core.TargetMath.toDaily(fromWeeklyMinutes: target)
 
-        // Daily activity: always on, drives the checkpoints and recaps.
+        // Daily activity: always on; checkpoints for recaps, alerts only
+        // in daily mode (F5).
         let dailySchedule = DeviceActivitySchedule(
             intervalStart: DateComponents(hour: 0, minute: 0),
             intervalEnd: DateComponents(hour: 23, minute: 59),
             repeats: true
         )
-        do {
-            try center.startMonitoring(
-                .daily,
-                during: dailySchedule,
-                events: Self.events(tokens: tokens, targetMinutes: dailyTarget)
-            )
-        } catch {
-            // Recorded by the caller's logger; monitoring continues on the
-            // next settings change.
-        }
+        start(.daily, during: dailySchedule,
+              events: Self.events(tokens: tokens, targetMinutes: dailyTarget))
 
-        // Weekly activity (weekly mode only): thresholds on the weekly target.
+        // Weekly activity (weekly mode only): the calendar week.
         if mode == .weekly {
             let weekStart = settings.weekStartsOn
             let weekEnd = ((weekStart + 5) % 7) + 1
@@ -66,17 +79,25 @@ final class MonitoringScheduler {
                 intervalEnd: DateComponents(hour: 23, minute: 59, weekday: weekEnd),
                 repeats: true
             )
-            do {
-                try center.startMonitoring(
-                    .weekly,
-                    during: weeklySchedule,
-                    events: Self.events(tokens: tokens, targetMinutes: target)
-                )
-            } catch {
-                // See above.
-            }
+            start(.weekly, during: weeklySchedule,
+                  events: Self.events(tokens: tokens, targetMinutes: target))
         } else {
             center.stopMonitoring([.weekly])
+        }
+    }
+
+    private func start(
+        _ name: DeviceActivityName,
+        during schedule: DeviceActivitySchedule,
+        events: [DeviceActivityEvent.Name: DeviceActivityEvent]
+    ) {
+        do {
+            try center.startMonitoring(name, during: schedule, events: events)
+            SharedSettings().lastMonitoringError = nil
+        } catch {
+            // F6: visible, not swallowed.
+            logger.error("startMonitoring \(name.rawValue, privacy: .public) failed: \(String(describing: error), privacy: .public)")
+            SharedSettings().lastMonitoringError = "\(name.rawValue): \(error) — \(Date())"
         }
     }
 

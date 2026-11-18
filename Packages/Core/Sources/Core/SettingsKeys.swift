@@ -24,6 +24,10 @@ public enum SettingsKeys {
     public static let weekStartsOn = "weekStartsOn"
     /// Bool — evening and Sunday recap notifications.
     public static let recapsEnabled = "recapsEnabled"
+    /// String — last monitoring start error, written by the main app.
+    public static let lastMonitoringError = "lastMonitoringError"
+    /// Data — encoded AlertRecord. Written by UsageMonitor only.
+    public static let lastAlert = "lastAlert"
     /// Data — encoded Checkpoint. Written by UsageMonitor only; approximate
     /// reading for recap messages and the future widget.
     public static let lastCheckpoint = "lastCheckpoint"

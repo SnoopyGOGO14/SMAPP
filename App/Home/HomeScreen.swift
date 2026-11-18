@@ -51,6 +51,9 @@ struct HomeScreen: View {
         .onReceive(NotificationCenter.default.publisher(for: AppState.openAppPicker)) { _ in
             showPicker = true
         }
+        #if DEBUG
+        .onAppear { DemoMarker.mark("home") }
+        #endif
     }
 
     private var header: some View {

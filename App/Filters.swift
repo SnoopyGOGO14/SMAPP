@@ -16,6 +16,15 @@ enum Filters {
         return DateInterval(start: start, end: min(now, calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: today) ?? now)))
     }
 
+    private static func weekToDate(calendar: Calendar, weekStartsOn: Int, now: Date) -> DateInterval {
+        let today = calendar.startOfDay(for: now)
+        let weekday = calendar.component(.weekday, from: today)
+        var daysBack = weekday - weekStartsOn
+        if daysBack < 0 { daysBack += 7 }
+        let start = calendar.date(byAdding: .day, value: -daysBack, to: today) ?? today
+        return DateInterval(start: start, end: now)
+    }
+
     static func interval(for period: Core.Period, calendar: Calendar = .current, now: Date = Date()) -> DateInterval {
         switch period {
         case .hour, .day:
@@ -47,9 +56,19 @@ enum Filters {
     }
 
     /// Home card. Daily mode: today against the daily target. Weekly mode:
-    /// the last seven days against the weekly target (spec allowance table).
+    /// the calendar week to date (from weekStartsOn) against the weekly
+    /// target — the same interval the monitor's weekly activity uses (F5).
     static func homeTotal(enabled: [ApplicationToken], mode: Core.TargetMode) -> DeviceActivityFilter {
-        let interval = interval(for: mode == .daily ? .day : .week)
+        let interval: DateInterval
+        if mode == .weekly {
+            interval = weekToDate(
+                calendar: .current,
+                weekStartsOn: SharedSettings().weekStartsOn,
+                now: Date()
+            )
+        } else {
+            interval = interval(for: .day)
+        }
         return make(segment: .daily(during: interval), tokens: enabled)
     }
 

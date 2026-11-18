@@ -36,14 +36,27 @@ jobs:
       - name: Publish logs to ci-logs branch
         if: always()
         run: |
+          # F7: share ci-logs — replace only this workflow's own files,
+          # never force-push over the other workflow's results.
+          REPO="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           mkdir out
           cp ci-*.log out/ 2>/dev/null || true
           grep -hE "error:|warning:|BUILD (SUCCEEDED|FAILED)|Executed .* tests|Unrecognized|not found" out/*.log > out/SUMMARY.txt 2>/dev/null || true
           echo "commit: $GITHUB_SHA status: ${{ job.status }} run: $GITHUB_RUN_NUMBER" >> out/SUMMARY.txt
-          cd out
-          git init -q -b ci-logs
-          git config user.name ci
-          git config user.email ci@users.noreply.github.com
-          git add .
-          git commit -qm "logs for $GITHUB_SHA"
-          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-logs
+          echo "build: $GITHUB_SHA ${{ job.status }}" >> out/STATUS.txt
+          publish() {
+            git clone -q --branch ci-logs --single-branch "$REPO" out_repo 2>/dev/null || { mkdir out_repo; cd out_repo; git init -q -b ci-logs; git remote add origin "$REPO"; cd ..; }
+            mkdir -p out_repo
+            cp out/ci-*.log out_repo/ 2>/dev/null || true
+            cp out/SUMMARY.txt out/STATUS.txt out_repo/
+            cd out_repo
+            git config user.name ci
+            git config user.email ci@users.noreply.github.com
+            git add .
+            git commit -qm "build logs for $GITHUB_SHA" || true
+          }
+          attempt=0
+          until publish && git push -q origin ci-logs; do
+            attempt=$((attempt+1)); [ $attempt -ge 3 ] && echo "publish failed after 3 attempts" && exit 1
+            git fetch -q origin && git rebase -q origin/ci-logs || exit 1
+          done

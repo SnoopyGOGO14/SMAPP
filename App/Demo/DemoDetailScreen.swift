@@ -56,7 +56,19 @@ struct DemoDetailScreen: View {
                         .foregroundStyle(Color("PrimaryText"))
                 }
             }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.body.weight(.medium))
+                        .foregroundStyle(Color("PrimaryText"))
+                }
+                .accessibilityLabel("Back")
+            }
         }
+        #if DEBUG
+        .onAppear { DemoMarker.mark("detail") }
+        #endif
     }
 }
 #endif

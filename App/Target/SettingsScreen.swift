@@ -63,6 +63,33 @@ struct SettingsScreen: View {
 
                     Divider().overlay(Color("Divider"))
 
+                    // F6: monitoring health, visible with a retry.
+                    HStack {
+                        Text("Monitoring")
+                            .font(.subheadline.weight(.semibold))
+                        Spacer()
+                        if let error = appState.settings.lastMonitoringError {
+                            VStack(alignment: .trailing, spacing: 4) {
+                                Text("Not running")
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color.red)
+                                Button("Try again") {
+                                    MonitoringScheduler.shared.restart()
+                                }
+                                .font(.footnote.weight(.semibold))
+                                .buttonStyle(.bordered)
+                                .controlSize(.small)
+                            }
+                        } else {
+                            Text("Running")
+                                .font(.subheadline)
+                                .foregroundStyle(Color.green)
+                        }
+                    }
+                    .padding(16)
+
+                    Divider().overlay(Color("Divider"))
+
                     Button("Add or remove apps") { showPicker = true }
                         .font(.subheadline.weight(.semibold))
                         .frame(maxWidth: .infinity, minHeight: 44)
