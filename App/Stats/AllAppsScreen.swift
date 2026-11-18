@@ -4,6 +4,7 @@
 import SwiftUI
 import DeviceActivity
 import FamilyControls
+import ManagedSettings
 import Core
 
 struct AllAppsScreen: View {

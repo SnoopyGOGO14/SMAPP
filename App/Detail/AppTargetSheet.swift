@@ -2,6 +2,7 @@
 
 import SwiftUI
 import FamilyControls
+import ManagedSettings
 import Core
 
 struct AppTargetSheet: View {
