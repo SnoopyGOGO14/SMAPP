@@ -1,13 +1,46 @@
-// Session 0 placeholder — one screen saying "Scaffold".
-// Session 3 replaces this with RootTabs and the real flow.
+// SocialTimeMonitorApp — entry point. Routes between onboarding and the
+// tabs, overlays the access banner, re-checks authorisation on every
+// return to the foreground, and rebuilds filters at midnight rollover.
 
 import SwiftUI
+import FamilyControls
+import Core
 
 @main
 struct SocialTimeMonitorApp: App {
+
+    @State private var appState = AppState()
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some Scene {
         WindowGroup {
-            Text("Scaffold")
+            ZStack(alignment: .top) {
+                if appState.showOnboarding {
+                    OnboardingFlow()
+                } else {
+                    RootTabs()
+                }
+                if appState.showAccessBanner {
+                    AccessBanner(
+                        message: appState.bannerMessage,
+                        actionTitle: appState.bannerActionTitle,
+                        action: { appState.runBannerAction() }
+                    )
+                    .padding(.horizontal, 20)
+                }
+            }
+            .environment(appState)
+            .background(Color("Ground").ignoresSafeArea())
+            .preferredColorScheme(nil)
+            .task {
+                appState.refreshAuthorizationStatus()
+                appState.startDayRolloverWatch()
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    appState.refreshAuthorizationStatus()
+                }
+            }
         }
     }
 }

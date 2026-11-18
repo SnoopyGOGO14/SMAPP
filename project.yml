@@ -27,6 +27,8 @@ targets:
     scheme: {}
     sources:
       - App
+      - Shared
+      - SharedUI
     dependencies:
       - package: Core
       - target: UsageReport
@@ -46,10 +48,12 @@ targets:
       path: Config/SocialTimeMonitor.entitlements
 
   UsageReport:
-    type: app-extension
+    type: extension-kit-extension
     platform: iOS
     sources:
       - UsageReport
+      - Shared
+      - SharedUI
     dependencies:
       - package: Core
     info:
@@ -71,6 +75,7 @@ targets:
     platform: iOS
     sources:
       - UsageMonitor
+      - Shared/SharedSettings.swift
     dependencies:
       - package: Core
     info:
