@@ -24,31 +24,24 @@ Builder: GLM (AI coding model) writes the code on the Mac. The person handles Ap
 
 ## 3. State at handoff
 
-**Done**
+**Done (end of the unattended run, 18 November ~02:00)**
 
-- Product requirements R1 to R13, architecture, data model, screens, risks: written and in the repo.
-- Session 0 scaffold committed by GLM: `project.yml` (XcodeGen), three targets (`SocialTimeMonitor`, `UsageReport`, `UsageMonitor`), `Packages/Core` with placeholder source and test, entitlements and Info.plists in `Config/`.
-- Repo history: `de02de0` initial commit, `fbbb91d` Session 0 scaffold, `cee7c72` README update. Working tree clean at 23:17.
-- GitHub access for GLM: deploy key titled `SMAPP` on this repo only, read/write, fingerprint `SHA256:E+8z54zWDK6VE63l5IZwOx8z4P3Ef4vqn+mazJaojkU`. Fingerprint checked against GLM's public key: match. Push works.
-- `zai.rtf` (holds a credential) was gitignored and is absent from the project folder as of the last listing.
+- All three targets **BUILD SUCCEEDED** on GitHub's macos-26 runner (Xcode 26.6, run 17, commit 324a148). 46 Core tests pass on both the 2016 Mac and in the cloud.
+- The full app as specified: onboarding, Home, App detail, All apps, Target + Settings, access banner, all states (Blocks A to O of `05-RUN-TO-REVIEW.md` — every box ticked or logged in `PROGRESS.md` §Skipped).
+- Demo mode renders the approved mock-up figures; the screenshot workflow pushes light+dark PNGs of five screens to `ci-logs/screenshots` (result of the final `[screens]` run recorded in `PROGRESS.md`).
+- Review pack: `REVIEW.md` (written for the product owner) + honesty table, budget, ASSUMED list and Apple-pages list in `PROGRESS.md`.
+- All portal and App Store documents drafted under `docs/`.
+- GitHub access: same deploy key `SMAPP` (read/write), pushes work.
 
-**In progress: tasks handed to GLM at 23:17, completion unconfirmed**
-
-1. Report the Mac's model, year and newest macOS offered (`sw_vers`, `sysctl hw.model`, `softwareupdate --list-full-installers`).
-2. Correct the toolchain entry in `PROGRESS.md` (see section 4) and add the April 2027 risk row to the spec.
-3. Session 1: Core logic and tests, built to run on this Mac today (swift-tools-version 5.7, Foundation only).
-4. Draft `docs/AppStore/family-controls-request.md` (answers for Apple's Family Controls Distribution form, one section per bundle ID).
-5. Draft `docs/portal-steps.md` (click-by-click portal steps for the person).
-6. Stop after Session 1; commit and push.
-
-At the time of writing `Packages/Core` still held the placeholder files, so Session 1 had yet to land.
+**The honesty line**: everything above is *compiles* or *tested* at best; **nothing is proven on an iPhone** — the 2016 Mac cannot run Xcode, and every device gate (A–D) is open by rule.
 
 **Blocked on the person**
 
-- Session 0 closes only when `xcodegen generate` succeeds, a signing team is chosen and the app installs on an iPhone showing "Scaffold". That needs the toolchain in section 4.
-- Apple Developer Program membership, three bundle IDs, the App Group, Family Controls (Development) on each, and the Family Controls (Distribution) request for each.
-- An organisation identifier to replace `YOURORG` in `project.yml` and the three `.entitlements` files.
-- One iPhone on iOS 17.4 or later; ideally a second on the newest iOS.
+- A build Mac (2018+ Intel until April 2027, or Apple silicon for the long run) — unblocks Gate A and everything after. Day one: `docs/build-mac-setup.md`.
+- Apple Developer Program + `docs/portal-steps.md`; the three Family Controls (Distribution) requests (answers drafted in `docs/AppStore/family-controls-request.md`).
+- The real organisation identifier to replace `YOURORG`.
+- Decisions on every ASSUMED row in `REVIEW.md`; replacement app icon.
+- Move `zai.rtf` out of the project folder (credential; gitignored).
 
 ## 4. Toolchain: the main open risk
 
@@ -94,16 +87,22 @@ At the time of writing `Packages/Core` still held the placeholder files, so Sess
 
 **GLM**
 
-1. Finish the six tasks in section 3 and record results in `PROGRESS.md`.
-2. Commit this file (`SESSION-HANDOFF.md`) to the repo.
-3. Wait at Gate A: Session 2 needs a device build.
+1. Done for this run: every box in `05-RUN-TO-REVIEW.md` ticked or logged
+   under Skipped; review pack written; final push made.
+2. Next work waits on the person (Gate A needs a device build). When a
+   build Mac exists: rerun the portal-dependent items, then Session 2's
+   gate per `docs/device-checks.md`.
 
 **Person**
 
-1. Apple menu → About This Mac: note the model year. System Settings → Software Update: note the newest macOS offered. Tell GLM.
-2. Join the Apple Developer Program; work through `docs/portal-steps.md` once GLM has drafted it.
+1. Arrange the build Mac; follow `docs/build-mac-setup.md`.
+2. Join the Apple Developer Program; work through `docs/portal-steps.md`;
+   submit the three Family Controls (Distribution) requests from
+   `docs/AppStore/family-controls-request.md`.
 3. Give GLM the organisation identifier.
-4. Answer the open decisions in section 7.
+4. Answer the ASSUMED decisions in `REVIEW.md`; choose the app name/icon.
+5. Review the screenshots on `ci-logs` against `design/reference/`
+   (GLM cannot view images) and run Gate A on a device.
 
 ## 9. Tool and access notes for the next assistant session
 

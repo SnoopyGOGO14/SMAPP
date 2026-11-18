@@ -197,8 +197,8 @@ page (UserDefaults codes), and the forums threads cited in the spec.
 
 - G1 core-tests-pass: **PASS** (46/46 local + cloud)
 - G2 checklist-complete: **PASS** after Block P ticks
-- G3 cloud-build-green: **[PATCHED BELOW]**
-- G4 screenshots-or-skipped: **[PATCHED BELOW]**
+- G3 cloud-build-green: **PASS** — BUILD SUCCEEDED, run 17, commit 324a148 (Xcode 26.6, all three targets)
+- G4 screenshots-or-skipped: **[FINAL SCREENSHOT RUN RESULT PATCHED IN THE BLOCK L NOTE ABOVE]**
 - G5 review-pack-exists: **PASS** (REVIEW.md)
 - G6 no-force-decode: **PASS** (grep clean)
 - G7 no-print-in-extensions: **PASS** (grep clean)
