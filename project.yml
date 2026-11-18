@@ -39,6 +39,9 @@ targets:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.YOURORG.socialtimemonitor
     entitlements:
       path: Config/SocialTimeMonitor.entitlements
 
@@ -59,6 +62,7 @@ targets:
       path: Config/UsageReport.entitlements
     settings:
       base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.YOURORG.socialtimemonitor.UsageReport
         # ExtensionKit extension: skip the classic extension lifecycle check
         ENABLE_EMBEDDED_CONTENT_PLUGINS: YES
 
@@ -76,6 +80,9 @@ targets:
         NSExtension:
           NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).UsageMonitor
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.YOURORG.socialtimemonitor.UsageMonitor
     entitlements:
       path: Config/UsageMonitor.entitlements
 
