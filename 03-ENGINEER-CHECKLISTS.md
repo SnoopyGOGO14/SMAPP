@@ -46,9 +46,11 @@ Lists to consider and implement. Tick items as they land; add the session number
 
 - [ ] Reads the App Group; never writes to it
 - [ ] Filter limited to iPhone and to enabled tokens
-- [ ] All totals computed in `makeConfiguration`; views only render
-- [ ] One `PeriodChartView` for four periods
-- [ ] Allowance for each view taken from `TargetMath`
+- [ ] All totals computed in `makeConfiguration` via `Aggregator`; views only render
+- [ ] Five contexts: `homeTotal`, `appRow`, `appTime`, `appDetail`, `allApps`
+- [ ] One embedded `appRow`/`appTime` report per row, hit testing off; fallback documented if performance is poor
+- [ ] Donut drawn with `SectorMark`, palette colour by `orderedTokens` index
+- [ ] Allowance from the overall target (`homeTotal`, `allApps`) or the per-app target (`appRow`, `appDetail`); no target → neutral
 - [ ] Placeholder, empty and short-history states
 - [ ] Redraws after returning from the background
 - [ ] Icons and names render inside the extension on both test iOS versions
@@ -74,13 +76,13 @@ Lists to consider and implement. Tick items as they land; add the session number
 ## 8. Interface and ease of use
 
 - [ ] Setup completes in under a minute, three steps
-- [ ] Target presets 1, 2, 3, 4 hours; custom in 15-minute steps
-- [ ] Times as "2h 14m"; "46m left" in green and amber
-- [ ] Zone shown as colour, word and symbol together
-- [ ] Encouraging wording throughout
-- [ ] Haptic on each switch; ring refreshes at once
+- [ ] Target presets 1, 2, 3, 4 hours; custom in 15-minute steps; per-app presets 30m–1h 30m
+- [ ] Times as "2h 14m" (whole hours drop minutes); status line "Getting close · 14m left"
+- [ ] Zone shown as colour and word together; neutral for apps with no target
+- [ ] Screens exactly as `design/DESIGN-NOTES.md`; nothing extra
+- [ ] Per-app switch on App detail; master switch on Target
 - [ ] Stats tab remembers the last period
-- [ ] Alert tap lands on the Today ring
+- [ ] Alert tap lands on the Home tab
 
 ## 9. Accessibility and appearance
 
@@ -103,6 +105,8 @@ Lists to consider and implement. Tick items as they land; add the session number
 | Scenario | iOS 17.4–18.x phone | Newest iOS phone |
 | --- | --- | --- |
 | Ring and all four charts agree with Settings › Screen Time | [ ] | [ ] |
+| Home with five embedded row reports loads within two seconds | [ ] | [ ] |
+| Tapping a row opens App detail | [ ] | [ ] |
 | Switch off one app: its time leaves every view | [ ] | [ ] |
 | Target change recolours ring and charts | [ ] | [ ] |
 | Alerts arrive with app closed | [ ] | [ ] |

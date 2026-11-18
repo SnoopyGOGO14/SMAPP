@@ -103,13 +103,14 @@ SMAPP/
 
 | File | Contents |
 | --- | --- |
-| `Shared/SharedSettings.swift` | Wrapper on `UserDefaults(suiteName: appGroup)`: typed get/set for every key; encodes `FamilyActivitySelection` and `Set<ApplicationToken>` with `PropertyListEncoder`; after decoding a selection, rebuild it with `includeEntireCategory: true` |
-| `Shared/ReportContexts.swift` | `extension DeviceActivityReport.Context { static let todaySummary = Self("todaySummary") }` (add `hourly`, `daily`, `weekly`, `monthly` now, used in Session 4) |
-| `Shared/ZoneStyle.swift` | semantic system colours (`Color(.systemGreen)`, `Color(.systemOrange)`, `Color(.systemRed)`; see the spec's visual rules — no hard-coded hex), wording and SF Symbol per zone |
-| `App/ProofView.swift` | Buttons: "Allow Screen Time", "Pick apps", a field for target minutes, and the embedded report |
+| `Shared/SharedSettings.swift` | Wrapper on `UserDefaults(suiteName: appGroup)`: typed get/set for every key; encodes `FamilyActivitySelection`, `Set<ApplicationToken>` and `[ApplicationToken]` with `PropertyListEncoder`; after decoding a selection, rebuild it with `includeEntireCategory: true`; helpers `target(for token)`, `paletteIndex(for token)` |
+| `Shared/ReportContexts.swift` | The five contexts: `homeTotal`, `appRow`, `appTime`, `appDetail`, `allApps` |
+| `Shared/ZoneStyle.swift` | semantic system colours (`Color(.systemGreen)`, `Color(.systemOrange)`, `Color(.systemRed)`; no hard-coded hex), wording per zone, plus the `neutral` case (no target) — app and `UsageReport` only |
+| `App/ProofView.swift` | Buttons: "Allow Screen Time", "Pick apps", a field for target minutes, and the embedded `homeTotal` report plus one `appRow` row |
 | `UsageReport/UsageReportExtension.swift` | `@main struct … : DeviceActivityReportExtension` listing the scenes |
-| `UsageReport/TodaySummaryScene.swift` | Scene that totals usage and returns a configuration |
-| `UsageReport/TodayRingView.swift` | Ring: time used, target, zone colour and word |
+| `UsageReport/Aggregator.swift` | The one walker of `DeviceActivityResults<DeviceActivityData>` → segments → categories → applications; returns plain structs (seconds per token, per day) |
+| `UsageReport/HomeTotalScene.swift` + view | Hero total, "of 3h", bar with marker, status line |
+| `UsageReport/AppRowScene.swift` + view | Time and thin bar for one token |
 
 **API shapes to follow**
 
@@ -129,7 +130,9 @@ let filter = DeviceActivityFilter(
     applications: settings.enabledTokens,
     categories: [],
     webDomains: [])
-DeviceActivityReport(.todaySummary, filter: filter)
+DeviceActivityReport(.homeTotal, filter: filter)
+// App row: same shape, filter limited to one token
+DeviceActivityReport(.appRow, filter: singleAppFilter)
 
 // Extension: a scene
 struct TodaySummaryScene: DeviceActivityReportScene {
@@ -163,98 +166,93 @@ struct TodaySummaryScene: DeviceActivityReportScene {
 **GATE A — [PERSON] on the iPhone**
 
 - [ ] Allow access, pick two or three apps, use one for five minutes
-- [ ] Ring total matches Settings › Screen Time for those apps within a minute or two
+- [ ] Home total matches Settings › Screen Time for those apps within a minute or two
 - [ ] Removing an app from the selection removes its time
-- [ ] Changing the target minutes recolours the ring (proves the extension reads the App Group)
+- [ ] Changing the target minutes recolours the bar and moves the marker (proves the extension reads the App Group)
 - [ ] Record the iOS version and result in `PROGRESS.md`. If the App Group read fails, stop and record it: the fallback in the spec's risk table applies.
 
 ---
 
-## Session 3 — Onboarding, Apps screen, switches, access banner
+## Session 3 — Onboarding, Home screen, access banner
 
-**Goal:** the real first-run experience and home screen (requirements R1, R2, R3, R11, R12).
+**Goal:** the real first-run experience and Home screen (requirements R1, R2, R3, R11, R12; design `design/DESIGN-NOTES.md` § Home).
 
 **[GLM] files**
 
 | File | Contents |
 | --- | --- |
-| `App/AppState.swift` | `@Observable` model: authorisation status, selection, enabled tokens, master switch, target; loads and saves through `SharedSettings` |
-| `App/Onboarding/OnboardingFlow.swift` | Card 1 what the app does; Card 2 plain-language "what we see / what we never see", then the system prompt; Card 3 picker with the hint "Tick Social and YouTube"; Card 4 target presets |
-| `App/Apps/AppsScreen.swift` | Today ring (embedded report) on top; master switch; one row per picked app: `Label(token)` + `Toggle`; "Add or remove apps" |
-| `App/Apps/AccessBanner.swift` | Shown when access is off or the selection is empty; button re-requests access and reopens the picker |
+| `App/AppState.swift` | `@Observable` model (use `ObservableObject` if `@Observable` causes trouble): authorisation status, selection, ordered tokens, enabled tokens, targets, period. Loads and saves through `SharedSettings` |
+| `App/Onboarding/OnboardingFlow.swift` | Card 1 what the app does; Card 2 what we see / what we never see, then the system prompt; Card 3 picker with the hint "Tick Social and YouTube"; Card 4 target presets |
+| `App/Home/HomeScreen.swift` | "Today" + date, embedded `homeTotal` report, card of `AppUsageRow` rows |
+| `App/Home/AppUsageRow.swift` | `NavigationLink` row: `Label(token)` icon and name, embedded `appRow` report with `.allowsHitTesting(false)`. A `timeOnly` style embeds `appTime` instead and shows a palette dot |
+| `App/AccessBanner.swift` | Shown when access is off or the selection is empty; one button re-requests access and reopens the picker |
 | `App/RootTabs.swift` | Tabs: Apps, Stats, Target (Stats and Target are placeholders until Sessions 4 and 5) |
 
 **Tasks**
 
-- [ ] Row order: stable sort so rows keep their place between launches (store an ordered array of tokens)
-- [ ] Switch flip: update `enabledTokens`, light haptic, ring refreshes (the filter changes, so the report reloads)
-- [ ] Master switch off: ring shows "Paused", rows dim
+- [ ] Row order: stable sort via `orderedTokens` so rows keep their place between launches
+- [ ] The whole row opens App detail; no switch on the row (it lives on App detail)
 - [ ] On every `scenePhase == .active`: re-read `AuthorizationCenter.shared.authorizationStatus`; when access is off, show the banner
 - [ ] After access is re-granted, ask the user to pick apps again (earlier tokens are void)
 - [ ] Empty states: before permission, before any app picked
+- [ ] Editing a non-empty selection lives in Settings ("Edit app selection"), keeping Home to the designed elements
 
-**Done when:** a new user completes setup in under a minute; switch states and row order survive relaunch; turning access off in Settings produces the banner on return.
+**Done when:** a new user completes setup in under a minute; row order survives relaunch; turning access off in Settings produces the banner on return.
 
 ---
 
-## Session 4 — Statistics — GATE B
+## Session 4 — App detail and All apps — GATE B
 
-**Goal:** Hour, Day, Week and Month views (R4, R5) from one chart component.
+**Goal:** the other two approved screens (R4, R5, R15, R16).
 
 **[GLM] files**
 
 | File | Contents |
 | --- | --- |
-| `App/Stats/StatsScreen.swift` | Segmented control (Hour, Day, Week, Month), back/forward arrows, remembers last period; builds the filter from `PeriodMath` and embeds `DeviceActivityReport(context, filter:)` |
-| `UsageReport/PeriodScene.swift` | One generic scene type, instantiated four times with a context and a bucketing rule |
-| `UsageReport/PeriodChartView.swift` | Swift Charts `BarMark` per bucket coloured by zone, dashed `RuleMark` at the allowance, total and average, per-app list with `Label(token)`, time and share bar |
-| `UsageReport/PeriodConfiguration.swift` | Buckets (start, minutes, zone), per-app totals, total, average, allowance |
-
-**Segments**
-
-| View | Filter segment | Buckets |
-| --- | --- | --- |
-| Hour | `.hourly(during: day)` | 24 bars; zone from running total |
-| Day | `.daily(during: week)` | 7 bars |
-| Week | `.weekly(during: last 8 weeks)` | 8 bars |
-| Month | `.daily(during: month)` | one bar per day, summary shows average per day or per week |
+| `App/Detail/AppDetailScreen.swift` | Back, `Label(token)` title, on/off switch, period switch, embedded `appDetail` report, target button. Writes `detailToken` and `statsPeriod` before the report appears |
+| `App/Detail/AppTargetSheet.swift` | Stepper in 15-minute steps, presets 30m, 45m, 1h, 1h 30m, "Remove target" |
+| `App/Stats/AllAppsScreen.swift` | "All apps" + date, period switch, embedded `allApps` report, card of `AppUsageRow(style: .timeOnly)` |
+| `UsageReport/AppDetailScene.swift` + view | Today card (hero, bar, status line); period card (days-hours-minutes-seconds line, Swift Charts daily bars in zone colours, dashed target rule, today outlined, day initials); two stats (daily average, days within target) |
+| `UsageReport/AppTimeScene.swift` + view | Time only, right-aligned |
+| `UsageReport/AllAppsScene.swift` + view | Donut with Swift Charts `SectorMark`, one segment per platform, centre total and "of 3h" |
 
 **Tasks**
 
-- [ ] Placeholder of identical size while the report loads
-- [ ] Empty state when a period has no usage
-- [ ] VoiceOver: each bar reads "Tuesday, 2 hours 14 minutes, Getting close"
+- [ ] Placeholder of identical size while each report loads; plain empty state per period
+- [ ] VoiceOver: donut reads total and per-app figures; bars read "Tuesday, 58 minutes, getting close"
 - [ ] Month view: when iOS returns fewer days than requested, show "Showing the last N days"
+- [ ] An app with no per-app target: neutral bar, no marker (Home row and detail today card)
 
 **GATE B — [PERSON]**
 
-- [ ] All four views agree with Settings › Screen Time on two iOS versions
-- [ ] Note how many days of history the Month view returns; record in `PROGRESS.md`
+- [ ] Home, App detail and All apps figures agree with Settings › Screen Time on two iOS versions
+- [ ] Home with five embedded row reports loads within two seconds; tapping a row opens App detail
+- [ ] Donut segment sizes match each app's share; centre total matches
+- [ ] Note how many days of history the Month views return; record in `PROGRESS.md`
 - [ ] App icons and names appear in the per-app list (a known trouble spot inside report extensions)
 - [ ] Leave the app and return: charts redraw
 
 ---
 
-## Session 5 — Target and zones
+## Session 5 — Target tab and per-app targets
 
-**Goal:** the Target tab and zone treatment everywhere (R6, R7, R8).
+**Goal:** the Target tab, overall target, per-app targets (R6, R7, R8, R14).
 
 **[GLM] files**
 
 | File | Contents |
 | --- | --- |
-| `App/Target/TargetScreen.swift` | Daily/Weekly selector; presets 1, 2, 3, 4 hours a day; custom stepper in 15-minute steps; live three-zone strip; alerts switch; recaps switch |
-| `App/Target/SettingsScreen.swift` | Amber threshold slider (50–95%), week start day, access status, privacy statement |
+| `App/Target/TargetScreen.swift` | Overall target: Daily or Weekly selector, presets 1h–4h, custom stepper (15-minute steps), live three-zone strip; master Monitoring switch; alerts switch; recaps switch; link to Settings |
+| `App/Target/SettingsScreen.swift` | Amber threshold slider, week start day, "Edit app selection", access status, privacy statement |
 
 **Tasks**
 
 - [ ] Switching Daily ↔ Weekly converts the current figure (× 7, ÷ 7) through `TargetMath`
-- [ ] Every report view takes its allowance from `TargetMath` per the spec table
-- [ ] Ring shows time remaining while green or amber; "Over today's target" when red
-- [ ] Weekly average line on the Day view
-- [ ] Zone always shown as colour + word + symbol
+- [ ] Per-app targets saved to `appTargets`; `appRow` and `appDetail` take their allowance from them; no target → neutral
+- [ ] Status line wording: "Getting close · 14m left", "Over target · by 7m", "Comfortable · 29m left"; empty for neutral
+- [ ] Zone always shown as colour + word
 
-**Done when:** changing target, mode or amber threshold recolours ring and charts on next appearance; Core tests still pass.
+**Done when:** changing any target recolours bars and status lines on next appearance; Core tests still pass.
 
 ---
 

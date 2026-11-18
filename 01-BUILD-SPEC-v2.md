@@ -33,6 +33,9 @@ Three consequences for the brief:
 | R11 | One-minute setup | Three steps: allow access, pick apps, choose a target from presets (1, 2, 3 or 4 hours a day, or custom). |
 | R12 | Access health check | If Screen Time access is switched off or the app list is emptied, a banner explains and offers a one-tap fix. |
 | R13 | Recaps | Optional evening and Sunday notification inviting the user to view the day or week. |
+| R14 | Per-app target | Optional daily target per app, alongside the overall target. An app with no target shows a neutral bar. Set from App detail. |
+| R15 | App detail screen | As `design/DESIGN-NOTES.md`: today card, period switch (Today / 7 days / Month), period card with the days-hours-minutes-seconds line and daily bars, two stats, one target button. The app's on/off switch lives here. |
+| R16 | All apps screen | As `design/DESIGN-NOTES.md`: donut of time per platform with the total in the centre, one row per platform with its colour dot. Replaces the earlier Stats tab layout. |
 
 **Zone thresholds (default, adjustable in one constants file)**
 
@@ -41,6 +44,8 @@ Three consequences for the brief:
 | Comfortable | Under 75% of target | Green |
 | Approaching | 75% to 100% of target | Amber |
 | Critical | Over 100% of target | Red |
+
+**Per-app alerts are out of scope for version 1:** the six checkpoint events stay tied to the overall target only (see R9 and the monitor-extension rules).
 
 **Out of scope for version 1:** blocking or locking apps, Android, iPad layout, accounts, cloud sync, widgets, sharing or exporting figures. Planned for version 1.1: Lock Screen and Home Screen widget showing the current zone, and a count of green days in a row.
 
@@ -131,7 +136,7 @@ Swift and SwiftUI throughout, minimum iOS 17.4, one Xcode project with three tar
 8. When a checkpoint is crossed, `UsageMonitor.eventDidReachThreshold` saves `lastCheckpoint` and, at 75% and 100%, posts a local notification.
 9. Every time the app returns to the foreground it re-checks authorisation and shows the access banner if needed.
 
-**Report contexts** (one `DeviceActivityReportScene` each): `todaySummary`, `hourly`, `daily`, `weekly`, `monthly`. Hourly uses `.hourly` segments over one day; daily and weekly use `.daily` segments over 7 days and `.weekly` over about 8 weeks; monthly sums `.daily` segments over the calendar month.
+**Report contexts** (one `DeviceActivityReportScene` each): `homeTotal`, `appRow`, `appTime`, `appDetail`, `allApps`. `homeTotal` and `appRow` use `.daily(during: today)`; `appDetail` and `allApps` use the interval for the chosen `statsPeriod` (`.daily` segments for the 7-day and month views). See `design/DESIGN-NOTES.md` § "What draws what" for which element each context covers.
 
 **Storage:** App Group `UserDefaults` only. No database and no network layer are needed in version 1.
 
@@ -148,8 +153,12 @@ Swift and SwiftUI throughout, minimum iOS 17.4, one Xcode project with three tar
 | `targetMinutes` | `Int` | Target in minutes for the chosen mode |
 | `amberFraction` | `Double` (default 0.75) | Where amber begins |
 | `alertsEnabled` | `Bool` | Zone notifications on or off |
-| `weekStartsOn` | `Int` | Monday by default, follows device locale |
+| `weekStartsOn` | `Int` | Week start day, Monday by default, follows device locale |
 | `recapsEnabled` | `Bool` | Evening and Sunday recap notifications on or off |
+| `orderedTokens` | `Data` (encoded `[ApplicationToken]`) | Row order and donut colour index |
+| `appTargets` | `Data` (encoded array of token + minutes) | Optional daily target per app |
+| `detailToken` | `Data` (encoded `ApplicationToken`) | App whose detail screen is open |
+| `statsPeriod` | `String` (`today`, `week`, `month`) | Period chosen on All apps and App detail |
 | `lastCheckpoint` | `Data` (date + percentage) | Written by `UsageMonitor` only; approximate reading for recaps |
 
 **Zone calculator (in `Shared`, unit tested, used by both extensions)**
@@ -181,40 +190,33 @@ Per-app rows show time and share of total only; zones apply to the combined tota
 
 ## Screen specification
 
-Three tabs: **Apps**, **Stats**, **Target**. Large type, few words, colour carries the meaning.
+Three tabs: **Apps**, **Stats**, **Target**. The three approved screens — Home (Apps tab), App detail, All apps (Stats tab) — are specified in **`design/DESIGN-NOTES.md`** (18 November, simplified), with exact sizes, spacing, copy and colours in `design/reference/*.dc.html`. Build exactly what those notes show; nothing extra.
 
 | Screen | Contents | Built in |
 | --- | --- | --- |
-| Onboarding (3 cards) | What the app does; Screen Time permission prompt; app picker with a hint to choose TikTok, Instagram, Facebook, X and YouTube; target entry | Main app |
-| Apps (home) | Top: today ring showing time used, target and zone colour. Below: master switch, then one row per app with icon, name and switch. "Add or remove apps" reopens the picker. | Ring in `UsageReport`; rows and switches in main app |
-| Stats | Segmented control: Hour, Day, Week, Month. Zone-coloured bar chart with a dashed target line, back and forward arrows for the period, total and average figures, then per-app list sorted by time with a share bar. | Segmented control in main app; everything beneath in `UsageReport` |
-| Target | Daily or Weekly selector, hour and minute stepper (15-minute steps), live preview of the three zones as a coloured strip, alerts switch | Main app |
+| Onboarding (4 cards) | What the app does; what the app sees and never sees, then the system prompt; app picker (hint: tick Social and YouTube); target presets | Main app |
+| Home (Apps tab) | Per `DESIGN-NOTES.md`: "Today" + date, `homeTotal` report card, card of app rows (icon, name, time, thin bar via `appRow`) | Report card + row time/bar in `UsageReport`; rows and navigation in main app |
+| App detail | Per `DESIGN-NOTES.md`: back, icon, name, on/off switch, `appDetail` report (today card, period card, two stats), target button | Report in `UsageReport`; chrome in main app |
+| All apps (Stats tab) | Per `DESIGN-NOTES.md`: "All apps" + date, period switch, `allApps` donut report, card of rows (colour dot, name, time via `appTime`) | Donut + times in `UsageReport`; rows and period switch in main app |
+| Target | Overall target: Daily or Weekly selector, presets 1h–4h a day, custom stepper (15-minute steps), live three-zone strip; master Monitoring switch; alerts switch; recaps switch; link to Settings | Main app |
 | Settings (from Target) | Amber threshold slider, week start day, permission status, privacy statement | Main app |
+
+The per-app on/off switch lives on **App detail** (not on the Home row); the master switch lives on the **Target** tab.
 
 **Visual rules**
 
-- Zone colours: always the semantic system colours — `Color(.systemGreen)`, `Color(.systemOrange)`, `Color(.systemRed)` — never hard-coded hex. (Reference values: green `#34C759`, orange `#FF9500`, red `#FF3B30` in light mode.) Semantic colours pick up Apple's dark-mode and Increase Contrast variants automatically; hard-coded hex silently loses both. Amber uses *orange*, not yellow: yellow is too pale on light backgrounds and can collide with green; orange keeps the green→amber→red ordering readable for the most common colour-vision deficiencies.
-- Every zone also carries a word and a symbol (Comfortable, Approaching, Critical), so meaning never rests on colour alone.
-- Bars are coloured by the zone of that period; the dashed line marks the target.
+- Zone colours: always the semantic system colours — `Color(.systemGreen)`, `Color(.systemOrange)`, `Color(.systemRed)` — never hard-coded hex. Semantic colours pick up Apple's dark-mode and Increase Contrast variants automatically. Amber uses *orange*, not yellow, so the green→amber→red ordering stays readable for the most common colour-vision deficiencies. The donut palette is the eight categorical colours in `DESIGN-NOTES.md`, as named asset colours.
+- Every zone also carries a word, so meaning never rests on colour alone.
 - Empty states: before permission, before any app is picked, and before any usage is recorded each get one friendly line and one button.
-- The report views load asynchronously; show a placeholder ring or chart outline of the same size so the layout holds steady.
-- Build every screen with Dynamic Type and VoiceOver from the first pass, not retrofitted in Session 7 — retrofitting accessibility inside the report extension is the most expensive place to do it, because that layout lives in a separately compiled target.
-
-**Ease-of-use refinements**
-
-- Before the system permission prompt, one card says in plain words what the app sees (time per app) and what it never sees (content, messages, accounts).
-- The picker opens with a hint to tick Social and YouTube, so most users finish in two taps.
-- Target presets of 1, 2, 3 and 4 hours a day sit above the custom stepper; switching to weekly multiplies the current figure by 7.
-- Times read as "2h 14m" everywhere; the ring also shows time remaining ("46m left") while in green or amber.
-- Zone wording stays encouraging: "Comfortable", "Getting close", "Over today's target".
-- Each switch gives a light haptic tap and the ring refreshes at once.
-- The Stats tab remembers the last period viewed.
+- The report views load asynchronously; show a placeholder of the same size so the layout holds steady.
+- Build every screen with Dynamic Type and VoiceOver from the first pass — retrofitting accessibility inside the report extension is the most expensive place to do it.
+- Times read "2h 14m" everywhere (whole hours drop the minutes: "1h", "10h"); the status line reads "Getting close · 14m left".
 
 **Build efficiencies**
 
-- One `PeriodChartView` serves Hour, Day, Week and Month; only the segment and date interval differ.
+- One `Aggregator` walks the activity results for all scenes; scenes compute configurations, views only render.
 - One `SharedSettings` type in `Shared` is the single reader and writer of App Group keys for all three targets.
-- Zone colours, wording and symbols live in one `ZoneStyle` file used by both the app and the report extension.
+- Zone colours, wording and symbols live in one `ZoneStyle` file used by the app and `UsageReport`.
 
 ## Build phases
 
