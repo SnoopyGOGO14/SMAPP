@@ -1,27 +1,26 @@
 /Users/runner/work/SMAPP/SMAPP/App/Monitoring/MonitoringScheduler.swift:42:24: warning: no calls to throwing functions occur within 'try' expression
-/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-2026-11-18 11:15:53.058 appintentsmetadataprocessor[3827:15223] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-18 11:15:53.074 appintentsmetadataprocessor[3829:15227] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 /Users/runner/work/SMAPP/SMAPP/App/Monitoring/MonitoringScheduler.swift:42:24: warning: no calls to throwing functions occur within 'try' expression
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-2026-11-18 11:15:59.207 appintentsmetadataprocessor[4000:15727] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-** BUILD SUCCEEDED **
+/Users/runner/work/SMAPP/SMAPP/App/Target/TargetScreen.swift:133:25: error: no exact matches in reference to static method 'buildExpression'
+** BUILD FAILED **
 	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
 	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 58 tests, with 0 failures (0 unexpected) in 0.018 (0.025) seconds
-	 Executed 58 tests, with 0 failures (0 unexpected) in 0.018 (0.030) seconds
-commit: 337203d463bd7ce0daa8cb42a40c9856fa43f8f2 status: success run: 19
+	 Executed 65 tests, with 0 failures (0 unexpected) in 0.020 (0.027) seconds
+	 Executed 65 tests, with 0 failures (0 unexpected) in 0.020 (0.032) seconds
+commit: 2a88ffe8c4102a840c56db3bbd02f5da19d6f84b status: failure run: 21
