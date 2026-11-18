@@ -48,10 +48,9 @@ public struct PeriodCardView: View {
                 ForEach(configuration.periodDays, id: \.label) { day in
                     Text(day.label)
                         .font(.caption2)
+                        .fontWeight(day.isToday ? .bold : .regular)
+                        .foregroundStyle(day.isToday ? Color("PrimaryText") : Color("SecondaryText"))
                         .frame(maxWidth: .infinity)
-                        .foregroundStyle(
-                            day.isToday ? Color("PrimaryText").weight(.bold) : Color("SecondaryText")
-                        )
                 }
             }
         }
