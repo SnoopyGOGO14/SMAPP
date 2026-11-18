@@ -217,6 +217,10 @@ final class SettingsKeysTests: XCTestCase {
         XCTAssertEqual(SettingsKeys.weekStartsOn, "weekStartsOn")
         XCTAssertEqual(SettingsKeys.recapsEnabled, "recapsEnabled")
         XCTAssertEqual(SettingsKeys.lastCheckpoint, "lastCheckpoint")
+        XCTAssertEqual(SettingsKeys.orderedTokens, "orderedTokens")
+        XCTAssertEqual(SettingsKeys.appTargets, "appTargets")
+        XCTAssertEqual(SettingsKeys.detailToken, "detailToken")
+        XCTAssertEqual(SettingsKeys.statsPeriod, "statsPeriod")
     }
 
     func testAllKeysUnique() {
@@ -224,9 +228,10 @@ final class SettingsKeysTests: XCTestCase {
             SettingsKeys.selection, SettingsKeys.enabledTokens, SettingsKeys.monitoringEnabled,
             SettingsKeys.targetMode, SettingsKeys.targetMinutes, SettingsKeys.amberFraction,
             SettingsKeys.alertsEnabled, SettingsKeys.weekStartsOn, SettingsKeys.recapsEnabled,
-            SettingsKeys.lastCheckpoint
+            SettingsKeys.lastCheckpoint, SettingsKeys.orderedTokens, SettingsKeys.appTargets,
+            SettingsKeys.detailToken, SettingsKeys.statsPeriod
         ]
-        XCTAssertEqual(Set(all).count, 10)
-        XCTAssertEqual(all.count, 10)
+        XCTAssertEqual(Set(all).count, 14)
+        XCTAssertEqual(all.count, 14)
     }
 }

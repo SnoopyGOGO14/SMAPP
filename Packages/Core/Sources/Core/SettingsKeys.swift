@@ -27,4 +27,12 @@ public enum SettingsKeys {
     /// Data — encoded Checkpoint. Written by UsageMonitor only; approximate
     /// reading for recap messages and the future widget.
     public static let lastCheckpoint = "lastCheckpoint"
+    /// Data — encoded [ApplicationToken]. Row order and donut colour index.
+    public static let orderedTokens = "orderedTokens"
+    /// Data — encoded array of token + minutes. Optional daily target per app.
+    public static let appTargets = "appTargets"
+    /// Data — encoded ApplicationToken. App whose detail screen is open.
+    public static let detailToken = "detailToken"
+    /// String — "today" | "week" | "month". Period on All apps and App detail.
+    public static let statsPeriod = "statsPeriod"
 }
