@@ -5,6 +5,7 @@
 import Foundation
 import SwiftUI
 import FamilyControls
+import ManagedSettings
 import DeviceActivity
 import Core
 

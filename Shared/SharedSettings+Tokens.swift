@@ -4,6 +4,7 @@
 
 import Foundation
 import FamilyControls
+import ManagedSettings
 import Core
 
 extension SharedSettings {

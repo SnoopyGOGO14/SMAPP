@@ -12,6 +12,7 @@ import Foundation
 import SwiftUI
 import DeviceActivity
 import FamilyControls
+import ManagedSettings
 import os
 
 enum Aggregator {
