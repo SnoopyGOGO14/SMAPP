@@ -271,7 +271,7 @@ Total: roughly 5 to 7 working weeks of development.
 - [ ] Confirm the amber zone at 75% of target, or choose green and red only
 - [ ] App name and icon
 - [ ] Free, paid, or subscription
-- [ ] Should websites (for example youtube.com in Safari) count towards the total in version 1?
+- [ ] Should websites (for example youtube.com in Safari) count towards the total in version 1? **Research verdict (docs/monitoring-analysis.md, 18 Nov): keep app-only for v1; add web domains as an opt-in v1.1 with domains shown as their own rows, never merged with app figures; never select browser app tokens alongside domains (over-counts). Private tabs and some browsers can never report domains.**
 - [ ] Launch countries: UK first, or UK and EU together? An EU release opens the direct-data route for a later edition.
 - [ ] Recap notifications on or off by default?
 

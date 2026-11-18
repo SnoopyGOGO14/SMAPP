@@ -18,6 +18,11 @@ and the iOS version in `PROGRESS.md`.
 | A14 | Taps and animation inside the embedded report | On Summary, tap a donut segment and a card: the segment thickens with the gold outline, siblings dim, the centre text swaps; tap again to clear. If taps never arrive in the extension, record it — the demo-only focus fallback applies until a host-driven design exists | |
 | A15 | History depth for Monthly and Yearly | Note how far back iOS returns data on the device; if less than a month, Monthly shows the available days with a note; Yearly stays hidden unless a year exists | |
 | A16 | Focus with real data | Focus state survives a period change when the app is still present; centre figures match that app's card | |
+| A17 | Time-zone accrual | Change the device time zone mid-day (or note it while travelling): the day's threshold boundary follows the schedule's start time zone, not local midnight — record which the totals follow | |
+| A18 | Web-domain monitoring (if enabled) | Select youtube.com in the picker; watch in a normal Safari tab → the domain row accrues; repeat in a Private tab → it must not | |
+| A19 | Browser reality check | Watch in Chrome and Firefox: note whether any domain-level time appears (expected: none or partial) and whether browser app time appears if their app tokens are selected | |
+| A20 | Home-screen web app | Add youtube.com to the Home Screen, watch from the icon: record whether it appears as its own entry and whether it lands in Safari or domain time | |
+| A21 | PiP and background audio | Watch YouTube in Picture in Picture, then with the app backgrounded (Premium audio): record which, if either, accrues | |
 
 ## Checks added after the November visual review
 
