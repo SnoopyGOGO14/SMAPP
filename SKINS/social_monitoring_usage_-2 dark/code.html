@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Social Monitoring Stats</title>
+<!-- Google Fonts: Space Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            swissDark: '#0a0a0c',
+            swissCard: '#111114',
+            hairline: '#222226',
+            accentRed: '#ff2d20',
+            // Bauhaus palette for chart slices (clean, sharp, matte)
+            bauhausRed: '#ff2d20',
+            bauhausBlue: '#2563eb',
+            bauhausYellow: '#facc15',
+            bauhausTeal: '#0d9488',
+            bauhausViolet: '#7c3aed',
+            bauhausPink: '#ec4899',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="base-enhancements">
+    body {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      letter-spacing: -0.02em;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .chart-transition {
+      transition: opacity 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
+      cursor: pointer;
+    }
+    .chart-segment-active {
+      stroke-width: 30px !important;
+      opacity: 1 !important;
+      filter: drop-shadow(0 0 7px rgba(255, 215, 0, 0.75));
+    }
+    .chart-dimmed {
+      opacity: 0.22;
+    }
+    .gold-highlight-active {
+      opacity: 1 !important;
+      stroke-width: 32px !important;
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.95)) drop-shadow(0 0 2px #ffd700);
+    }
+    .app-card-active {
+      border-color: #ffd700 !important;
+      background-color: rgba(255, 215, 0, 0.05) !important;
+      box-shadow: 0 0 12px -2px rgba(255, 215, 0, 0.25);
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="bg-[#050507] text-[#f4f4f5] flex items-center justify-center min-h-screen p-0 sm:p-4">
+<!-- BEGIN: MobileDeviceFrame -->
+<main class="w-full max-w-[412px] h-[100dvh] sm:h-[844px] bg-[#0a0a0c] sm:rounded-[36px] sm:border sm:border-[#222226] flex flex-col justify-between overflow-hidden relative" data-purpose="mobile-container">
+<!-- BEGIN: iOSStatusBar -->
+<header class="w-full pt-3 px-6 pb-2 flex justify-between items-center z-20 shrink-0 select-none">
+<span class="text-sm font-semibold tracking-tight text-white tabular-nums">12:00</span>
+<div class="flex items-center space-x-2 text-white">
+<!-- Cellular Icon -->
+<svg class="w-4 h-3.5 fill-current" viewbox="0 0 16 12">
+<rect height="3.5" rx="0.5" width="2.5" x="0" y="8.5"></rect>
+<rect height="6" rx="0.5" width="2.5" x="4.5" y="6"></rect>
+<rect height="9" rx="0.5" width="2.5" x="9" y="3"></rect>
+<rect height="11.5" rx="0.5" width="2.5" x="13.5" y="0.5"></rect>
+</svg>
+<!-- Wifi Icon -->
+<svg class="w-4 h-3.5 fill-current" viewbox="0 0 16 12">
+<path d="M8 9.5a2 2 0 100 4 2 2 0 000-4zm4.8-3.4a7 7 0 00-9.6 0 .8.8 0 11-1.1-1.1 8.5 8.5 0 0111.8 0 .8.8 0 11-1.1 1.1zm2.4-2.4a10.4 10.4 0 00-14.4 0 .8.8 0 11-1.1-1.1 12 12 0 0116.6 0 .8.8 0 11-1.1 1.1z"></path>
+</svg>
+<!-- Battery Icon -->
+<div class="flex items-center">
+<div class="w-5 h-2.5 border border-white rounded-[2px] p-[1px] flex">
+<div class="w-3/4 h-full bg-white rounded-[0.5px]"></div>
+</div>
+<div class="w-[1.5px] h-1 bg-white rounded-r-[0.5px] ml-[0.5px]"></div>
+</div>
+</div>
+</header>
+<!-- END: iOSStatusBar -->
+<!-- BEGIN: ScrollableContent -->
+<div class="flex-1 flex flex-col px-5 overflow-y-auto no-scrollbar space-y-4 z-10">
+<!-- BEGIN: TimeframeNavigation -->
+<section aria-label="Timeframe Navigation" class="mt-1">
+<div class="flex items-center justify-between px-1 text-xs uppercase tracking-wider font-semibold border-b border-[#222226] pb-2">
+<button class="time-tab text-[#71717a] hover:text-white transition py-1 px-2" data-period="daily" type="button">Daily</button>
+<!-- Centered Active Weekly Tab with crisp high-contrast solid white/crimson underline bar (50% full) -->
+<div class="flex flex-col items-center relative">
+<button class="time-tab text-white font-bold tracking-wider py-1 px-3" data-period="weekly" type="button">Weekly</button>
+<!-- 50% Crisp Underline (No glow, solid white track & bold red fill) -->
+<div class="w-12 h-[2px] bg-[#27272a] mt-0.5 relative overflow-hidden">
+<div class="w-1/2 h-full bg-[#ff2d20]" id="weeklyProgress"></div>
+</div>
+</div>
+<button class="time-tab text-[#71717a] hover:text-white transition py-1 px-2" data-period="monthly" type="button">Monthly</button>
+<button class="time-tab text-[#71717a] hover:text-white transition py-1 px-2" data-period="yearly" type="button">Yearly</button>
+</div>
+<!-- Days of Week Pills Row (Crisp Swiss Modernist - strictly zero neon glow) -->
+<div class="grid grid-cols-7 gap-1.5 mt-3 pt-1">
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-[#111114] border border-[#222226] text-[#71717a] text-center font-medium hover:border-[#3f3f46] transition-colors" type="button">Mon</button>
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-[#111114] border border-[#222226] text-[#71717a] text-center font-medium hover:border-[#3f3f46] transition-colors" type="button">Tues</button>
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-[#111114] border border-[#222226] text-[#71717a] text-center font-medium hover:border-[#3f3f46] transition-colors" type="button">Wed</button>
+<!-- Active Highlighted Day: Thurs (Solid inverted crisp white pill, stark contrast, zero glow) -->
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-white border border-white text-black text-center font-bold tracking-tight shadow-none ring-0" type="button">Thurs</button>
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-[#111114] border border-[#222226] text-[#71717a] text-center font-medium hover:border-[#3f3f46] transition-colors" type="button">Fri</button>
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-[#111114] border border-[#222226] text-[#71717a] text-center font-medium hover:border-[#3f3f46] transition-colors" type="button">Sat</button>
+<button class="day-pill text-[11px] py-1.5 rounded-md bg-[#111114] border border-[#222226] text-[#71717a] text-center font-medium hover:border-[#3f3f46] transition-colors" type="button">Sun</button>
+</div>
+</section>
+<!-- END: TimeframeNavigation -->
+<!-- BEGIN: DonutChartSection -->
+<section aria-label="Usage Wheel Chart" class="flex flex-col items-center justify-center my-1 relative">
+<div class="relative w-56 h-56 flex items-center justify-center">
+<!-- Minimal matte center disc -->
+<div class="absolute inset-5 rounded-full bg-[#0a0a0c] border border-[#222226] pointer-events-none"></div>
+<!-- Donut Wheel SVG (Circumference: 2 * PI * 80 ≈ 502.65) - Bauhaus Matte Palette -->
+<svg class="w-full h-full -rotate-90 transform overflow-visible" id="donutSvg" viewbox="0 0 200 200">
+<!-- Background hairline circle track -->
+<circle cx="100" cy="100" fill="transparent" r="80" stroke="#18181b" stroke-width="24"></circle>
+<!-- Segment 1: TikTok 37.19% -> Vermilion Red (#ff2d20) -->
+<circle class="chart-transition donut-seg" cx="100" cy="100" data-app="tiktok" fill="transparent" id="seg-tiktok" r="80" stroke="#ff2d20" stroke-dasharray="186.9 502.65" stroke-dashoffset="0" stroke-width="24"></circle>
+<!-- Segment 2: WhatsApp 29.15% -> Crisp Teal (#0d9488) -->
+<circle class="chart-transition donut-seg" cx="100" cy="100" data-app="whatsapp" fill="transparent" id="seg-whatsapp" r="80" stroke="#0d9488" stroke-dasharray="146.5 502.65" stroke-dashoffset="-186.9" stroke-width="24"></circle>
+<!-- Segment 3: FaceBook 19.10% -> Bauhaus Cobalt (#2563eb) -->
+<circle class="chart-transition donut-seg" cx="100" cy="100" data-app="facebook" fill="transparent" id="seg-facebook" r="80" stroke="#2563eb" stroke-dasharray="96.0 502.65" stroke-dashoffset="-333.4" stroke-width="24"></circle>
+<!-- Segment 4: YouTube 8.04% -> Canary Yellow (#facc15) -->
+<circle class="chart-transition donut-seg" cx="100" cy="100" data-app="youtube" fill="transparent" id="seg-youtube" r="80" stroke="#facc15" stroke-dasharray="40.4 502.65" stroke-dashoffset="-429.4" stroke-width="24"></circle>
+<!-- Segment 5: X 6.03% -> Violet (#7c3aed) -->
+<circle class="chart-transition donut-seg" cx="100" cy="100" data-app="x" fill="transparent" id="seg-x" r="80" stroke="#7c3aed" stroke-dasharray="30.3 502.65" stroke-dashoffset="-469.8" stroke-width="24"></circle>
+<!-- Segment 6: Instagram 0.50% -> Blush Pink (#ec4899) -->
+<circle class="chart-transition donut-seg" cx="100" cy="100" data-app="instagram" fill="transparent" id="seg-instagram" r="80" stroke="#ec4899" stroke-dasharray="3.2 502.65" stroke-dashoffset="-500.1" stroke-width="24"></circle>
+<!-- Outlined Gold Border Highlight Arc Overlay -->
+<circle class="opacity-0 pointer-events-none transition-all duration-200" cx="100" cy="100" fill="transparent" id="goldHighlightSeg" r="80" stroke="#ffd700" stroke-dasharray="0 502.65" stroke-dashoffset="0" stroke-linecap="butt" stroke-width="32"></circle>
+</svg>
+<!-- Center Donut Content (Swiss Typography, High-Contrast) -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-4" id="centerStatsContainer">
+<span class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#a1a1aa] transition-colors" id="centerPeriodLabel">WEEKLY USAGE</span>
+<span class="text-3xl font-bold text-white tracking-tighter tabular-nums mt-0.5 transition-all" id="centerTotal">99.5 hrs</span>
+<span class="text-[11px] text-[#ff2d20] font-semibold tracking-tight uppercase transition-colors" id="centerTopApp">TIKTOK 37 HRS</span>
+</div>
+</div>
+</section>
+<!-- END: DonutChartSection -->
+<!-- BEGIN: PlatformsLegendGrid (High-Density Swiss Editorial List with Hairline Borders) -->
+<section aria-label="Platform Usage Statistics" class="flex flex-col space-y-2 pb-2">
+<!-- 1st: TikTok (37 hrs) -->
+<div class="app-row bg-[#111114] border border-[#222226] hover:border-[#ffd700]/70 transition-all duration-150 rounded-lg px-4 py-3 flex flex-col cursor-pointer group" data-app="tiktok" data-purpose="stat-card">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#ff2d20] shrink-0"></span>
+<span class="text-sm font-medium text-white tracking-tight">TikTok</span>
+</div>
+<div class="flex items-center space-x-3 tabular-nums">
+<span class="text-xs text-[#71717a] font-mono">37.2%</span>
+<span class="text-sm font-bold text-white text-right w-16" id="val-tiktok">37 hrs</span>
+</div>
+</div>
+<!-- Progress track: Hairline matte bar -->
+<div class="w-full bg-[#1c1c21] h-1 rounded-none mt-2.5 overflow-hidden">
+<div class="h-full bg-[#ff2d20]" style="width: 37.2%"></div>
+</div>
+</div>
+<!-- 2nd: WhatsApp (29 hrs) -->
+<div class="app-row bg-[#111114] border border-[#222226] hover:border-[#ffd700]/70 transition-all duration-150 rounded-lg px-4 py-3 flex flex-col cursor-pointer group" data-app="whatsapp" data-purpose="stat-card">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#0d9488] shrink-0"></span>
+<span class="text-sm font-medium text-white tracking-tight">WhatsApp</span>
+</div>
+<div class="flex items-center space-x-3 tabular-nums">
+<span class="text-xs text-[#71717a] font-mono">29.1%</span>
+<span class="text-sm font-bold text-white text-right w-16" id="val-whatsapp">29 hrs</span>
+</div>
+</div>
+<!-- Progress track -->
+<div class="w-full bg-[#1c1c21] h-1 rounded-none mt-2.5 overflow-hidden">
+<div class="h-full bg-[#0d9488]" style="width: 29.1%"></div>
+</div>
+</div>
+<!-- 3rd: Facebook (19 hrs) -->
+<div class="app-row bg-[#111114] border border-[#222226] hover:border-[#ffd700]/70 transition-all duration-150 rounded-lg px-4 py-3 flex flex-col cursor-pointer group" data-app="facebook" data-purpose="stat-card">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#2563eb] shrink-0"></span>
+<span class="text-sm font-medium text-white tracking-tight">Facebook</span>
+</div>
+<div class="flex items-center space-x-3 tabular-nums">
+<span class="text-xs text-[#71717a] font-mono">19.1%</span>
+<span class="text-sm font-bold text-white text-right w-16" id="val-facebook">19 hrs</span>
+</div>
+</div>
+<!-- Progress track -->
+<div class="w-full bg-[#1c1c21] h-1 rounded-none mt-2.5 overflow-hidden">
+<div class="h-full bg-[#2563eb]" style="width: 19.1%"></div>
+</div>
+</div>
+<!-- 4th: YouTube (8 hrs) -->
+<div class="app-row bg-[#111114] border border-[#222226] hover:border-[#ffd700]/70 transition-all duration-150 rounded-lg px-4 py-3 flex flex-col cursor-pointer group" data-app="youtube" data-purpose="stat-card">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#facc15] shrink-0"></span>
+<span class="text-sm font-medium text-white tracking-tight">YouTube</span>
+</div>
+<div class="flex items-center space-x-3 tabular-nums">
+<span class="text-xs text-[#71717a] font-mono">8.0%</span>
+<span class="text-sm font-bold text-white text-right w-16" id="val-youtube">8 hrs</span>
+</div>
+</div>
+<!-- Progress track -->
+<div class="w-full bg-[#1c1c21] h-1 rounded-none mt-2.5 overflow-hidden">
+<div class="h-full bg-[#facc15]" style="width: 8.0%"></div>
+</div>
+</div>
+<!-- 5th: X (6 hrs) -->
+<div class="app-row bg-[#111114] border border-[#222226] hover:border-[#ffd700]/70 transition-all duration-150 rounded-lg px-4 py-3 flex flex-col cursor-pointer group" data-app="x" data-purpose="stat-card">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#7c3aed] shrink-0"></span>
+<span class="text-sm font-medium text-white tracking-tight">X</span>
+</div>
+<div class="flex items-center space-x-3 tabular-nums">
+<span class="text-xs text-[#71717a] font-mono">6.0%</span>
+<span class="text-sm font-bold text-white text-right w-16" id="val-x">6 hrs</span>
+</div>
+</div>
+<!-- Progress track -->
+<div class="w-full bg-[#1c1c21] h-1 rounded-none mt-2.5 overflow-hidden">
+<div class="h-full bg-[#7c3aed]" style="width: 6.0%"></div>
+</div>
+</div>
+<!-- 6th: Instagram (0.5 hrs) -->
+<div class="app-row bg-[#111114] border border-[#222226] hover:border-[#ffd700]/70 transition-all duration-150 rounded-lg px-4 py-3 flex flex-col cursor-pointer group" data-app="instagram" data-purpose="stat-card">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#ec4899] shrink-0"></span>
+<span class="text-sm font-medium text-white tracking-tight">Instagram</span>
+</div>
+<div class="flex items-center space-x-3 tabular-nums">
+<span class="text-xs text-[#71717a] font-mono">0.5%</span>
+<span class="text-sm font-bold text-white text-right w-16" id="val-instagram">0.5 hrs</span>
+</div>
+</div>
+<!-- Progress track -->
+<div class="w-full bg-[#1c1c21] h-1 rounded-none mt-2.5 overflow-hidden">
+<div class="h-full bg-[#ec4899]" style="width: 1.5%"></div>
+</div>
+</div>
+</section>
+<!-- END: PlatformsLegendGrid -->
+</div>
+<!-- END: ScrollableContent -->
+<!-- BEGIN: MinimalBottomSection -->
+<footer class="w-full pb-4 pt-2.5 px-6 border-t border-[#222226] bg-[#0a0a0c] flex flex-col items-center justify-center shrink-0 z-20" data-purpose="app-footer">
+<div class="flex items-center space-x-2">
+<span class="w-1.5 h-1.5 rounded-full bg-[#ff2d20]"></span>
+<h2 class="text-[11px] tracking-[0.16em] uppercase font-bold text-[#e4e4e7]">Social Monitoring Stats</h2>
+</div>
+<!-- Home Indicator Bar -->
+<div class="w-32 h-1 bg-[#27272a] rounded-full mt-3"></div>
+</footer>
+<!-- END: MinimalBottomSection -->
+</main>
+<!-- END: MobileDeviceFrame -->
+<!-- BEGIN: InteractiveTabLogic -->
+<script data-purpose="timeframe-interaction">
+  document.addEventListener('DOMContentLoaded', () => {
+    const statsData = {
+      daily: {
+        label: 'Daily Usage',
+        total: '14.2 hrs',
+        topApp: 'TIKTOK 5.3 HRS',
+        items: {
+          tiktok: '5.3 hrs',
+          whatsapp: '4.1 hrs',
+          facebook: '2.7 hrs',
+          youtube: '1.1 hrs',
+          x: '0.9 hrs',
+          instagram: '0.1 hrs'
+        }
+      },
+      weekly: {
+        label: 'Weekly Usage',
+        total: '99.5 hrs',
+        topApp: 'TIKTOK 37 HRS',
+        items: {
+          tiktok: '37 hrs',
+          whatsapp: '29 hrs',
+          facebook: '19 hrs',
+          youtube: '8 hrs',
+          x: '6 hrs',
+          instagram: '0.5 hrs'
+        }
+      },
+      monthly: {
+        label: 'Monthly Usage',
+        total: '398 hrs',
+        topApp: 'TIKTOK 148 HRS',
+        items: {
+          tiktok: '148 hrs',
+          whatsapp: '116 hrs',
+          facebook: '76 hrs',
+          youtube: '32 hrs',
+          x: '24 hrs',
+          instagram: '2 hrs'
+        }
+      },
+      yearly: {
+        label: 'Yearly Share',
+        total: '100%',
+        topApp: 'TOP: TIKTOK (37%)',
+        items: {
+          tiktok: '37.2%',
+          whatsapp: '29.1%',
+          facebook: '19.1%',
+          youtube: '8.0%',
+          x: '6.0%',
+          instagram: '0.6%'
+        }
+      }
+    };
+
+    let currentPeriod = 'weekly';
+    let lockedApp = null;     // Keeps selection if clicked
+    let hoveredApp = null;    // Tracks current hover
+
+    const segmentGeometries = {
+      tiktok: { dash: '186.9 502.65', offset: '0', name: 'TikTok', color: '#ff2d20' },
+      whatsapp: { dash: '146.5 502.65', offset: '-186.9', name: 'WhatsApp', color: '#0d9488' },
+      facebook: { dash: '96.0 502.65', offset: '-333.4', name: 'Facebook', color: '#2563eb' },
+      youtube: { dash: '40.4 502.65', offset: '-429.4', name: 'YouTube', color: '#facc15' },
+      x: { dash: '30.3 502.65', offset: '-469.8', name: 'X', color: '#7c3aed' },
+      instagram: { dash: '3.2 502.65', offset: '-500.1', name: 'Instagram', color: '#ec4899' }
+    };
+
+    const tabs = document.querySelectorAll('.time-tab');
+    const centerPeriodLabel = document.getElementById('centerPeriodLabel');
+    const centerTotal = document.getElementById('centerTotal');
+    const centerTopApp = document.getElementById('centerTopApp');
+    const weeklyProgress = document.getElementById('weeklyProgress');
+    const goldHighlightSeg = document.getElementById('goldHighlightSeg');
+    const appRows = document.querySelectorAll('.app-row');
+    const donutSegments = document.querySelectorAll('.donut-seg');
+
+    function renderActiveState(appKey) {
+      if (!appKey || !segmentGeometries[appKey]) {
+        // Reset to default total state
+        goldHighlightSeg.classList.remove('gold-highlight-active');
+        goldHighlightSeg.classList.add('opacity-0');
+        goldHighlightSeg.setAttribute('stroke-dasharray', '0 502.65');
+
+        donutSegments.forEach(seg => {
+          seg.classList.remove('chart-dimmed', 'chart-segment-active');
+        });
+
+        appRows.forEach(row => {
+          row.classList.remove('app-card-active');
+        });
+
+        const data = statsData[currentPeriod];
+        centerPeriodLabel.textContent = data.label.toUpperCase();
+        centerPeriodLabel.classList.remove('text-[#ffd700]');
+        centerPeriodLabel.classList.add('text-[#a1a1aa]');
+        centerTotal.textContent = data.total;
+        centerTopApp.textContent = data.topApp;
+        centerTopApp.style.color = '#ff2d20';
+        return;
+      }
+
+      const geom = segmentGeometries[appKey];
+      const appVal = statsData[currentPeriod].items[appKey] || '';
+
+      // Highlight segment with outlined gold stroke and subtle glow
+      goldHighlightSeg.setAttribute('stroke', '#FFD700');
+      goldHighlightSeg.setAttribute('stroke-dasharray', geom.dash);
+      goldHighlightSeg.setAttribute('stroke-dashoffset', geom.offset);
+      goldHighlightSeg.classList.remove('opacity-0');
+      goldHighlightSeg.classList.add('gold-highlight-active');
+
+      // Dim other segments, keep active bright
+      donutSegments.forEach(seg => {
+        if (seg.dataset.app === appKey) {
+          seg.classList.remove('chart-dimmed');
+          seg.classList.add('chart-segment-active');
+        } else {
+          seg.classList.add('chart-dimmed');
+          seg.classList.remove('chart-segment-active');
+        }
+      });
+
+      // Highlight matching row card
+      appRows.forEach(row => {
+        if (row.dataset.app === appKey) {
+          row.classList.add('app-card-active');
+        } else {
+          row.classList.remove('app-card-active');
+        }
+      });
+
+      // Update Center text to show selected app name and hours/usage
+      centerPeriodLabel.textContent = geom.name.toUpperCase();
+      centerPeriodLabel.classList.remove('text-[#a1a1aa]');
+      centerPeriodLabel.classList.add('text-[#ffd700]');
+
+      centerTotal.textContent = appVal;
+      centerTopApp.textContent = `${geom.name.toUpperCase()} ${appVal.toUpperCase()}`;
+      centerTopApp.style.color = '#ffd700';
+    }
+
+    function handleEnter(app) {
+      hoveredApp = app;
+      renderActiveState(app);
+    }
+
+    function handleLeave() {
+      hoveredApp = null;
+      if (lockedApp) {
+        renderActiveState(lockedApp);
+      } else {
+        renderActiveState(null);
+      }
+    }
+
+    function handleClick(app, e) {
+      if (e) e.stopPropagation();
+      if (lockedApp === app) {
+        lockedApp = null;
+        renderActiveState(hoveredApp || null);
+      } else {
+        lockedApp = app;
+        renderActiveState(lockedApp);
+      }
+    }
+
+    // Attach listeners to App Rows
+    appRows.forEach(row => {
+      const app = row.dataset.app;
+      row.addEventListener('mouseenter', () => handleEnter(app));
+      row.addEventListener('mouseleave', handleLeave);
+      row.addEventListener('click', (e) => handleClick(app, e));
+      row.addEventListener('touchstart', (e) => {
+        // Handle touch on mobile cleanly
+        handleClick(app, e);
+      }, { passive: true });
+    });
+
+    // Attach listeners to Donut Slices
+    donutSegments.forEach(seg => {
+      const app = seg.dataset.app;
+      seg.addEventListener('mouseenter', () => handleEnter(app));
+      seg.addEventListener('mouseleave', handleLeave);
+      seg.addEventListener('click', (e) => handleClick(app, e));
+      seg.addEventListener('touchstart', (e) => {
+        handleClick(app, e);
+      }, { passive: true });
+    });
+
+    // Clicking anywhere outside clears lock and restores default
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.app-row') && !e.target.closest('#donutSvg')) {
+        lockedApp = null;
+        renderActiveState(null);
+      }
+    });
+
+    // Time tabs handler
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const period = tab.dataset.period;
+        const data = statsData[period];
+        if (!data) return;
+        currentPeriod = period;
+
+        // Reset tab styles
+        tabs.forEach(t => {
+          t.classList.remove('text-white', 'font-bold');
+          t.classList.add('text-[#71717a]', 'font-semibold');
+        });
+
+        // Activate clicked tab
+        tab.classList.remove('text-[#71717a]');
+        tab.classList.add('text-white', 'font-bold');
+
+        // Manage Weekly underline bar opacity
+        if (period === 'weekly') {
+          weeklyProgress.classList.remove('opacity-20');
+          weeklyProgress.classList.add('opacity-100');
+        } else {
+          weeklyProgress.classList.remove('opacity-100');
+          weeklyProgress.classList.add('opacity-20');
+        }
+
+        // Update Legend Grid Card Values
+        Object.keys(data.items).forEach(key => {
+          const el = document.getElementById(`val-${key}`);
+          if (el) el.textContent = data.items[key];
+        });
+
+        // Refresh view with current selection or reset
+        renderActiveState(lockedApp || hoveredApp || null);
+      });
+    });
+
+    // Initialize with default state
+    renderActiveState(null);
+  });
+</script>
+<!-- END: InteractiveTabLogic -->
+</body></html>

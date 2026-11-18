@@ -1,6 +1,34 @@
 # Social Time Monitor (SMAPP) — session handoff
 
-Written 17 November 2026, 23:20 UK time, at the end of the planning and setup session. Read this first when picking the project up, then `PROGRESS.md`.
+Written 17 November 2026, 23:20 UK time; updated after each run. Read this first when picking the project up, then `PROGRESS.md`.
+
+## Todos — state at this handoff (18 November, mid-run)
+
+1. **`07-NEXT-TASKS.md` run, nearly done.** Parts 1–2 pushed as
+   `0dd5508` (V1–V10 fixes + `-state/-period/-sheet` demo routes +
+   31-capture manifest). The final screenshot run (3 of 3) is in
+   flight; when its `NOTE.txt` lands, close Parts 3–4: push the held
+   device-checks edit (`docs/device-checks.md` A11–A13), update
+   `REVIEW.md`/`PROGRESS.md`, and run the `GATES.md` audit.
+2. **`08-SUMMARY-PAGE-PLAN.md` run, starting.** SKINS + plan are read
+   (light skin = warm-paper palette, soft shadows, 12 pt cards; dark =
+   hairlines, 8 pt cards; `SKINS/social_monitoring_usage_-2 dark/` is a
+   byte-identical copy — ignore). Build P1–P12, budget 6 builds +
+   3 screenshot runs. Draft status: the product owner may still
+   overrule the section-11 defaults.
+3. **Standing cautions learned the hard way:**
+   - Never push to `main` while a `[screens]` run is in flight — the
+     concurrency group cancels it, even for a docs-only push.
+   - Always `grep -rn "import SharedUI"` before pushing: SharedUI is a
+     source group, not a module; the phantom import has slipped in
+     twice.
+   - Deferred `let` initialisation inside ViewBuilder closures fails
+     (`buildExpression`); use a helper function.
+   - In extension targets, `ApplicationToken` needs
+     `import ManagedSettings`, and DeviceActivity overlay types need
+     `import SwiftUI` alongside `import DeviceActivity`.
+4. `zai.rtf` still in the folder (credential; gitignored) — the person
+   means to move it.
 
 ## 1. What this is
 

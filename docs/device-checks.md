@@ -11,6 +11,14 @@ and the iOS version in `PROGRESS.md`.
    plus YouTube in the picker, choose a target (1 hour is fine for testing).
 2. Use one or two of the chosen apps for about five minutes.
 
+## Checks added after the November visual review
+
+| # | Check | Expected | Result |
+| --- | --- | --- | --- |
+| A11 | Chart baseline with real data | Open App detail on a week with mixed days: every bar rises from one shared baseline at the bottom; short days do not float; only over-target days cross the dashed line | |
+| A12 | One alert per line, per day | Switch alerts on, use an app past 75%, receive the alert; then force-quit and reopen the app several times — the 75% alert must not repeat (100% still arrives once when crossed) | |
+| A13 | Weekly mode totals the calendar week | Set a weekly target and week start day; Home's total over the week must match Settings › Screen Time for the same Monday-to-Sunday span, not the last seven days | |
+
 ## Gate A checks
 
 | # | Check | Expected | Result |
