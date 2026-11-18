@@ -19,6 +19,14 @@ final class AppState {
     var enabledTokens: [ApplicationToken] = []
     var appTargets: [SharedSettings.AppTarget] = []
     var monitoringEnabled = true
+    var alertsEnabled: Bool {
+        get { settings.alertsEnabled }
+        set { settings.alertsEnabled = newValue }
+    }
+    var recapsEnabled: Bool {
+        get { settings.recapsEnabled }
+        set { settings.recapsEnabled = newValue }
+    }
     var targetMode: Core.TargetMode = .daily
     var targetMinutes: Int? = 180
     var statsPeriod: Core.Period = .day
