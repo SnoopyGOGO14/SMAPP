@@ -49,9 +49,9 @@ Where this file and `04-OVERNIGHT-TASKS.md` differ, this file wins: there is no 
 
 Do them exactly as written there, with the run rules above. Skip Block G for now.
 
-- [ ] **A** Cloud build loop (workflow, `ci-logs` branch, scaffold builds)
-- [ ] **B** Spec, session file and checklists brought in line with the approved designs
-- [ ] **C** Core additions with tests (`DurationParts`, `BarGeometry`, `AppZone`, `StatusLine`, `DonutMath`, `PeriodStats`, `Palette`, new keys)
+- [x] **A** Cloud build loop (workflow, `ci-logs` branch, scaffold builds) — done: run 2 green; docs/ci.md written
+- [x] **B** Spec, session file and checklists brought in line with the approved designs
+- [x] **C** Core additions with tests (`DurationParts`, `BarGeometry`, `AppZone`, `StatusLine`, `DonutMath`, `PeriodStats`, `Palette`, new keys) — 46 tests pass locally and in the cloud
 - [ ] **D** Shared iOS layer and the five report scenes
 - [ ] **E** Main app screens (onboarding, Home, App detail, All apps, Target, access banner, filters)
 - [ ] **F** Monitor extension, scheduler, notifications

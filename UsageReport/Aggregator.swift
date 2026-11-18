@@ -7,8 +7,11 @@
 import Foundation
 import DeviceActivity
 import FamilyControls
+import os
 
 enum Aggregator {
+
+    private static let logger = Logger(subsystem: "com.YOURORG.socialtimemonitor", category: "UsageReport")
 
     struct DayTotal: Equatable {
         let dayStart: Date
