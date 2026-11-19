@@ -2,7 +2,7 @@
 
 Written 17 November 2026, 23:20 UK time; updated after each run. Read this first when picking the project up, then `PROGRESS.md`.
 
-## Todos — state at this handoff (18 November, end of the 08 code run)
+## Todos — state at this handoff (19 November, after the research pass)
 
 1. **BLOCKED: GitHub Actions macOS minutes appear exhausted.** The
    `0dd5508` runs (07 Parts 1–2 captures) and every later push neither
@@ -20,7 +20,30 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
    Summary/detail/Home/presets, demo routes + capture manifest
    (08 build budget untouched: 0 of 6 runs used while blocked).
    P9 (captures) and P12 (level updates) are blocked on item 1.
-4. **Standing cautions learned the hard way:**
+4. **Research pass complete (18–19 November), all findings landed:**
+   - **`docs/monitoring-analysis.md`** — how iOS behaviours shape the
+     numbers (foreground-only counting, background audio and PiP,
+     time-zone accrual, restarts, access revocation, device sharing),
+     the full browser-linked YouTube matrix (Safari tabs count via
+     WebDomainActivity; Private tabs never do; Chrome partial,
+     Firefox none, Brave yes; browsers may opt out entirely;
+     home-screen web apps get their own identity), and the verdict on
+     the spec's open "websites" decision: **app-only for v1; web
+     domains as an opt-in v1.1 shown as their own rows, never merged;
+     never select browser app tokens alongside domains.** Every claim
+     evidence-tagged [doc]/[forum]/[device]. The five falsifiable
+     unknowns became device checks A17–A21 in `docs/device-checks.md`.
+   - **UK day tracker** — "Luxor" = Luxon = JavaScript-only; SwiftDate
+     and friends rejected under the Apple-frameworks-only rule.
+     `Core.AppCalendar.uk()` (gregorian, Europe/London) now drives the
+     Summary day pills, today-selection and elapsed underline, so the
+     UI's day boundary matches the monitor's schedule even abroad.
+     ASSUMED: UK-pinned time (alternative: device-local). 90 tests.
+   - **Earlier research already baked into the spec:** the sandbox
+     rules, the EU-only direct-data route (kept off), the Xcode 26 /
+     April 2027 Apple-silicon upload deadline, monitor-extension
+     memory ceiling and early-firing events.
+5. **Standing cautions learned the hard way:**
    - Never push to `main` while a `[screens]` run is in flight — the
      concurrency group cancels it, even for a docs-only push.
    - Always `grep -rn "import SharedUI"` before pushing: SharedUI is a
@@ -31,7 +54,9 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
    - In extension targets, `ApplicationToken` needs
      `import ManagedSettings`, and DeviceActivity overlay types need
      `import SwiftUI` alongside `import DeviceActivity`.
-5. `zai.rtf` still in the folder (credential; gitignored) — the person
+   - Chain shell checks honestly: a `grep` in a `&&` chain can mask a
+     failing `swift test` (burned once; the fix landed same-session).
+6. `zai.rtf` still in the folder (credential; gitignored) — the person
    means to move it.
 
 ## 1. What this is
@@ -48,8 +73,13 @@ Builder: GLM (AI coding model) writes the code on the Mac. The person handles Ap
 | GitHub repo | `github.com/SnoopyGOGO14/SMAPP`, branch `main` |
 | Live specification | `01-BUILD-SPEC-v2.md` in the repo (GLM has edited it since it was written; the repo copy is the authority) |
 | Build sessions | `02-SESSION-TASKS.md` (nine sessions, four device gates A to D) |
+| Run lists (in order) | `04-OVERNIGHT-TASKS.md` → `05-RUN-TO-REVIEW.md` → `06-FIXES-AFTER-REVIEW.md` → `07-NEXT-TASKS.md` → `08-SUMMARY-PAGE-PLAN.md` |
 | Checklists | `03-ENGINEER-CHECKLISTS.md` |
 | Running log | `PROGRESS.md` (GLM updates at the end of every session) |
+| Review pack | `REVIEW.md` (written for the product owner) |
+| Monitoring research | `docs/monitoring-analysis.md` (iOS behaviours, browser-linked usage, websites verdict) |
+| Device checks | `docs/device-checks.md` (Gates A–D; A17–A21 come from the research) |
+| Design references | `design/` (original mock-ups) and `SKINS/` (Summary page skins) |
 | Standing rules | `00-README-START-HERE.md` |
 | Claude doc (planning copy) | `https://claude.ai/artifact/94ykMFNWj2vKtZgKgc4i72` — matches spec v2 as first written; lacks GLM's later edits |
 | Version 1 plans | `archive/` (reference only) |
