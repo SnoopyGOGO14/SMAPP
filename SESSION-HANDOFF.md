@@ -33,6 +33,18 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
      never select browser app tokens alongside domains.** Every claim
      evidence-tagged [doc]/[forum]/[device]. The five falsifiable
      unknowns became device checks A17–A21 in `docs/device-checks.md`.
+    - **Research addendum (21 November), `docs/monitoring-analysis.md`
+      §7–§8:** unused report signal (per-app `numberOfPickups` /
+      `numberOfNotifications`, per-segment `longestActivity` /
+      `firstPickup` — zero-cost v1.1 candidates; a screenshot-reading
+      model rejected: no input stream on iOS); alternative capture
+      routes (Shortcuts personal automation is the only consumer-legal
+      app-open trigger — the one sec pattern, candidate opt-in nudge
+      mode; ManagedSettings shields give launch attempts but flip the
+      product to restrict-mode; NetworkExtension content filters see
+      `sourceAppIdentifier` but are supervised/child-device only;
+      per-app 1-min threshold pulses possible inside our existing API).
+      Verification became device checks A22–A24.
    - **UK day tracker** — "Luxor" = Luxon = JavaScript-only; SwiftDate
      and friends rejected under the Apple-frameworks-only rule.
      `Core.AppCalendar.uk()` (gregorian, Europe/London) now drives the

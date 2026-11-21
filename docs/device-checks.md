@@ -11,6 +11,18 @@ and the iOS version in `PROGRESS.md`.
    plus YouTube in the picker, choose a target (1 hour is fine for testing).
 2. Use one or two of the chosen apps for about five minutes.
 
+## Checks added after the alternative-capture research (21 November)
+
+From `docs/monitoring-analysis.md` §7 (unused report signal) and §8
+(alternative capture routes). Each verifies a `[device]` unknown the
+research left open.
+
+| # | Check | Expected | Result |
+| --- | --- | --- | --- |
+| A22 | Per-app pulse events (§8) | Test build registers one extra `DeviceActivityEvent` per enabled app (`app.<n>`, 1-min threshold) alongside the six checkpoints; record whether iOS accepts ~11 events per activity and whether `UsageMonitor` wakes per app without breaching the memory ceiling | |
+| A23 | Unused signal populates (§7) | Test report scene displays raw `numberOfPickups` and `numberOfNotifications` per application; after a day of normal use both should be non-zero for the chosen apps | |
+| A24 | Shortcuts automation open signal (§8, only if a nudge mode is ever built) | Set "When TikTok is opened → run shortcut"; over ~20 openings record firing delay, missed fires, and whether a close event also fires | |
+
 ## Checks added after the Summary page plan (08)
 
 | # | Check | Expected | Result |
