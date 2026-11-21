@@ -162,7 +162,52 @@ in/out. Infeasible on iOS by rule more than by cost **[doc: sandbox]**:
   are the sanctioned, zero-cost equivalent of "how often, how long",
   and even Apple's own Screen Time has no per-app open/close log.
 
-## 8. Sources
+## 8. Alternative capture routes (researched 21 November)
+
+Question: beyond the DeviceActivity pipeline, can anything on the device
+capture app use — a background screen reader, or a watcher triggered
+only when certain apps are used?
+
+| Route | What it would give | Who can ship it | Verdict |
+| --- | --- | --- | --- |
+| Background screen reader / capture | Pixels or accessibility tree of other apps | Nobody | Impossible: the sandbox forbids observing other apps; ReplayKit records only our own app **[doc]** |
+| **Shortcuts personal automation** ("When TikTok is opened") | An open (and close) event per chosen app, user-configured | Any app — the one sec route | Works and is App Store-proven; setup friction, measures *opens*, not time **[vendor + paper]** |
+| Screen Time **shields** (ManagedSettings) | Launch *attempts* of shielded apps — the shield's buttons run our callbacks | The same Family Controls entitlement we already need | Proven (one sec "Re-Interventions"); flips the product from observe to restrict; shield token flakiness documented **[vendor blog]** |
+| Content filter (`NEFilterDataProvider` — flows do carry `sourceAppIdentifier`) | Per-app **network** activity | Supervised devices only; or Family Controls apps on *child* devices (TN3134) | Dead end for a consumer adult app — and traffic ≠ screen time **[doc: TN3134]** |
+| Packet-tunnel VPN | Raw IP packets, no app attribution | Any app | No per-app signal exists at this layer **[doc: WWDC25 234]** |
+| DNS settings resolver | Domains, not apps | Any app, user enables in Settings | Wrong signal, weak timing |
+| URL filter (iOS 26) | Nothing readable — Apple runs the filter, the app never sees URLs | Registered configurations only | Deliberately unreadable **[doc: WWDC25 234]** |
+| Per-app `DeviceActivityEvent` thresholds (e.g. 1 min per app) | "App X used ≥ 1 min today" wakeups | Us, today | The sanctioned per-app trigger; event-count limit to verify **[doc/device]** |
+
+### The "trigger on certain apps" pattern, done legally
+
+one sec intercepts target-app openings via **Shortcuts automations**: a
+personal automation ("When Instagram is opened → run one sec") fires our
+app on top of the target. Since iOS 17 automations run without
+confirmation; since iOS 18 they can be auto-imported, cutting setup from
+ten steps to one **[vendor tutorials]**. A published study (280 users,
+six weeks) treats these open/close signals as behavioural data **[paper]**.
+Costs: one automation per app the user must set up (and can delete),
+firing delay, and it counts *opening attempts* — never foreground time.
+It is an intervention hook, not a measurement source.
+
+### Per-app pulses inside our existing API
+
+Nothing stops us registering one extra `DeviceActivityEvent` per enabled
+app (`app.<n>`, threshold ≈ 1 min, `applications: [token]`) so
+`UsageMonitor` learns each specific app crossed a minute — opens-by-
+proxy with zero new permissions and zero user setup. Open questions:
+iOS's per-activity event-count limit **[device]**, wakeup frequency vs
+the memory ceiling, and no exact open/close timestamps.
+
+### Recommendation
+
+v1 stays as designed: DeviceActivity is the only route that measures
+*time* on a consumer device. Shortcuts automations become a candidate
+opt-in "nudge mode" for a later version (intervention, never a chart
+data source); the network routes are rejected outright.
+
+## 9. Sources
 
 - Apple: DeviceActivityReport, DeviceActivityEvent ("accumulate based
   on the time zone of the scheduled start date"; STWebpageController
@@ -178,3 +223,14 @@ in/out. Infeasible on iOS by rule more than by cost **[doc: sandbox]**:
   request; reddit nosurf report (Firefox app-time only); Apple Support
   and third-party write-ups on private-tab exclusion; WebKit/openpwa
   on home-screen web apps' standalone identity.
+- §8: one sec tutorials (tutorials.one-sec.app — "Why do I need to
+  connect target apps to Screen Time?", "Customize the Intervention");
+  Frederik Riedel, "Apple's Screen Time API has some major issues"
+  (riedel.wtf, 2024 — random tokens, shield action limits);
+  Grüning et al., "Directing smart phone use through the self-nudge app
+  one sec" (2022, doi 10.31234/osf/nwuar); Apple TN3134 (Network
+  Extension provider deployment — supervised/child-device gating);
+  WWDC25 session 234 (packet tunnel sees no flow metadata; iOS 26 URL
+  filter hides URLs from the app); NEFilterFlow docs
+  (sourceAppIdentifier exists); r/swift thread 1m3xwyd on the App
+  Intent mechanics.
