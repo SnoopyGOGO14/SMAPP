@@ -47,6 +47,34 @@ which is also what demo mode feeds.
    at 75% and 100% (worded as approximate).
 5. Tapping an alert opens the Apps tab; the Home card is the accurate figure.
 
+## Day boundary (UK calendar)
+
+`Core.AppCalendar.uk()` (gregorian, Europe/London, `en_GB`) is the app's
+reference calendar. It drives the Summary day pills, "today" selection
+and elapsed fractions, so the UI's day boundary matches the monitor's
+schedule even when the device is abroad: DeviceActivity threshold events
+accrue on the time zone of the scheduled start date (London), so a UK
+calendar keeps UI and monitor on the same day. DST (23/25-hour days) is
+handled by the system time-zone database and covered by Core tests.
+Foundation only — Luxon is JavaScript-only and SwiftDate would break the
+Apple-frameworks-only rule. ASSUMED: UK-pinned time; alternative is
+device-local (see REVIEW.md decisions).
+
+## Websites and browsers
+
+v1 counts apps only — browser viewing is ignored, by decision
+(`docs/monitoring-analysis.md` §5). The v1.1 opt-in, when it ships:
+
+- Web domains (e.g. `youtube.com`) are shown as **their own rows**
+  ("YouTube (web)") — never merged into an app's total.
+- Never select browser app tokens alongside domains: the Safari token
+  counts *all* browsing, so both together over-count.
+- Coverage is browser-dependent: Safari normal tabs yes, Private tabs
+  never, Brave yes, Chrome partial, Firefox no, and browsers may opt out
+  entirely (`suppressUsageRecording`).
+- Mechanics: `Aggregator` gains a `category.webDomains` walk, checkpoint
+  events already accept `webDomains:`, settings gain a domain-item kind.
+
 ## Zones
 
 Green under 75% of target, amber 75–100%, red over 100% (per-app targets use
