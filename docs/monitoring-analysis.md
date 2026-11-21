@@ -129,7 +129,40 @@ If the owner wants it in v1, §4 is the whole change — say the word.
 5. **Widget/Live-Activity interactions** expected ≈ 0 but unverified.
 6. **Low Power Mode delivery timing** for threshold alerts unverified.
 
-## 7. Sources
+## 7. Unused signal in the report data (added 21 November)
+
+The report data model we already walk exposes fields the app does not
+display yet, verified against Apple's pages this session **[doc]**:
+
+- Per application (`ApplicationActivity`, iOS 16+): `numberOfPickups` —
+  device pickups made directly into that app; `numberOfNotifications` —
+  notifications the app sent.
+- Per segment (`ActivitySegment`, iOS 16+): `longestActivity` — the date
+  interval of the longest session in the segment; `firstPickup`;
+  `totalPickupsWithoutApplicationUse`.
+
+Zero marginal cost: computable in the same `Aggregator` walk inside
+`makeConfiguration` — no new permission, no background time, no extra
+CPU. v1.1 candidates: pickups and notification counts on App detail
+("opened 14× · 32 notifications"), longest session on the day card.
+Before code: verify the exact Swift spellings against Apple's pages
+(docs-before-code rule) and confirm both per-app fields populate inside
+the report extension at Gate A.
+
+**Rejected: a built-in model reading screenshots** to timestamp app
+in/out. Infeasible on iOS by rule more than by cost **[doc: sandbox]**:
+
+- No input stream — a third-party app cannot screenshot other apps
+  (ReplayKit records only our own app) and cannot run in the background
+  to timestamp anything.
+- Scraping the photo library for the user's own screen recordings is
+  user-initiated content at best, a privacy/rejection risk at worst,
+  and burns battery — the opposite of minimal.
+- Redundant anyway: pickups, notification counts and longest session
+  are the sanctioned, zero-cost equivalent of "how often, how long",
+  and even Apple's own Screen Time has no per-app open/close log.
+
+## 8. Sources
 
 - Apple: DeviceActivityReport, DeviceActivityEvent ("accumulate based
   on the time zone of the scheduled start date"; STWebpageController
