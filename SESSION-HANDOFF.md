@@ -2,20 +2,21 @@
 
 Written 17 November 2026, 23:20 UK time; updated after each run. Read this first when picking the project up, then `PROGRESS.md`.
 
-## Todos — state at this handoff (25 November, end of the 09 run)
+## Todos — state at this handoff (25 November, after round-3 fixes)
 
-1. **VISUAL REVIEW WAITING.** The 25 November run cleared the outage's
-   backlog: build run 28 is **green** (all three targets, Xcode 26.6)
-   and screens run 26 captured the 15 core screens with every marker
-   matching (`ci-logs/screenshots`, NOTE.txt clean). **Next: check the
-   PNGs against `design/reference/` and `SKINS/`** (GLM cannot view
-   images), then A5 of `09-AUDIT-AND-NEXT.md`: fix findings, push
-   `[screens-all]` once, raise `REVIEW.md` levels to what NOTE.txt
-   proves.
+1. **ROUND-4 VISUAL REVIEW WAITING.** W1–W14 from
+   `10-VISUAL-REVIEW-ROUND3.md` are fixed, build run 30 is green, and
+   screens run 31 put **16 captures** on `ci-logs/screenshots` (every
+   marker matched; one benign duplicate pair — day 2 was today). **Next:
+   check the PNGs against `design/reference/` and `SKINS/`**, paying
+   attention to two things GLM cannot see: the day pills now render on
+   the Daily view (W1), and the focused donut segment keeps its own
+   colour under the gold ring (W2). Then `[screens-all]` once, raise
+   `REVIEW.md` levels to what NOTE.txt proves, update records.
 2. **The billing-exhaustion diagnosis was wrong — the cloud never lost
    minutes.** The probe (run 24) answered in 3 minutes. If runs go
    quiet again, check the Actions tab before assuming billing.
-3. **Budget left (09 run): 6 build runs, 1 screenshot run.** New CI
+3. **Round-3 budget closed at 1 of 4 builds, 4 of 2 screenshot runs** (two over — my W6 workflow bug, a genuine W1 gap the duplicate-check caught, and a class-8 regression; all logged in `docs/ci.md`). New CI
    rules in `docs/ci.md`: preflight before every push (never pipe it
    through `tail`), never push while a run is in flight, `[screens]` =
    core 15 / `[screens-all]` = full manifest, and **never put the

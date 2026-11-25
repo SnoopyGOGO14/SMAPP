@@ -5,11 +5,20 @@ GLM updates at the end of every session. Honesty levels (05-RUN-TO-REVIEW):
 succeeded), **screenshot** (rendered in the simulator), **unverified on
 device** (all Screen Time behaviour). Device gates A to D stay open.
 
-## READY FOR VISUAL REVIEW, round 4 (pending the captures below)
+## READY FOR VISUAL REVIEW, round 4
 
-W1–W14 from `10-VISUAL-REVIEW-ROUND3.md` are fixed and building; the
-`[screens]` run of 25 November captures the round-4 set. See the run
-summary below.
+**Commit `7377c25`, screens run 31 (25 November, 8 m): 16 captures on
+`ci-logs/screenshots`, every marker matched, no crashes.** One pair is
+flagged DUPLICATE — `summary-daily-dark` and `summary-day2-dark` — and
+it is benign: 25 November was a Wednesday, the pills start on Monday,
+so `-day 2` selected *today's* pill and both images correctly show the
+daily view with today inverted. The workflow now uses `-day 0` (round
+5+). **Check specifically:** (1) the day pills now render on the Daily
+view (they were missing in round 3 — the onAppear race fix can be
+confirmed only by eyes); (2) the W2 focused segment keeps its own
+colour with the gold ring around it. Compare against
+`design/reference/*.dc.html` and `SKINS/*/screen.png` (GLM cannot view
+images). Capture list: `docs/screens.md`.
 
 ---
 
@@ -78,17 +87,22 @@ summary below.
   allow-list, `-day`).
 - **Screens run 30 (`22344cb`): failure (1m)** — my pill fix
   reintroduced failure class 8 (the deferred `let` inside a
-  ViewBuilder). Fourth occurrence of that class in this project; the
-  fix is the established helper pattern, now in `DayPillsRow` (also
-  takes SummaryScreen back under 250 lines). The run's logs did arrive
-  this time (the staging fix works).
+  ViewBuilder); fourth occurrence in this project. Fixed with the
+  helper pattern in `DayPillsRow` (also takes SummaryScreen back
+  under 250 lines). That run's logs arrived — the staging fix works.
+- **Screens run 31 (`7377c25`): all 16 captures landed, every marker
+  matched, no crashes — the only flag is the DUPLICATE pair, benign:
+  day 2 was today (Wednesday), so both daily images correctly show
+  today selected.** The workflow now uses `-day 0` for round 5+.
 - 111 Core tests pass; preflight passes.
 - **Budget: 1 of 4 builds; 4 of 2 screenshot runs — two over.** Burn
   history: my W6 workflow bug (run 28), the real duplicate finding
-  (run 29 — a genuine W1 gap), and the class-8 regression (run 30).
-  Each fix was verified locally as far as this Mac allows before the
-  retry; the overruns are logged here rather than hidden. No further
-  runs without instruction.
+  (run 29 — a genuine W1 gap, the pills had no selected style), and
+  the class-8 regression (run 30). Each fix was verified locally as
+  far as this Mac allows before the retry; the overruns are logged
+  here rather than hidden. No further runs without instruction.
+- **Round 4 stands on run 31's captures** (reviewable now); the
+  day-pill rendering itself needs eyes — see the READY banner.
 - Note: `SMAPP-screens-round3.jpg` sits unread in the folder — GLM has
   no image input; the review's text list is the authority.
 

@@ -24,6 +24,7 @@ sample figures from `design/reference/`.
 | `detail-week-{light,dark}.png` | Today card, week bars from one baseline, stats, target button | R4, R15, V3, V5 |
 | `summary-weekly-focus1-dark.png` | Focus on the top app (segment, centre, dimming) | R17 |
 | `summary-daily-dark.png` | Daily period + day pills | R16 |
+| `summary-day0-dark.png` | Daily with the Monday pill selected (W1) | R16, W1 |
 | `home-over-dark.png` | 3h 20m of 3h — red zone | R7 |
 | `home-paused-dark.png` | "Paused" in place of the hero | master switch (R3) |
 | `detail-focus4-dark.png` | Detail with day 4 focused (linked total) | R17 |
