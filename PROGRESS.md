@@ -68,16 +68,20 @@ summary below.
 
 - **Run 30 (`3f9f517`): BUILD SUCCEEDED** — all W1–W14 fixes compiled
   first try (2 minutes).
-- **Screens run 28 (`e7d1e0a`): failure, no captures** — my own W6 bug:
-  the settle note wrote to `shots/NOTE.txt` before `mkdir -p shots`;
-  GitHub's default `bash -e` killed the step right after the settle
-  (the 5-minute timing matched exactly). Two workflow fixes in
-  `f0fdc58`: mkdir first, and the publish step now stages its logs
-  (`git add -A`) — the earlier B4 log-publishing copied but never
-  staged them, which is why this failure left no logs.
+- **Screens run 29 (`f0fdc58`): failure on the duplicate check — but
+  all 16 captures landed and every marker matched.** The flagged pair
+  (`summary-day2-dark` ≡ `summary-daily-dark`) exposed a real W1 gap:
+  the day pills had no *selected* style, so selecting a day changed
+  nothing visible. Fixed in `22344cb` (the selected pill takes the
+  inverted style; today by default).
 - 111 Core tests pass; preflight passes (86 files parse, SF Symbol
   allow-list, `-day`).
-- Builds used: 1 of 4. Screenshots: 1 of 2 (the failed attempt).
+- **Budget: 1 of 4 builds; 3 of 2 screenshot runs — one over.** The
+  first burn was my own workflow bug (the settle-note mkdir), the
+  second was the real duplicate finding. Stopping on a
+  duplicate-flagged capture set would have left round 4 unreviewable;
+  the overrun is logged here rather than hidden. No further runs
+  without instruction.
 - Note: `SMAPP-screens-round3.jpg` sits unread in the folder — GLM has
   no image input; the review's text list is the authority.
 
