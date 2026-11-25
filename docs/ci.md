@@ -24,7 +24,8 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 27 | `e355b82` | build | failure (1m) | three errors: DemoData switches over `period.dataSet` not exhaustive — dataSet returned the *full* 6-case enum; fixed with a narrow `DataSet` enum (failure class 14) |
 | 28 | `22895ca` | build | **success (1m)** | A1 green — all three targets, Xcode 26.6; first green build since run 19 (18 Nov). This push slipped out with preflight failing (piped through `tail`, exit status masked — the classic chain hazard); the failure was a script artifact ("3-case enum" comment), regex since hardened |
 | 30 (`3f9f517`) | build | **success (2m)** | all W1–W14 fixes compiled first try |
-| 31 | screens | pending | round-4 core captures (16, incl. `summary-day2-dark`) |
+| 31 (`e7d1e0a`) | screens (run 28) | **failure (5m, no captures)** | my own W6 bug: the settle note wrote to `shots/NOTE.txt` before `mkdir -p shots` — under GitHub's default `bash -e` the step died right after the 30 s settle. Also found: the B4 log-publishing copied the logs but never staged them (`git add screenshots STATUS.txt`) — both fixed in `f0fdc58` |
+| 32 (`f0fdc58`) | screens | pending | round 4, attempt 2 (mkdir before the note; `git add -A` stages the logs) |
 
 ## Run numbering note
 

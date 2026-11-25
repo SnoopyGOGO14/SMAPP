@@ -68,10 +68,16 @@ summary below.
 
 - **Run 30 (`3f9f517`): BUILD SUCCEEDED** — all W1–W14 fixes compiled
   first try (2 minutes).
-- 111 Core tests pass (6 new: DemoSeries; arg-parser day handling
-  covered by the existing suite); preflight passes (86 files parse, SF
-  Symbol allow-list, `-day`).
-- Builds used: 1 of 4. Screenshots: 0 of 2 this round.
+- **Screens run 28 (`e7d1e0a`): failure, no captures** — my own W6 bug:
+  the settle note wrote to `shots/NOTE.txt` before `mkdir -p shots`;
+  GitHub's default `bash -e` killed the step right after the settle
+  (the 5-minute timing matched exactly). Two workflow fixes in
+  `f0fdc58`: mkdir first, and the publish step now stages its logs
+  (`git add -A`) — the earlier B4 log-publishing copied but never
+  staged them, which is why this failure left no logs.
+- 111 Core tests pass; preflight passes (86 files parse, SF Symbol
+  allow-list, `-day`).
+- Builds used: 1 of 4. Screenshots: 1 of 2 (the failed attempt).
 - Note: `SMAPP-screens-round3.jpg` sits unread in the folder — GLM has
   no image input; the review's text list is the authority.
 
