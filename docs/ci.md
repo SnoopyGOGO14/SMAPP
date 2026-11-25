@@ -20,7 +20,8 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | --- | --- | --- | --- | --- |
 | 24 | `c3a6e3b` | build | failure (3 min) | the probe — cloud alive again; one error: HomeScreen deferred-let; Core 90/90 in cloud |
 | 25 | `0003a8d` | screens (accidental, full manifest) | failure | message contained `[screens]`/`[screens-all]`; build.yml skipped; run failed before/without publishing logs (publish gap now fixed); 1 of 3 screenshot runs burned |
-| 26 | `c9ad31b` | build | pending | A1 attempt 2: all fixes + B3–B7 work; 104 Core tests |
+| 26 | `c9ad31b` | build | failure (1m) | one error: `homeCard` — computed property without `@ViewBuilder`, so Swift 5.9's if-expression rule demanded matching branch types. Everything else type-checked clean (Core-test skip + caches in effect). |
+| 27 | `e355b82` | build | pending | the `@ViewBuilder` fix; expected green |
 
 ## Historical (before the outage)
 

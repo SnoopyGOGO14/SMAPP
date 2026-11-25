@@ -40,6 +40,15 @@ review, and the 25 November audit.
 12. **New-API drift** — code written against memory instead of the
     page: verify every Screen Time / Charts / SwiftUI signature against
     Apple's docs before trusting it (docs-before-code rule).
+13. **Non-ViewBuilder `if` in a `some View` property** (run 26): a
+    computed property without `@ViewBuilder` whose body is `if/else`
+    becomes a Swift 5.9 *if-expression* — both branches must have the
+    same type ("branches have mismatching types"). Annotate with
+    `@ViewBuilder`.
+14. **Non-exhaustive switch over a widened enum** (run 27): when a
+    mapping property returns the *same* enum it narrows (e.g.
+    `dataSet: DemoPeriod`), downstream switches silently stop being
+    exhaustive. Return a narrow dedicated enum instead.
 
 Also caught by `tools/preflight.sh` (static, no compiler):
 

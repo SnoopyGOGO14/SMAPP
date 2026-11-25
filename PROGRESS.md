@@ -56,21 +56,24 @@ First full run, 25 November: **PREFLIGHT OK**.
 
 ### A1 — green build
 
-- The 0003a8d push **backfired**: its commit message contained the
-  literal `[screens]` (describing the tier change), so `build.yml`
-  skipped (working as designed) and the **screens** workflow ran
-  instead — on the full manifest (the message also matched
-  `[screens-all]`). That run **failed** with no logs on `ci-logs`
-  (screens.yml never published its own logs — a gap now fixed: it
-  copies `ci-screens-*.log`). Most likely cause: the 60-capture full
-  manifest against the 30-minute timeout; unproven. One screenshot
-  run burned (1 of 3).
-- 8a73d19 then carries everything to a plain build run: HomeScreen
-  deferred-`let` fix (run 24's error), run-24 warnings cleared,
-  `import UIKit` in SummaryView, DemoPeriod summary cases, plus the
-  B3/B7 code (SummaryText, DemoArguments, ASSUMED switches) and the
-  B4 workflow changes (log publishing, caches, Core-test skip,
-  durations). 104 Core tests pass.
+- **Run 26** (`c9ad31b`, 1m, failure): one error — `homeCard` was a
+  computed property without `@ViewBuilder`, so Swift 5.9 treats its
+  `if/else` as an *expression* requiring matching branch types
+  ("branches have mismatching types"). Fixed with `@ViewBuilder`; a
+  repo-wide scan found no other property with the pattern. Everything
+  else type-checked clean — the B4 caches and Core-test skip worked
+  (1-minute run).
+- **Run 27** (`e355b82`): the fix, expected green.
+- History: the 0003a8d push **backfired** — its message contained the
+  literal `[screens]`, so `build.yml` skipped (by design) and the
+  screens workflow ran the full manifest instead, failing without
+  logs (screens.yml never published them — fixed). 1 of 3 screenshot
+  runs burned; cause unproven (likely the 60-capture manifest vs the
+  30-minute timeout).
+- 8a73d19/c9ad31b carry: run-24 fixes (HomeScreen deferred-let,
+  warnings, UIKit import), DemoPeriod summary cases, B3
+  (SummaryText/DemoArguments, 104 tests), B5–B7 records and switches,
+  B4 workflow changes.
 
 ## Run of 18 November — Blocks A to P (05-RUN-TO-REVIEW.md)
 

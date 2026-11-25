@@ -33,8 +33,15 @@ enum DemoMode {
         case weekly
         case monthly
 
-        /// The data set this period draws from.
-        var dataSet: DemoPeriod {
+        /// The data set this period draws from — a narrow 3-case enum,
+        /// so DemoData's switches stay exhaustive (run 27).
+        enum DataSet {
+            case today
+            case week
+            case month
+        }
+
+        var dataSet: DataSet {
             switch self {
             case .today, .daily: return .today
             case .week, .weekly: return .week
