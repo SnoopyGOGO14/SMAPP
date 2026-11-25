@@ -3,6 +3,7 @@
 // selection joins donut and cards. Cards focus; they do not navigate.
 
 import SwiftUI
+import UIKit
 import FamilyControls
 import ManagedSettings
 import Core

@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   screens:
-    if: contains(github.event.head_commit.message, '[screens]') || github.event_name == 'workflow_dispatch'
+    if: contains(github.event.head_commit.message, '[screens]') || contains(github.event.head_commit.message, '[screens-all]') || github.event_name == 'workflow_dispatch'
     runs-on: macos-26
     timeout-minutes: 30
     steps:
@@ -37,6 +37,9 @@ jobs:
             2>&1 | tee ci-screens-build.log
 
       - name: Boot simulator and capture screenshots (self-checking)
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           set -o pipefail
           APP="build/DerivedData/Build/Products/Debug-iphonesimulator/SocialTimeMonitor.app"
@@ -85,6 +88,14 @@ jobs:
             echo "$name marker=$MARKER" >> shots/NOTE.txt
           }
 
+          # B4/A2 capture tiers: [screens] = the core set for the visual
+          # review; [screens-all] (or a manual dispatch) = the full manifest.
+          FULL=0
+          if echo "$COMMIT_MSG" | grep -q "\[screens-all\]" || [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            FULL=1
+          fi
+
+          if [ "$FULL" = "1" ]; then
           # Base screens: five screens x light and dark (08: Summary
           # replaces All apps). Expected markers mirror DemoMode.markerFor.
           for appearance in light dark; do
@@ -125,6 +136,24 @@ jobs:
             xcrun simctl ui "$UDID" content_size large || true
           else
             echo "SKIPPED large-text capture: content_size unavailable" >> shots/NOTE.txt
+          fi
+          else
+          # Core set (09-AUDIT-AND-NEXT.md A2): light+dark for home,
+          # summary weekly and detail week; dark singles for the rest.
+          for appearance in light dark; do
+            capture home home-$appearance $appearance -screen home
+            capture summary/weekly summary-weekly-$appearance $appearance -screen summary -period weekly
+            capture detail/week detail-week-$appearance $appearance -screen detail -period week
+          done
+          capture summary/weekly/focus1 summary-weekly-focus1-dark dark -screen summary -period weekly -focus 1
+          capture summary/daily summary-daily-dark dark -screen summary -period daily
+          capture home/over home-over-dark dark -screen home -state over
+          capture home/paused home-paused-dark dark -screen home -state paused
+          capture detail/week/focus4 detail-focus4-dark dark -screen detail -period week -focus 4
+          capture detail/month detail-month-dark dark -screen detail -period month
+          capture target target-dark dark -screen target
+          capture onboarding onboarding-card1-dark dark -screen onboarding -card 1
+          capture onboarding onboarding-card4-dark dark -screen onboarding -card 4
           fi
 
           # F2: checksums; duplicates fail the job.

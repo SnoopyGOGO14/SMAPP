@@ -21,31 +21,15 @@ struct HomeScreen: View {
 
                 if appState.monitoringEnabled {
                     homeCard
-                    #if DEBUG
-                    // V1/Part 2: demo states drive the branches — notarget
-                    // shows the button; paused/noapps are handled below.
-                    let showSetTarget: Bool
-                    if DemoMode.isEnabled {
-                        showSetTarget = DemoMode.state == .notarget
-                    } else {
-                        showSetTarget = appState.targetMinutes == nil
-                    }
-                    if showSetTarget {
+                    // Failure class 8: no deferred `let` inside a
+                    // ViewBuilder — the test lives in a helper.
+                    if showsSetTargetButton {
                         Button("Set a target") {
                             NotificationCenter.default.post(name: AppState.openTargetTab, object: nil)
                         }
                         .buttonStyle(.primaryAction)
                         .padding(.horizontal, 20)
                     }
-                    #else
-                    if appState.targetMinutes == nil {
-                        Button("Set a target") {
-                            NotificationCenter.default.post(name: AppState.openTargetTab, object: nil)
-                        }
-                        .buttonStyle(.primaryAction)
-                        .padding(.horizontal, 20)
-                    }
-                    #endif
                 } else {
                     pausedCard
                 }
@@ -103,6 +87,17 @@ struct HomeScreen: View {
     }
 
     @ViewBuilder
+    /// V1/Part 2: demo states drive the branch — `notarget` shows the
+    /// button; live mode shows it when no target is set.
+    private var showsSetTargetButton: Bool {
+        #if DEBUG
+        if DemoMode.isEnabled {
+            return DemoMode.state == .notarget
+        }
+        #endif
+        return appState.targetMinutes == nil
+    }
+
     private var homeCard: some View {
         #if DEBUG
         if DemoMode.isEnabled {

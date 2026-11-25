@@ -11,6 +11,9 @@ permissions:
   contents: write
 jobs:
   build:
+    # B4: [screens] pushes build once inside the screenshot job;
+    # build.yml stays out of the way (no double build).
+    if: ${{ !contains(github.event.head_commit.message, '[screens]') }}
     runs-on: macos-26
     timeout-minutes: 15
     steps:

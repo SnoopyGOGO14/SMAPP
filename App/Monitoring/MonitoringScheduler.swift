@@ -39,7 +39,7 @@ final class MonitoringScheduler {
     /// missing — never restart unconditionally.
     func topUpIfMissing() {
         let settings = SharedSettings()
-        let running = (try? center.activities) ?? []
+        let running = center.activities
         let expected: Set<DeviceActivityName> = settings.targetMode == .weekly
             ? [.daily, .weekly]
             : [.daily]

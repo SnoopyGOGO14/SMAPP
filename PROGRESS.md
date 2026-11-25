@@ -41,7 +41,32 @@ First full run, 25 November: **PREFLIGHT OK**.
   Level: **uncompiled** (parse + tests only; not built).
 - Script notes: dynamic asset names (`"DemoIcon0\(…)Solid"`) are skipped
   as unverifiable statically; `-card "$card"` loop variable accepted.
-- Probe T0 pushed with this commit (build.yml triggers on the App/ files).
+### T0 — the probe (25 November)
+
+- 11:33 pushed `c3a6e3b` (code commit, no `[skip ci]`/`[screens]`).
+- **The cloud answered at minute 3**: run 24 published at 11:36 —
+  `build: c3a6e3b failure`. Core tests passed in the cloud too
+  (Executed 90 tests, 0 failures). The failure is one compile error:
+  `HomeScreen.swift:29: type '()' cannot conform to 'View'` — failure
+  class 8 again (deferred `let` assignment inside a ViewBuilder; the
+  TargetScreen:133 bug pattern). Notably, the billing diagnosis was
+  wrong — minutes are available again (cycle refill or the limit was
+  something else).
+- Verdict → **Track A**.
+
+### A1 — green build (attempt 1)
+
+- HomeScreen: the deferred `let showSetTarget` block replaced with a
+  `showsSetTargetButton` computed property; `#if DEBUG` moved inside it.
+- Warnings cleared from run 24: unused `total` (RankedDonutView),
+  unused `rank` binding (thirdColour), `try?` on non-throwing
+  `center.activities` (MonitoringScheduler).
+- `SummaryView.swift`: `import UIKit` added for its
+  `UIImpactFeedbackGenerator` use (run 24 showed it resolved anyway —
+  a transitive import — but the explicit import is correct).
+- B4 pulled forward (A2 needs it): capture tiers — `[screens]` = 15
+  core captures, `[screens-all]` = the full manifest; `build.yml` skips
+  on `[screens]` so the screenshot job is the only build.
 
 ## Run of 18 November — Blocks A to P (05-RUN-TO-REVIEW.md)
 

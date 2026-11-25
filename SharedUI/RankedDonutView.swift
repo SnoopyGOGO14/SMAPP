@@ -70,7 +70,6 @@ struct RankedDonutView: View {
 
     private func donutShape(items: [SummaryItem]) -> some View {
         let fractions = segmentFractions(items: items)
-        let total = configuration.totalMinutes
         let progress = sweepProgress
         return ZStack {
             // Hairline track.
@@ -174,7 +173,7 @@ struct RankedDonutView: View {
     }
 
     private var thirdColour: Color {
-        if let rank = focusedRank {
+        if focusedRank != nil {
             return Color("Focus")
         }
         if let top = configuration.topItem {
