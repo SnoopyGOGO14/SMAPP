@@ -1,23 +1,40 @@
-error: emit-module command failed with exit code 1 (use -v to see invocation)
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DemoSeries.swift:22:46: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-   |                                              `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
-error: fatalError
-commit: 124f7765cc3fbc3cbf93a19b19df336083078c1f status: failure run: 34
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+2026-11-25 22:02:45.519 appintentsmetadataprocessor[3919:15394] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 22:02:45.543 appintentsmetadataprocessor[3920:15396] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 22:03:06.379 appintentsmetadataprocessor[4386:16536] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+** BUILD SUCCEEDED **
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.006 (0.008) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 119 tests, with 0 failures (0 unexpected) in 0.062 (0.087) seconds
+	 Executed 119 tests, with 0 failures (0 unexpected) in 0.062 (0.090) seconds
+commit: ec3f62343f9c6d1ba86e90051a0ac86dd6bd0a78 status: success run: 35
