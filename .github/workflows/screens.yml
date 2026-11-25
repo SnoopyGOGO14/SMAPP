@@ -194,6 +194,9 @@ jobs:
             rm -rf out_repo/screenshots
             mkdir -p out_repo/screenshots
             cp shots/* out_repo/screenshots/ 2>/dev/null || echo "no screenshots" >> out_repo/screenshots/NOTE.txt
+            # B4: publish this workflow's own logs too, so a failure is
+            # diagnosable from ci-logs (the 0003a8d run failed invisibly).
+            cp ci-screens-*.log out_repo/ 2>/dev/null || true
             minutes=$(( ( $(date +%s) - ${JOB_START_EPOCH:-$(date +%s)} ) / 60 ))
             echo "screens: $GITHUB_SHA ${{ job.status }} ${minutes}m run:$GITHUB_RUN_NUMBER" >> out_repo/STATUS.txt
             cd out_repo

@@ -54,19 +54,23 @@ First full run, 25 November: **PREFLIGHT OK**.
   something else).
 - Verdict → **Track A**.
 
-### A1 — green build (attempt 1)
+### A1 — green build
 
-- HomeScreen: the deferred `let showSetTarget` block replaced with a
-  `showsSetTargetButton` computed property; `#if DEBUG` moved inside it.
-- Warnings cleared from run 24: unused `total` (RankedDonutView),
-  unused `rank` binding (thirdColour), `try?` on non-throwing
-  `center.activities` (MonitoringScheduler).
-- `SummaryView.swift`: `import UIKit` added for its
-  `UIImpactFeedbackGenerator` use (run 24 showed it resolved anyway —
-  a transitive import — but the explicit import is correct).
-- B4 pulled forward (A2 needs it): capture tiers — `[screens]` = 15
-  core captures, `[screens-all]` = the full manifest; `build.yml` skips
-  on `[screens]` so the screenshot job is the only build.
+- The 0003a8d push **backfired**: its commit message contained the
+  literal `[screens]` (describing the tier change), so `build.yml`
+  skipped (working as designed) and the **screens** workflow ran
+  instead — on the full manifest (the message also matched
+  `[screens-all]`). That run **failed** with no logs on `ci-logs`
+  (screens.yml never published its own logs — a gap now fixed: it
+  copies `ci-screens-*.log`). Most likely cause: the 60-capture full
+  manifest against the 30-minute timeout; unproven. One screenshot
+  run burned (1 of 3).
+- 8a73d19 then carries everything to a plain build run: HomeScreen
+  deferred-`let` fix (run 24's error), run-24 warnings cleared,
+  `import UIKit` in SummaryView, DemoPeriod summary cases, plus the
+  B3/B7 code (SummaryText, DemoArguments, ASSUMED switches) and the
+  B4 workflow changes (log publishing, caches, Core-test skip,
+  durations). 104 Core tests pass.
 
 ## Run of 18 November — Blocks A to P (05-RUN-TO-REVIEW.md)
 
