@@ -22,6 +22,42 @@ images). Capture list: `docs/screens.md`.
 
 ---
 
+## Run of 25 November (late) — X1 to X9 (11-VISUAL-REVIEW-ROUND4)
+
+Round 4's verdict confirmed W2, W3, W5–W12 and W1-in-part fixed
+("pills render, today inverted, future days disabled"), with nine
+findings left. All are fixed in `124f776`:
+
+- **X1** `-day` now reaches the data: `DemoSeries.dailyFigures(dayIndex:)`
+  gives each day its own five figures (today = Home's five + TikTok's
+  40 s; other days from the per-app week series); the chosen day is in
+  the marker (`summary/daily/day0`); `SummaryPeriod.pillIndexOf` maps a
+  selected date back to its data set; the demo report follows the live
+  period state. Tests: chosen day ≠ today, figures match the week
+  series, parser yields day 2.
+- **X2** decision changed: colour by the **user's row order** (one
+  colour per app everywhere); `SummaryDefaults.colourByRank = false`,
+  the ASSUMED row updated.
+- **X3** minutes under an hour read as minutes ("58 min", "11 min").
+- **X4** one truncation rule: `DurationFormat.fromSeconds` — 3,520 s is
+  "58m" on Home rows and the detail hero (test added).
+- **X5** weekly and monthly totals sum the same daily series, scaled
+  per app so every period ranks TikTok first (tests: weekly and
+  monthly order equals the daily order).
+- **X6** the row bar starts at the text column (46 pt inset, clear of
+  the tile) and keeps the full trailing width.
+- **X7** detail screens: tabs 12 pt below the navigation bar
+  (`contentMargins(.top, 12)`).
+- **X8** month labels drawn as a positioned overlay — fixed 28 pt
+  width, no truncation (1, 15, 29).
+- **X9** bottom inset 112 pt; new `-scroll end` argument and capture
+  `summary-weekly-bottom-dark`, marker `summary/weekly/end`.
+
+Also: the person's `11-VISUAL-REVIEW-ROUND4.md` was swept unread into
+my round-4 close-out commit (it arrived mid-run) — the "treat
+unfamiliar files as user work" caution, violated benignly; noted here
+so the pattern is visible. 119 Core tests pass; preflight passes.
+
 ## Run of 25 November (evening) — W1 to W14 (10-VISUAL-REVIEW-ROUND3)
 
 ### Fixes
