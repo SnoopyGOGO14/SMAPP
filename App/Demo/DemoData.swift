@@ -57,7 +57,7 @@ enum DemoData {
     /// A per-app total over a period: today as-is; week and month from
     /// the deterministic series so charts and rows agree.
     static func periodMinutes(_ app: DemoApp, period: DemoMode.DemoPeriod) -> Double {
-        switch period {
+        switch period.dataSet {
         case .today:
             return app.todayMinutes
         case .week:
@@ -76,7 +76,7 @@ enum DemoData {
         let values: [Double]
         let labels: [String]
         let todayMinutes: Double
-        switch period {
+        switch period.dataSet {
         case .today:
             values = [58]
             labels = ["T"]
@@ -137,7 +137,7 @@ enum DemoData {
 
         let minutes: [Double]
         let label: String
-        switch period {
+        switch period.dataSet {
         case .today:
             minutes = daily
             label = "Daily usage"

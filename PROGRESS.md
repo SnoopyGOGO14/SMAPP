@@ -20,6 +20,29 @@ device** (all Screen Time behaviour). Device gates A to D stay open.
 5. `zai.rtf` still sits in the project folder (credential; gitignored) —
    move it out.
 
+## Run of 25 November — 09-AUDIT-AND-NEXT.md
+
+### B1 — local pre-flight (`tools/preflight.sh`)
+
+First full run, 25 November: **PREFLIGHT OK**.
+
+- Section 1 Core tests: **Executed 90 tests, 0 failures** (this Mac).
+- Section 2 syntax parse: all 79 Swift files parse with this Mac's
+  compiler (Xcode 14.2 / Swift 5.7) — no file needs triage.
+- Sections 3–6: brackets, imports, sizes, force-unwrap/print scan,
+  project.yml sources ↔ tree, asset names, demo launch args + marker
+  logic all pass.
+- **Genuine bug found and fixed:** `DemoMode.DemoPeriod` had only
+  `today/week/month`, but `screens.yml` passes `-period
+  weekly|daily|monthly` to the Summary captures. Every one of those six
+  captures would have logged a MISMATCH (`summary` ≠ `summary/weekly`).
+  Fixed: `daily/weekly/monthly` cases added, mapping onto the existing
+  data sets (`DemoPeriod.dataSet`); `DemoData` switches via the mapping.
+  Level: **uncompiled** (parse + tests only; not built).
+- Script notes: dynamic asset names (`"DemoIcon0\(…)Solid"`) are skipped
+  as unverifiable statically; `-card "$card"` loop variable accepted.
+- Probe T0 pushed with this commit (build.yml triggers on the App/ files).
+
 ## Run of 18 November — Blocks A to P (05-RUN-TO-REVIEW.md)
 
 ### Build and screenshot budget

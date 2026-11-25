@@ -24,6 +24,20 @@ enum DemoMode {
         case today
         case week
         case month
+        // Summary-period aliases (08 plan §9): daily/weekly/monthly draw
+        // from the same data sets so one enum serves both screens.
+        case daily
+        case weekly
+        case monthly
+
+        /// The data set this period draws from.
+        var dataSet: DemoPeriod {
+            switch self {
+            case .today, .daily: return .today
+            case .week, .weekly: return .week
+            case .month, .monthly: return .month
+            }
+        }
     }
 
     static var isEnabled: Bool {
