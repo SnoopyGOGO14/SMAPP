@@ -58,12 +58,12 @@ jobs:
           echo "UDID=$UDID" | tee -a ci-screens-build.log
           xcrun simctl boot "$UDID" || true
           xcrun simctl bootstatus "$UDID" -b
+          mkdir -p shots
           # W6: let the system settle after boot so no notification
           # banner lands over a capture (one did, in detail-focus4-dark).
           sleep 30
           echo "SETTLED 30s after boot" >> shots/NOTE.txt
           xcrun simctl install "$UDID" "$APP"
-          mkdir -p shots
 
           # capture <expected-marker> <file-name> [extra launch args...]
           # Expected markers mirror DemoMode.markerFor: screen[/state][/period][/sheet].
@@ -208,7 +208,9 @@ jobs:
             cd out_repo
             git config user.name ci
             git config user.email ci@users.noreply.github.com
-            git add screenshots STATUS.txt
+            # -A stages the copied ci-screens-*.log too (the earlier
+            # version added only screenshots/STATUS and lost the logs).
+            git add -A
             git commit -qm "screenshots for $GITHUB_SHA" || true
           }
           attempt=0
