@@ -1,9 +1,9 @@
-2026-11-25 11:47:49.433 appintentsmetadataprocessor[2620:11186] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-25 11:47:49.480 appintentsmetadataprocessor[2624:11194] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/App/Demo/DemoData.swift:60:9: error: switch must be exhaustive
-/Users/runner/work/SMAPP/SMAPP/App/Demo/DemoData.swift:79:9: error: switch must be exhaustive
-/Users/runner/work/SMAPP/SMAPP/App/Demo/DemoData.swift:140:9: error: switch must be exhaustive
-** BUILD FAILED **
-commit: e355b8241944bd0260ab3be2213733b18115d90b status: failure run: 27
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+2026-11-25 11:53:17.215 appintentsmetadataprocessor[3316:13592] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 11:53:17.247 appintentsmetadataprocessor[3317:13593] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 11:53:23.160 appintentsmetadataprocessor[3426:13890] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+** BUILD SUCCEEDED **
+commit: 22895caa9149f458bd5e31cfb8afc9c9fc121201 status: success run: 28
