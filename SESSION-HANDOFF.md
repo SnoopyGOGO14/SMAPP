@@ -4,19 +4,18 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
 
 ## Todos — state at this handoff (25 November, after round-3 fixes)
 
-1. **ROUND-4 VISUAL REVIEW WAITING.** W1–W14 from
-   `10-VISUAL-REVIEW-ROUND3.md` are fixed, build run 30 is green, and
-   screens run 31 put **16 captures** on `ci-logs/screenshots` (every
-   marker matched; one benign duplicate pair — day 2 was today). **Next:
-   check the PNGs against `design/reference/` and `SKINS/`**, paying
-   attention to two things GLM cannot see: the day pills now render on
-   the Daily view (W1), and the focused donut segment keeps its own
-   colour under the gold ring (W2). Then `[screens-all]` once, raise
-   `REVIEW.md` levels to what NOTE.txt proves, update records.
+1. **ROUND-5 VISUAL REVIEW WAITING.** X1–X9 from
+   `11-VISUAL-REVIEW-ROUND4.md` are fixed, build run 35 is green, and
+   screens run 34 put **17 clean captures** on `ci-logs/screenshots`
+   (every marker matched — `day0` and `weekly/end` included; no
+   duplicates). **Next: check the PNGs against `design/reference/` and
+   `SKINS/`** (GLM cannot view images), then `[screens-all]` once,
+   raise `REVIEW.md` levels to what NOTE.txt proves, update records.
+   Round-4 history: run 31's flagged pair was benign (day 2 = today).
 2. **The billing-exhaustion diagnosis was wrong — the cloud never lost
    minutes.** The probe (run 24) answered in 3 minutes. If runs go
    quiet again, check the Actions tab before assuming billing.
-3. **Round-3 budget closed at 1 of 4 builds, 4 of 2 screenshot runs** (two over — my W6 workflow bug, a genuine W1 gap the duplicate-check caught, and a class-8 regression; all logged in `docs/ci.md`). New CI
+3. **Round-3 budget closed at 1 of 4 builds, 4 of 2 screenshot runs; round-4/X round at 2 of 3 builds, 1 of 2 screens** (two over — my W6 workflow bug, a genuine W1 gap the duplicate-check caught, and a class-8 regression; all logged in `docs/ci.md`). New CI
    rules in `docs/ci.md`: preflight before every push (never pipe it
    through `tail`), never push while a run is in flight, `[screens]` =
    core 15 / `[screens-all]` = full manifest, and **never put the

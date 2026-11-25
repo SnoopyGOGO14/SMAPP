@@ -30,7 +30,8 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 34 (`7377c25`) | screens (run 31) | **all 16 captures, markers clean; the only flag a benign duplicate** | day 2 = today (Wednesday), so `-day 2` and the plain daily capture correctly showed the same image; the workflow now uses `-day 0` (collides only on Mondays). Round 4 stands on these captures |
 | 35 (`124f776`) | build (run 34) | failure (1m) | failure class 15: the type-checker timed out on the untyped literal chain in `monthBase`; broken into typed sub-expressions |
 | 36 (`ec3f623`) | build (run 35) | **success (2m)** | X1–X9 compile; the round-5 capture run follows |
-| — | — | — | X-round budget: 2 of 3 builds used, 1 of 2 screens |
+| 37 (`9623dfd`) | screens (run 34) | **success (8m) — 17 captures, markers clean, day0 and end included, no duplicates** | round 5 stands on these captures |
+| — | — | — | X-round closed: 2 of 3 builds (one burn: failure class 15), 1 of 2 screens |
 
 ## Run numbering note
 

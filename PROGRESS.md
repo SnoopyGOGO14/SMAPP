@@ -5,20 +5,18 @@ GLM updates at the end of every session. Honesty levels (05-RUN-TO-REVIEW):
 succeeded), **screenshot** (rendered in the simulator), **unverified on
 device** (all Screen Time behaviour). Device gates A to D stay open.
 
-## READY FOR VISUAL REVIEW, round 4
+## READY FOR VISUAL REVIEW, round 5
 
-**Commit `7377c25`, screens run 31 (25 November, 8 m): 16 captures on
-`ci-logs/screenshots`, every marker matched, no crashes.** One pair is
-flagged DUPLICATE — `summary-daily-dark` and `summary-day2-dark` — and
-it is benign: 25 November was a Wednesday, the pills start on Monday,
-so `-day 2` selected *today's* pill and both images correctly show the
-daily view with today inverted. The workflow now uses `-day 0` (round
-5+). **Check specifically:** (1) the day pills now render on the Daily
-view (they were missing in round 3 — the onAppear race fix can be
-confirmed only by eyes); (2) the W2 focused segment keeps its own
-colour with the gold ring around it. Compare against
-`design/reference/*.dc.html` and `SKINS/*/screen.png` (GLM cannot view
-images). Capture list: `docs/screens.md`.
+**Commit `9623dfd`, screens run 34 (25 November, 8 m): 17 captures on
+`ci-logs/screenshots`, every marker matched — including
+`summary/daily/day0` (X1: the chosen day provably took effect) and
+`summary/weekly/end` (X9) — no duplicates, no crashes.** Check them
+against `design/reference/*.dc.html` and `SKINS/*/screen.png` (GLM
+cannot view images); the list and what each file evidences is in
+`docs/screens.md`. Round-4 history is below: run 31's one flagged pair
+was benign (day 2 was today, a Wednesday), and the round-4 review
+confirmed W2, W3, W5–W12 and the pills rendering before this round's
+X1–X9 fixes landed on top.
 
 ---
 
