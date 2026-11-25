@@ -87,7 +87,7 @@ One line each; change any answer and the change is small:
 | --- | --- | --- |
 | Where the page lives | Replaces All apps as the Stats tab, renamed Summary | a fourth tab needs RootTabs + spacing rework |
 | Yearly tab | Hidden until a device shows a year of history | a greyed tab needs one flag flip (B7 switch) |
-| App colours | By rank, largest first | by row order = swap Ranking for orderedTokens (one function) |
+| App colours | **By the user's row order (position)** — X2 (round 4) reversed the earlier default: rank colouring made the same app change colour from tab to tab | by rank, largest first |
 | Underline bar on the active tab | share of the period elapsed | share of target used would move it inside the report |
 | Day pills | tap = that day, Daily view | pills on every period = one showsDayPills flag |
 | Fonts | system font | Space Grotesk needs bundling + licence note |

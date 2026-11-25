@@ -23,4 +23,11 @@ public enum DurationFormat {
     public static func left(minutes: Int) -> String {
         return short(minutes: minutes) + " left"
     }
+
+    /// X4: one truncation rule for seconds. Home's row and the detail
+    /// hero must give the same text for the same seconds — 3,520 s is
+    /// "58m" everywhere (58.67 minutes truncated, never rounded up).
+    public static func fromSeconds(_ seconds: TimeInterval) -> String {
+        return short(minutes: Int(seconds / 60))
+    }
 }

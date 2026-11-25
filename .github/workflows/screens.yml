@@ -161,11 +161,14 @@ jobs:
           done
           capture summary/weekly/focus1 summary-weekly-focus1-dark dark -screen summary -period weekly -focus 1
           capture summary/daily summary-daily-dark dark -screen summary -period daily
-          # W1: the day pills, with a non-today pill selected. -day 0 is
-          # Monday — the earliest past day; only collides with "today"
-          # if the run happens on a Monday (day 2 collided with today,
-          # a Wednesday, and the pair read as a duplicate).
-          capture summary/daily summary-day0-dark dark -screen summary -period daily -day 0
+          # W1/X1: the day pills with a non-today pill selected; the
+          # chosen day is in the marker, and the day's figures differ
+          # from today's. -day 0 is Monday — only collides with "today"
+          # if the run happens on a Monday.
+          capture summary/daily/day0 summary-day0-dark dark -screen summary -period daily -day 0
+          # X9: the last card clears the floating tab bar, scrolled to
+          # the end.
+          capture summary/weekly/end summary-weekly-bottom-dark dark -screen summary -period weekly -scroll end
           capture home/over home-over-dark dark -screen home -state over
           capture home/paused home-paused-dark dark -screen home -state paused
           capture detail/week/focus4 detail-focus4-dark dark -screen detail -period week -focus 4

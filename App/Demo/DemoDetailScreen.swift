@@ -37,9 +37,10 @@ struct DemoDetailScreen: View {
                 .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color("Divider"), lineWidth: 1))
             }
             .padding(.horizontal, 20)
-            .padding(.top, 16)
         }
         .background(Color("Ground"))
+        // X7: tabs 12 pt below the navigation bar.
+        .contentMargins(.top, 12, for: .scrollContent)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 10) {

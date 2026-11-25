@@ -43,9 +43,11 @@ final class RankingTests: XCTestCase {
 final class HoursFormatTests: XCTestCase {
 
     func testRules() {
+        // X3: under an hour reads as minutes, not decimal hours.
         XCTAssertEqual(Core.HoursFormat.hours(minutes: 0), "0 min")
-        XCTAssertEqual(Core.HoursFormat.hours(minutes: 5), "5 min")
-        XCTAssertEqual(Core.HoursFormat.hours(minutes: 30), "0.5 hrs")
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 11), "11 min")
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 30), "30 min")
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 58.67), "58 min")
         XCTAssertEqual(Core.HoursFormat.hours(minutes: 318), "5.3 hrs")
         XCTAssertEqual(Core.HoursFormat.hours(minutes: 2220), "37 hrs")
     }
@@ -61,7 +63,8 @@ final class HoursFormatTests: XCTestCase {
 
     func testTotalsFollowTheSameRule() {
         XCTAssertEqual(Core.HoursFormat.total(minutes: 5970), "99.5 hrs")
-        // W5: whole totals drop the ".0".
+        XCTAssertEqual(Core.HoursFormat.total(minutes: 166.67), "2.8 hrs")
+        XCTAssertEqual(Core.HoursFormat.total(minutes: 52), "52 min")
         XCTAssertEqual(Core.HoursFormat.total(minutes: 2220), "37 hrs")
         XCTAssertEqual(Core.HoursFormat.total(minutes: 60), "1 hr")
     }

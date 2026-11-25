@@ -25,34 +25,42 @@ struct SummaryScreen: View {
     #endif
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                titleRow
-                periodTabsControl
-                if showsDayPills {
-                    dayPills
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    titleRow
+                    periodTabsControl
+                    if showsDayPills {
+                        dayPills
+                    }
+                    report
+                    // X9: the anchor the `-scroll end` capture scrolls to.
+                    Color.clear.frame(height: 0).id("summary-end")
                 }
-                report
+                .padding(.horizontal, 20)
+                .padding(.top, 16)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 16)
-        }
-        .background(Color("Ground"))
-        .navigationBarHidden(true)
-        // W5: the last card must clear the floating tab bar when scrolled.
-        .contentMargins(.bottom, 100, for: .scrollContent)
-        .onAppear {
-            #if DEBUG
-            DemoMarker.mark("summary")
-            // W1: demo arguments win over stored settings — two separate
-            // onAppears used to race, the stored period overwriting the
-            // demo one, which is why the day pills never appeared.
-            applyDemoArguments()
-            if DemoMode.isEnabled, DemoMode.period != nil || DemoMode.day != nil {
-                return
+            .background(Color("Ground"))
+            .navigationBarHidden(true)
+            // X9: the last card must clear the floating tab bar — inset
+            // equal to the bar plus 16 pt.
+            .contentMargins(.bottom, 112, for: .scrollContent)
+            .onAppear {
+                #if DEBUG
+                DemoMarker.mark("summary")
+                // W1: demo arguments win over stored settings — two separate
+                // onAppears used to race, the stored period overwriting the
+                // demo one, which is why the day pills never appeared.
+                applyDemoArguments()
+                if DemoMode.scroll == "end" {
+                    proxy.scrollTo("summary-end", anchor: .bottom)
+                }
+                if DemoMode.isEnabled, DemoMode.period != nil || DemoMode.day != nil {
+                    return
+                }
+                #endif
+                period = appState.settings.summaryPeriod
             }
-            #endif
-            period = appState.settings.summaryPeriod
         }
     }
 
@@ -158,7 +166,9 @@ struct SummaryScreen: View {
     private var report: some View {
         #if DEBUG
         if DemoMode.isEnabled {
-            let config = DemoData.summary(period: DemoMode.period ?? .weekly)
+            // X1: the demo data follows the live period state — the
+            // chosen day's figures, not just the launch argument.
+            let config = demoConfiguration
             SummaryView(configuration: config, initialFocus: demoFocus)
                 .frame(minHeight: summaryHeight(appCount: config.items.count))
         } else {
@@ -168,6 +178,33 @@ struct SummaryScreen: View {
         liveReport
         #endif
     }
+
+    #if DEBUG
+    /// The demo Summary for the current period state, including the
+    /// selected day (X1).
+    private var demoConfiguration: SummaryConfiguration {
+        switch period {
+        case .daily(let day):
+            let dayIndex: Int?
+            if let day {
+                dayIndex = Core.SummaryPeriod.pillIndexOf(
+                    date: day,
+                    weekStartsOn: appState.settings.weekStartsOn,
+                    calendar: ukCalendar
+                )
+            } else {
+                dayIndex = nil
+            }
+            return DemoData.summary(period: .today, dayIndex: dayIndex)
+        case .weekly:
+            return DemoData.summary(period: .week)
+        case .monthly:
+            return DemoData.summary(period: .month)
+        case .yearly:
+            return DemoData.summary(period: .week)
+        }
+    }
+    #endif
 
     private var liveReport: some View {
         let count = max(appState.orderedTokens.count, 1)

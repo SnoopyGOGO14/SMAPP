@@ -74,4 +74,13 @@ public enum SummaryPeriod: Equatable {
         let start = PeriodProgress.weekStart(weekStartsOn: weekStartsOn, now: now, calendar: calendar)
         return calendar.date(byAdding: .day, value: index, to: start) ?? start
     }
+
+    /// The pill index a date falls on — the inverse of `pillDate`
+    /// (X1: the demo's chosen day maps back to its data set).
+    public static func pillIndexOf(date: Date, weekStartsOn: Int, now: Date = Date(), calendar: Calendar = .current) -> Int? {
+        let start = PeriodProgress.weekStart(weekStartsOn: weekStartsOn, now: now, calendar: calendar)
+        let days = calendar.dateComponents([.day], from: start, to: date).day ?? 0
+        guard days >= 0, days < 7 else { return nil }
+        return days
+    }
 }

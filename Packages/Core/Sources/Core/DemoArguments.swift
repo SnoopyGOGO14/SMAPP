@@ -22,6 +22,8 @@ public struct DemoArguments: Equatable {
     public let card: Int?
     /// 0…6: the day pill pre-selected on Summary's Daily view (W1).
     public let day: Int?
+    /// "end": scroll the screen to its bottom (X9's bottom capture).
+    public let scroll: String?
     /// Flags that carried values outside the legal sets.
     public let invalid: [String]
 
@@ -43,6 +45,7 @@ public struct DemoArguments: Equatable {
         var sheet: String?
         var card: Int?
         var day: Int?
+        var scroll: String?
         var invalid: [String] = []
         var enabled = false
 
@@ -103,6 +106,13 @@ public struct DemoArguments: Equatable {
                     invalid.append("day=\(value)")
                 }
                 index += 2
+            case "-scroll":
+                if let value, value == "end" {
+                    scroll = value
+                } else if let value {
+                    invalid.append("scroll=\(value)")
+                }
+                index += 2
             default:
                 index += 1
             }
@@ -117,6 +127,7 @@ public struct DemoArguments: Equatable {
             sheet: sheet,
             card: card,
             day: day,
+            scroll: scroll,
             invalid: invalid
         )
     }

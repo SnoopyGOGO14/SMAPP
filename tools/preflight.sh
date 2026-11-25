@@ -195,7 +195,7 @@ for line in app.splitlines():
     if stripped.startswith("case "):
         routed |= set(re.findall(r'"(\w+)"', stripped))
 routed |= {"home"}  # home = default tab
-known_flags = {"-demo", "-screen", "-state", "-period", "-sheet", "-focus", "-card", "-day"}
+known_flags = {"-demo", "-screen", "-state", "-period", "-sheet", "-focus", "-card", "-day", "-scroll"}
 for line in screens_wf.splitlines():
     # In the raw workflow the third argument is either the literal
     # $appearance (the light/dark loop) or an explicit appearance.
@@ -206,7 +206,7 @@ for line in screens_wf.splitlines():
     name = expected  # for messages
     args = argstr.split()
     i = 0
-    state = "default"; period = None; focus = None; sheet = None; screen = None
+    state = "default"; period = None; focus = None; sheet = None; screen = None; day = None; scroll = None
     while i < len(args):
         flag = args[i]
         if flag not in known_flags:
@@ -231,6 +231,10 @@ for line in screens_wf.splitlines():
             focus = val
             if not val.isdigit():
                 failures.append(f"6 screens.yml -focus not a digit in {name}")
+        elif flag == "-day":
+            day = val
+        elif flag == "-scroll":
+            scroll = val
         elif flag == "-sheet":
             sheet = val
             if val != "target":
@@ -241,17 +245,24 @@ for line in screens_wf.splitlines():
         elif flag == "-day":
             if not (val.isdigit() and 0 <= int(val) <= 6):
                 failures.append(f"6 screens.yml -day {val} out of 0-6 ({name})")
+        elif flag == "-scroll":
+            if val != "end":
+                failures.append(f"6 screens.yml -scroll {val} not handled in DemoMode ({name})")
         i += 2
-    # markerFor mirror: screen[/state][/period][/focus][/sheet]
+    # markerFor mirror: screen[/state][/period][/day][/focus][/sheet][/scroll]
     parts = [screen or "?"]
     if state != "default":
         parts.append(state)
     if period:
         parts.append(period)
+    if day:
+        parts.append(f"day{day}")
     if focus:
         parts.append(f"focus{focus}")
     if sheet:
         parts.append("sheet")
+    if scroll:
+        parts.append(scroll)
     marker = "/".join(parts)
     if marker != expected:
         failures.append(f"6 marker mismatch {name}: workflow expects {expected}, DemoMode logic produces {marker}")

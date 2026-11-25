@@ -28,9 +28,11 @@ struct AppDetailScreen: View {
                 targetButton
             }
             .padding(.horizontal, 20)
-            .padding(.top, 12)
         }
         .background(Color("Ground"))
+        // X7: the tabs sit 12 pt below the navigation bar — the
+        // ScrollView's default top content margin left an ~80 pt band.
+        .contentMargins(.top, 12, for: .scrollContent)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) { toolbarTitle }

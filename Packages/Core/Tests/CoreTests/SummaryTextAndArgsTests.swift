@@ -107,6 +107,22 @@ final class DemoArgumentsTests: XCTestCase {
         XCTAssertFalse(parsed.isEnabled)
         XCTAssertEqual(parsed.screen, "home")
     }
+
+    func testDayAndScrollParse() {
+        // X1/X9: `-day 2` and `-scroll end`.
+        let parsed = Core.DemoArguments.parse([
+            "-demo", "-screen", "summary", "-period", "daily", "-day", "2", "-scroll", "end"
+        ])
+        XCTAssertEqual(parsed.day, 2)
+        XCTAssertEqual(parsed.scroll, "end")
+        XCTAssertTrue(parsed.invalid.isEmpty)
+    }
+
+    func testScrollValuesBeyondEndAreInvalid() {
+        let parsed = Core.DemoArguments.parse(["-demo", "-scroll", "top"])
+        XCTAssertNil(parsed.scroll)
+        XCTAssertEqual(parsed.invalid, ["scroll=top"])
+    }
 }
 
 final class SummaryIntervalEdgeTests: XCTestCase {
@@ -173,5 +189,26 @@ final class SummaryIntervalEdgeTests: XCTestCase {
         XCTAssertEqual(interval.start, date("2027-02-01", hour: 0, minute: 0))
         XCTAssertEqual(interval.end, date("2027-03-01", hour: 0, minute: 0))
         XCTAssertEqual(interval.duration, 28 * 86_400, accuracy: 1)
+    }
+
+    func testPillIndexOfIsTheInverseOfPillDate() {
+        // X1: the demo's chosen day maps back to its data set.
+        for index in 0...6 {
+            let pill = Core.SummaryPeriod.pillDate(index: index, weekStartsOn: 2, now: date("2026-11-25"), calendar: uk)
+            XCTAssertEqual(
+                Core.SummaryPeriod.pillIndexOf(date: pill, weekStartsOn: 2, now: date("2026-11-25"), calendar: uk),
+                index
+            )
+        }
+    }
+}
+
+final class DurationFormatSecondsTests: XCTestCase {
+
+    func testTruncationNotRounding() {
+        // X4: 3,520 s = 58m 40s — "58m" everywhere, never "59m".
+        XCTAssertEqual(Core.DurationFormat.fromSeconds(3520), "58m")
+        XCTAssertEqual(Core.DurationFormat.fromSeconds(3600), "1h")
+        XCTAssertEqual(Core.DurationFormat.fromSeconds(0), "0m")
     }
 }

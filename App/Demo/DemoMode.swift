@@ -122,10 +122,19 @@ enum DemoMode {
         #endif
     }
 
-    /// The marker a screen writes: "<screen>[/state][/period][/focus][/sheet]".
-    /// B3: a typo in the launch arguments surfaces here as
-    /// "/invalid(...)" — the capture workflow then records a MISMATCH
-    /// instead of silently photographing the default screen.
+    /// "end" scrolls the screen to its bottom (X9's capture).
+    static var scroll: String? {
+        #if DEBUG
+        return parsed.scroll
+        #else
+        return nil
+        #endif
+    }
+
+    /// The marker a screen writes: "<screen>[/state][/period][/day]
+    /// [/focus][/sheet][/scroll]". X1: the chosen day is in the marker
+    /// so the workflow proves the argument took effect; X9: the scroll
+    /// position too. B3: invalid arguments surface as "/invalid(...)".
     static func markerFor(_ screen: String) -> String {
         var parts = [screen]
         if state != .default {
@@ -134,11 +143,17 @@ enum DemoMode {
         if let period {
             parts.append(period.rawValue)
         }
+        if let day {
+            parts.append("day\(day)")
+        }
         if let focus {
             parts.append("focus\(focus)")
         }
         if sheet != nil {
             parts.append("sheet")
+        }
+        if let scroll {
+            parts.append(scroll)
         }
         #if DEBUG
         if !parsed.invalid.isEmpty {

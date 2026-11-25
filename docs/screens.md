@@ -23,8 +23,9 @@ sample figures from `design/reference/`.
 | `summary-weekly-{light,dark}.png` | Ranked donut, centre total, share cards | R16, R17 |
 | `detail-week-{light,dark}.png` | Today card, week bars from one baseline, stats, target button | R4, R15, V3, V5 |
 | `summary-weekly-focus1-dark.png` | Focus on the top app (segment, centre, dimming) | R17 |
-| `summary-daily-dark.png` | Daily period + day pills | R16 |
-| `summary-day0-dark.png` | Daily with the Monday pill selected (W1) | R16, W1 |
+| `summary-daily-dark.png` | Daily period + day pills, today selected | R16 |
+| `summary-day0-dark.png` | Daily with the Monday pill selected — its own figures (X1) | R16, W1 |
+| `summary-weekly-bottom-dark.png` | Scrolled to the end — the last card clears the tab bar (X9) | R16 |
 | `home-over-dark.png` | 3h 20m of 3h — red zone | R7 |
 | `home-paused-dark.png` | "Paused" in place of the hero | master switch (R3) |
 | `detail-focus4-dark.png` | Detail with day 4 focused (linked total) | R17 |

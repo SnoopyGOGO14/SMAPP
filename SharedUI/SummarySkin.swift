@@ -9,8 +9,10 @@ import Core
 /// changed owner answer is a one-line change. The alternatives are
 /// listed in REVIEW.md ("Summary-page decisions").
 public enum SummaryDefaults {
-    /// Rank colours (default) vs the user's row order (position).
-    public static let colourByRank = true
+    /// X2 (decision changed, round 4): colour by the user's row order
+    /// (position) — an app keeps one colour on every screen and in
+    /// every period. Rank colouring made TikTok change colour per tab.
+    public static let colourByRank = false
     /// Yearly tab hidden until a device proves a year of history.
     public static let showYearly = false
     /// The mock's footer strip above the tab bar (default: off).

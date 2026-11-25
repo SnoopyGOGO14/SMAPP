@@ -21,7 +21,7 @@ public struct HeroCardView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline, spacing: 10) {
-                Text(DurationFormat.short(minutes: Int(configuration.usedMinutes.rounded())))
+                Text(DurationFormat.fromSeconds(configuration.usedMinutes * 60))
                     .font(.system(size: heroSize, weight: .bold))
                     .foregroundStyle(Color("PrimaryText"))
                     .lineLimit(1)
@@ -96,7 +96,7 @@ public struct HeroCardView: View {
     }
 
     private var accessibilityText: String {
-        let used = DurationFormat.short(minutes: Int(configuration.usedMinutes.rounded()))
+        let used = DurationFormat.fromSeconds(configuration.usedMinutes * 60)
         guard let allowance = configuration.allowanceMinutes else {
             return "\(used) today"
         }

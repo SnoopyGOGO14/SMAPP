@@ -138,16 +138,29 @@ public struct PeriodCardView: View {
     }
 
     private var labels: some View {
-        HStack(spacing: 0) {
-            ForEach(configuration.periodDays) { day in
-                Text(day.label)
-                    .font(.caption2)
-                    .fontWeight(day.isToday ? .bold : .regular)
-                    .foregroundStyle(day.isToday ? Color("PrimaryText") : Color("SecondaryText"))
-                    .frame(maxWidth: .infinity)
-                    .lineLimit(1)
+        // X8: month labels drawn as an overlay positioned by day index,
+        // fixed 28 pt width, no truncation — the slot-per-day HStack
+        // truncated them to "1 … …".
+        GeometryReader { proxy in
+            let count = max(configuration.periodDays.count, 1)
+            ZStack(alignment: .leading) {
+                ForEach(configuration.periodDays) { day in
+                    if !day.label.isEmpty {
+                        Text(day.label)
+                            .font(.caption2)
+                            .fontWeight(day.isToday ? .bold : .regular)
+                            .foregroundStyle(day.isToday ? Color("PrimaryText") : Color("SecondaryText"))
+                            .frame(width: 28, alignment: .center)
+                            .fixedSize()
+                            .position(
+                                x: proxy.size.width * (CGFloat(day.id) + 0.5) / CGFloat(count),
+                                y: proxy.size.height / 2
+                            )
+                    }
+                }
             }
         }
+        .frame(height: 16)
     }
 
     private func barColor(for day: AppDetailConfiguration.DayValue) -> Color {

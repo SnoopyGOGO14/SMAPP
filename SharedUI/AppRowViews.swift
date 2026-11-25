@@ -9,17 +9,24 @@ import Core
 public struct AppRowReportView: View {
     let configuration: AppRowConfiguration
     let amberFraction: Double
+    /// X6: the bar's leading inset — the width of the tile/icon column,
+    /// so the bar starts at the app-name column. 46 matches the demo
+    /// tile (36 + 10 spacing); live rows' Label icon column is close.
+    var barLeadingInset: CGFloat = 46
 
-    public init(configuration: AppRowConfiguration, amberFraction: Double = 0.75) {
+    public init(configuration: AppRowConfiguration, amberFraction: Double = 0.75, barLeadingInset: CGFloat = 46) {
         self.configuration = configuration
         self.amberFraction = amberFraction
+        self.barLeadingInset = barLeadingInset
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Spacer()
-                Text(DurationFormat.short(minutes: Int(configuration.usedMinutes.rounded())))
+                // X4: one truncation rule — 3,520 s reads "58m" here and
+                // on the Home rows, never "59m".
+                Text(DurationFormat.fromSeconds(configuration.usedMinutes * 60))
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(Color("PrimaryText"))
             }
@@ -33,6 +40,9 @@ public struct AppRowReportView: View {
                 fill: barColor,
                 height: 6
             )
+            // X6: the bar starts at the text column (clear of the tile)
+            // and ends at the row's trailing edge.
+            .padding(.leading, barLeadingInset)
             .frame(height: 16)
         }
         .accessibilityElement(children: .ignore)
@@ -49,7 +59,7 @@ public struct AppRowReportView: View {
     }
 
     private var rowAccessibilityText: String {
-        let minutes = Int(configuration.usedMinutes.rounded())
+        let minutes = Int(configuration.usedMinutes)
         let zone = Core.appZone(usedMinutes: configuration.usedMinutes, targetMinutes: configuration.targetMinutes, amberFraction: amberFraction)
         let word = ZoneStyle.word(for: zone)
         if word.isEmpty {

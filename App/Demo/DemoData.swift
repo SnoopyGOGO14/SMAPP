@@ -146,16 +146,18 @@ enum DemoData {
 
     // MARK: - Summary (08 plan §9)
 
-    /// W4: one coherent data set — daily = Home's five figures; weekly
-    /// and monthly built from the same per-app series App detail draws
-    /// (`Core.DemoSeries`). Ranked largest-first.
-    static func summary(period: DemoMode.DemoPeriod) -> SummaryConfiguration {
+    /// W4/X1: one coherent data set — daily = that day's five figures
+    /// (`Core.DemoSeries.dailyFigures`, today by default); weekly and
+    /// monthly built from the same per-app series App detail draws.
+    /// Ranked largest-first.
+    static func summary(period: DemoMode.DemoPeriod, dayIndex: Int? = nil) -> SummaryConfiguration {
         let apps = DemoData.apps
         let minutes: [Double]
         let label: String
         switch period.dataSet {
         case .today:
-            minutes = apps.map { $0.todayMinutes }
+            let figures = Core.DemoSeries.dailyFigures(dayIndex: dayIndex ?? 6)
+            minutes = figures
             label = "Daily usage"
         case .week:
             minutes = apps.map { Core.DemoSeries.weekTotal(index: $0.paletteIndex) }
