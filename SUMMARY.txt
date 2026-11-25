@@ -1,6 +1,9 @@
-2026-11-25 11:45:06.544 appintentsmetadataprocessor[2484:11190] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-25 11:45:15.556 appintentsmetadataprocessor[2651:11714] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
-/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:105:17: error: branches have mismatching types 'some View' and 'ModifiedContent<HeroCardView, AccessibilityAttachmentModifier>'
+2026-11-25 11:47:49.433 appintentsmetadataprocessor[2620:11186] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 11:47:49.480 appintentsmetadataprocessor[2624:11194] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Demo/DemoData.swift:60:9: error: switch must be exhaustive
+/Users/runner/work/SMAPP/SMAPP/App/Demo/DemoData.swift:79:9: error: switch must be exhaustive
+/Users/runner/work/SMAPP/SMAPP/App/Demo/DemoData.swift:140:9: error: switch must be exhaustive
 ** BUILD FAILED **
-commit: c9ad31bb66e28f81155af5c223df531ee1f31ce5 status: failure run: 26
+commit: e355b8241944bd0260ab3be2213733b18115d90b status: failure run: 27
