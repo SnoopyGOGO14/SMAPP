@@ -1,1 +1,34 @@
-no screenshots
+SETTLED 30s after boot
+home-light marker=home
+summary-weekly-light marker=summary/weekly
+detail-week-light marker=detail/week
+home-dark marker=home
+summary-weekly-dark marker=summary/weekly
+detail-week-dark marker=detail/week
+summary-weekly-focus1-dark marker=summary/weekly/focus1
+summary-daily-dark marker=summary/daily
+summary-day2-dark marker=summary/daily
+home-over-dark marker=home/over
+home-paused-dark marker=home/paused
+detail-focus4-dark marker=detail/week/focus4
+detail-month-dark marker=detail/month
+target-dark marker=target
+onboarding-card1-dark marker=onboarding
+onboarding-card4-dark marker=onboarding
+detail-focus4-dark.png checksum=dd7c2e4ecbf41d33002b760d11c2b0c2a2bf0657
+detail-month-dark.png checksum=b4391c781a69152d8c11a7a350b2e8785b8c584f
+detail-week-dark.png checksum=88d0f0495c2178b9f3232c45827dcbbc29b6a7df
+detail-week-light.png checksum=57ca950a2e1ecd267d787d150b49d5e66080222a
+home-dark.png checksum=1b62d5bd5c7aaceab7b3023362b88ae2550b0d60
+home-light.png checksum=bd0c38bfc9d896298c2af427fbe4c1397bd23ff0
+home-over-dark.png checksum=78740e951f40bdb906944d024810e7f21f6f8d00
+home-paused-dark.png checksum=878e8fe74f2c7c487777d5ede93d5cd5c6ac64f8
+onboarding-card1-dark.png checksum=ba76e5b1c1b14e97dfaef20cd74549e008fe3d14
+onboarding-card4-dark.png checksum=a56a8c5b6b5fa1736029e834a1461d2e149faf4b
+summary-daily-dark.png checksum=103960da822e104221fa385c91019ea0e14bfeec
+summary-day2-dark.png checksum=103960da822e104221fa385c91019ea0e14bfeec
+summary-weekly-dark.png checksum=6bce8e0cc4b40adefff93674e2ebc4491fe6343a
+summary-weekly-focus1-dark.png checksum=872c58943046c4a6cecbcf942cb9eb821ce88ddb
+summary-weekly-light.png checksum=42b25d3792aa11774e9172c7340931fdc0a3c983
+target-dark.png checksum=7c9179c1f41f5a3965460c52c5321c9823d7959e
+DUPLICATE  summary-daily-dark.png  summary-day2-dark.png 
