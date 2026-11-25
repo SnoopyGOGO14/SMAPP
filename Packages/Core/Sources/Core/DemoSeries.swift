@@ -19,8 +19,14 @@ public enum DemoSeries {
     public static let tikTokWeek: [Double] = [44, 61, 38, 82, 49, 41, 58 + 40.0 / 60]
 
     /// The month's 30 values for TikTok; the last is today's figure.
-    private static let monthBase: [Double] = (0..<30).map { day in
-        Double((((day + 2) % 7) * 9 + (day % 5) * 8 + 16) % 74 + 8)
+    /// Failure class 15: the arithmetic is broken into typed
+    /// sub-expressions — the one-liner's untyped literal chain timed
+    /// out the type-checker (run 34).
+    private static let monthBase: [Double] = (0..<30).map { day -> Double in
+        let weekdayCycle: Int = (day + 2) % 7
+        let fiveCycle: Int = day % 5
+        let raw: Int = weekdayCycle * 9 + fiveCycle * 8 + 16
+        return Double(raw % 74 + 8)
     }
 
     public static var dailyTotal: Double {

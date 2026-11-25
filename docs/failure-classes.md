@@ -49,6 +49,12 @@ review, and the 25 November audit.
     mapping property returns the *same* enum it narrows (e.g.
     `dataSet: DemoPeriod`), downstream switches silently stop being
     exhaustive. Return a narrow dedicated enum instead.
+15. **Type-checker timeout on untyped literal chains** (run 34): an
+    expression like `(((d + 2) % 7) * 9 + (d % 5) * 8 + 16) % 74 + 8`
+    inside a closure can time out ("unable to type-check this
+    expression in reasonable time") — even when near-identical code
+    compiled before. Break the arithmetic into explicitly typed
+    sub-expressions (`let step: Int = …`).
 
 Also caught by `tools/preflight.sh` (static, no compiler):
 
