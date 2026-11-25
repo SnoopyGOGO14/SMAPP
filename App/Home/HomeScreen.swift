@@ -98,6 +98,9 @@ struct HomeScreen: View {
         return appState.targetMinutes == nil
     }
 
+    // @ViewBuilder, not an if-expression: the DEBUG branches return
+    // different view types (run 26's "branches have mismatching types").
+    @ViewBuilder
     private var homeCard: some View {
         #if DEBUG
         if DemoMode.isEnabled {

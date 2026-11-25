@@ -1,44 +1,29 @@
-# The cloud build loop
+# CI ledger — runs, minutes, and what they proved
 
-The 2016 build Mac cannot run Xcode, so every compile happens on GitHub's
-hosted Macs. This page explains how the loop works and how to read results.
+Live state: `git show origin/ci-logs:STATUS.txt` (each line:
+`build|screens: <sha> <status> <minutes>m run:<n>`).
 
-## How it works
+## Rules (B4)
 
-- **`.github/workflows/build.yml`** runs on every push to `main` (unless the
-  push touches only Markdown, `docs/`, `design/`, `archive/` or
-  `Packages/Core` — those commits carry `[skip ci]`).
-- On a `macos-26` runner it: installs XcodeGen, runs the Core package tests,
-  generates the Xcode project, and builds all three targets for the iOS
-  Simulator with signing disabled.
-- Whatever happens, the logs are pushed to the **`ci-logs`** branch:
-  - `SUMMARY.txt` — errors, warnings, test counts and the commit it belongs to
-  - full logs for each step
+- `tools/preflight.sh` before every push.
+- Never push while a run is in flight (the concurrency group cancels).
+- `[screens]` = 15 core captures; `[screens-all]` = full manifest;
+  `build.yml` skips on `[screens]` so only one build runs.
+- **Never put the literal `[screens]` or `[screens-all]` in a commit
+  message unless you mean it** — the 0003a8d push described the tier
+  change in its message and accidentally triggered a full capture run.
+- Budget for the 09 run: 10 build runs, 3 screenshot runs.
 
-## Reading results
+## The 25 November series
 
-- **Browser:** the repo's Actions tab shows each run end to end.
-- **Command line:**
-  ```bash
-  git fetch origin ci-logs
-  git show origin/ci-logs:SUMMARY.txt
-  ```
-  Always check the `commit:` line matches the commit you care about — the
-  branch is force-pushed and holds only the latest run.
+| Run | Commit | Kind | Result | Notes |
+| --- | --- | --- | --- | --- |
+| 24 | `c3a6e3b` | build | failure (3 min) | the probe — cloud alive again; one error: HomeScreen deferred-let; Core 90/90 in cloud |
+| 25 | `0003a8d` | screens (accidental, full manifest) | failure | message contained `[screens]`/`[screens-all]`; build.yml skipped; run failed before/without publishing logs (publish gap now fixed); 1 of 3 screenshot runs burned |
+| 26 | `c9ad31b` | build | pending | A1 attempt 2: all fixes + B3–B7 work; 104 Core tests |
 
-## Screenshots
+## Historical (before the outage)
 
-- **`.github/workflows/screens.yml`** runs only when the head commit message
-  contains `[screens]` (or via manual dispatch). It builds the app, boots a
-  simulator, and captures Home, App detail, All apps, Target and Onboarding
-  in light and dark appearance using demo mode. PNGs land in
-  `screenshots/` on the `ci-logs` branch.
-
-## Budget
-
-- Private repos: macOS runners consume included minutes at 10× the Linux
-  rate — the free 2,000 minutes ≈ 200 macOS minutes per month. The overnight
-  run (18 November) was capped at 25 build runs + 3 screenshot runs; each
-  build takes roughly 3–5 minutes of macOS time.
-- **A public repo has no Actions minutes limit.** If the repo is made public,
-  tell GLM the cap no longer applies.
+Last green build before the outage: run 19, `337203d`, 18 Nov 11:13.
+Run 21: the `2a88ffe` TargetScreen `buildExpression` failure. Runs 17–19
+details in `PROGRESS.md` (18 November section).
