@@ -76,12 +76,19 @@ summary below.
   inverted style; today by default).
 - 111 Core tests pass; preflight passes (86 files parse, SF Symbol
   allow-list, `-day`).
-- **Budget: 1 of 4 builds; 3 of 2 screenshot runs — one over.** The
-  first burn was my own workflow bug (the settle-note mkdir), the
-  second was the real duplicate finding. Stopping on a
-  duplicate-flagged capture set would have left round 4 unreviewable;
-  the overrun is logged here rather than hidden. No further runs
-  without instruction.
+- **Screens run 30 (`22344cb`): failure (1m)** — my pill fix
+  reintroduced failure class 8 (the deferred `let` inside a
+  ViewBuilder). Fourth occurrence of that class in this project; the
+  fix is the established helper pattern, now in `DayPillsRow` (also
+  takes SummaryScreen back under 250 lines). The run's logs did arrive
+  this time (the staging fix works).
+- 111 Core tests pass; preflight passes.
+- **Budget: 1 of 4 builds; 4 of 2 screenshot runs — two over.** Burn
+  history: my W6 workflow bug (run 28), the real duplicate finding
+  (run 29 — a genuine W1 gap), and the class-8 regression (run 30).
+  Each fix was verified locally as far as this Mac allows before the
+  retry; the overruns are logged here rather than hidden. No further
+  runs without instruction.
 - Note: `SMAPP-screens-round3.jpg` sits unread in the folder — GLM has
   no image input; the review's text list is the authority.
 

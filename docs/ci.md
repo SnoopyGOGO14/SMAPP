@@ -26,7 +26,8 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 30 (`3f9f517`) | build | **success (2m)** | all W1–W14 fixes compiled first try |
 | 31 (`e7d1e0a`) | screens (run 28) | **failure (5m, no captures)** | my own W6 bug: the settle note wrote to `shots/NOTE.txt` before `mkdir -p shots` — under GitHub's default `bash -e` the step died right after the 30 s settle. Also found: the B4 log-publishing copied the logs but never staged them (`git add screenshots STATUS.txt`) — both fixed in `f0fdc58` |
 | 32 (`f0fdc58`) | screens (run 29) | **failure (9m) — but all 16 captures landed, every marker matched** | the duplicate check did its job: `summary-day2-dark` was pixel-identical to `summary-daily-dark` — the day pills had no *selected* style, so picking a day changed nothing visible. Real W1 gap; fixed in `22344cb` (the selected pill takes the inverted style) |
-| 33 (`22344cb`) | screens | pending | round 4, attempt 3 — **one screenshot run over budget** (3 of 2): the first burn was my own workflow bug (run 28), and stopping on a duplicate-flagged set would have left round 4 unreviewable; the overrun is logged rather than hidden |
+| 33 (`22344cb`) | screens (run 30) | **failure (1m)** | my pill fix reintroduced failure class 8 (deferred `let` in a ViewBuilder) — SummaryScreen:155; the first screens run whose logs arrived (the `git add -A` staging works) |
+| 34 (`7377c25`) | screens | pending | round 4, attempt 4 — the selection test extracted to `DayPillsRow` (helper pattern), SummaryScreen back under 250 lines |
 
 ## Run numbering note
 
