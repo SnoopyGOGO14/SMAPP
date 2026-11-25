@@ -5,6 +5,14 @@ GLM updates at the end of every session. Honesty levels (05-RUN-TO-REVIEW):
 succeeded), **screenshot** (rendered in the simulator), **unverified on
 device** (all Screen Time behaviour). Device gates A to D stay open.
 
+## READY FOR VISUAL REVIEW
+
+**Commit `2997d30`, screens run 26 (25 November, 9 m): 15 core captures
+on `ci-logs/screenshots`, every marker matched, every checksum unique,
+no crashes.** Check them against `design/reference/*.dc.html` and
+`SKINS/*/screen.png` (GLM cannot view images). The capture list and
+what each file evidences: `docs/screens.md`.
+
 ---
 
 ## Open questions for the product owner (read first)
@@ -54,26 +62,63 @@ First full run, 25 November: **PREFLIGHT OK**.
   something else).
 - Verdict → **Track A**.
 
-### A1 — green build
+### A1 — green build: **DONE (run 28, 25 November)**
 
-- **Run 26** (`c9ad31b`, 1m, failure): one error — `homeCard` was a
-  computed property without `@ViewBuilder`, so Swift 5.9 treats its
-  `if/else` as an *expression* requiring matching branch types
-  ("branches have mismatching types"). Fixed with `@ViewBuilder`; a
-  repo-wide scan found no other property with the pattern. Everything
-  else type-checked clean — the B4 caches and Core-test skip worked
-  (1-minute run).
-- **Run 27** (`e355b82`): the fix, expected green.
-- History: the 0003a8d push **backfired** — its message contained the
-  literal `[screens]`, so `build.yml` skipped (by design) and the
-  screens workflow ran the full manifest instead, failing without
-  logs (screens.yml never published them — fixed). 1 of 3 screenshot
-  runs burned; cause unproven (likely the 60-capture manifest vs the
-  30-minute timeout).
-- 8a73d19/c9ad31b carry: run-24 fixes (HomeScreen deferred-let,
-  warnings, UIKit import), DemoPeriod summary cases, B3
-  (SummaryText/DemoArguments, 104 tests), B5–B7 records and switches,
-  B4 workflow changes.
+- **Run 28 (`22895ca`): BUILD SUCCEEDED** — all three targets, Xcode
+  26.6. First green build since run 19 (18 November). The 50 unbuilt
+  files now compile; 104 Core tests also ran green in run 26's series.
+- Run 26 (`c9ad31b`, 1m, failure): `homeCard` lacked `@ViewBuilder` —
+  Swift 5.9's if-expression rule demanded matching branch types
+  (failure class 13). Fixed.
+- Run 27 (`e355b82`, 1m, failure): `DemoPeriod.dataSet` returned the
+  full 6-case enum → DemoData's switches not exhaustive (class 14).
+  Fixed with a narrow `DataSet` enum.
+- History: the 0003a8d push backfired — its message contained the
+  literal `[screens]`, so build.yml skipped and screens.yml ran the
+  full manifest, failing without logs (screens.yml never published
+  them; now fixed). 1 of 3 screenshot runs burned.
+- Process slip, logged: the 22895ca push went out with preflight
+  failing — the run command piped preflight through `tail`, masking
+  the exit status. The failure was a script artifact ("3-case enum"
+  comment matched the case-extraction regex); the regex is hardened
+  and preflight passes clean.
+
+### A2 — core captures: **DONE (screens run 26, 9 minutes)**
+
+- **Run 29 (`2997d30`) with `[screens]`: success.** 15 captures, every
+  marker matched (`home`, `summary/weekly`, `summary/daily`,
+  `summary/weekly/focus1`, `detail/week`, `detail/week/focus4`,
+  `detail/month`, `home/over`, `home/paused`, `target`, `onboarding` ×2,
+  light+dark where required), all 15 checksums unique, no
+  CRASHED/LAUNCH-FAILED/MISMATCH/DUPLICATE lines in `NOTE.txt`.
+- A3 self-check: V1–V10 routes all present in the capture set; the
+  Summary markers carry period and focus; the DemoPeriod marker fix
+  from B1 is proven (the `summary/<period>` captures match). Visual
+  claims (do the pictures look right) remain the reviewer's — GLM has
+  no image input.
+- **A4: stopped for visual review** — see the READY banner at the top
+  of this file. A5 (raise levels after findings fixed, `[screens-all]`)
+  waits for the review.
+
+### Run summary (Part 4)
+
+- **Done:** B1 (preflight, one real bug found); T0 (cloud answered —
+  the billing-exhaustion diagnosis was wrong, minutes were available);
+  Track A in full (green build run 28; core captures screens run 26);
+  Track B in full (B2 read-through + docs; B3 SummaryText +
+  DemoArguments + edge tests, 104 tests; B4 capture tiers, no double
+  builds, caches, Core-test skip, durations, screens log publishing;
+  B5 records brought to the truth; B6 first-run kit, gate-a card,
+  reordered checks; B7 ASSUMED switches).
+- **Runs used:** builds 4 of 10 (runs 24, 26, 27, 28 ≈ 6 min total);
+  screenshots 2 of 3 (the accidental full-manifest failure on
+  `0003a8d`, plus this success, 9 m).
+- **Skipped:** nothing from the 09 list; `[screens-all]` deliberately
+  deferred to after the visual review (A5).
+- **Levels:** every Swift file changed since `337203d` is **compiles**
+  (run 28) and, for the 15 captured screens, **captured, markers
+  verified**; everything else per the table in `REVIEW.md`; nothing is
+  device-verified (Gates A–D open).
 
 ## Run of 18 November — Blocks A to P (05-RUN-TO-REVIEW.md)
 

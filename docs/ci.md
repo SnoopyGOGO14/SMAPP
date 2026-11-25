@@ -22,7 +22,15 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 25 | `0003a8d` | screens (accidental, full manifest) | failure | message contained `[screens]`/`[screens-all]`; build.yml skipped; run failed before/without publishing logs (publish gap now fixed); 1 of 3 screenshot runs burned |
 | 26 | `c9ad31b` | build | failure (1m) | one error: `homeCard` — computed property without `@ViewBuilder`, so Swift 5.9's if-expression rule demanded matching branch types. Everything else type-checked clean (Core-test skip + caches in effect). |
 | 27 | `e355b82` | build | failure (1m) | three errors: DemoData switches over `period.dataSet` not exhaustive — dataSet returned the *full* 6-case enum; fixed with a narrow `DataSet` enum (failure class 14) |
-| 28 | `22895ca` | build | pending | the DataSet fix; note: this push slipped through with preflight FAILING — the run command piped preflight through `tail`, masking the exit status (the classic chain-masking hazard, re-burned). The failure was a script artifact ("3-case enum" comment matched the case regex); regex fixed, preflight passes again |
+| 28 | `22895ca` | build | **success (1m)** | A1 green — all three targets, Xcode 26.6; first green build since run 19 (18 Nov). This push slipped out with preflight failing (piped through `tail`, exit status masked — the classic chain hazard); the failure was a script artifact ("3-case enum" comment), regex since hardened |
+| 29 (`2997d30`) | screens | **success (9m, screens run 26)** | A2: 15 core captures, all markers matched, all checksums unique |
+
+## Run numbering note
+
+The two workflows number their runs separately: build runs are 24, 26,
+27, 28; screens runs are 25 (the accidental full-manifest failure on
+`0003a8d`) and 26 (the A2 success). STATUS.txt lines carry `run:` to
+disambiguate.
 
 ## Historical (before the outage)
 

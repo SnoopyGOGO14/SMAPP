@@ -2,74 +2,61 @@
 
 Written 17 November 2026, 23:20 UK time; updated after each run. Read this first when picking the project up, then `PROGRESS.md`.
 
-## Todos — state at this handoff (19 November, after the research pass)
+## Todos — state at this handoff (25 November, end of the 09 run)
 
-1. **BLOCKED: GitHub Actions macOS minutes appear exhausted.** The
-   `0dd5508` runs (07 Parts 1–2 captures) and every later push neither
-   start nor fail — the classic billing-queue signature after tonight's
-   ~20 runs. **The person must check the repo's Actions tab and billing
-   (or make the repo public — public repos have no minutes cap).** Once
-   minutes exist, push any commit with `[screens]` and the manifest
-   delivers everything: the 07 captures plus the new Summary set.
-2. **07-NEXT-TASKS Parts 1–2: code complete and pushed** (`0dd5508`),
-   capture verification pending item 1. Parts 3–4 documents are done;
-   REVIEW/PROGRESS level updates wait on the same captures.
-3. **08-SUMMARY-PAGE-PLAN P1–P8, P10, P11: built and committed** —
-   Summary page (ranked donut, share cards, period tabs with elapsed
-   underline, day pills), skin tokens app-wide, FocusGroup motion on
-   Summary/detail/Home/presets, demo routes + capture manifest
-   (08 build budget untouched: 0 of 6 runs used while blocked).
-   P9 (captures) and P12 (level updates) are blocked on item 1.
-4. **Research pass complete (18–19 November), all findings landed:**
-   - **`docs/monitoring-analysis.md`** — how iOS behaviours shape the
-     numbers (foreground-only counting, background audio and PiP,
-     time-zone accrual, restarts, access revocation, device sharing),
-     the full browser-linked YouTube matrix (Safari tabs count via
-     WebDomainActivity; Private tabs never do; Chrome partial,
-     Firefox none, Brave yes; browsers may opt out entirely;
-     home-screen web apps get their own identity), and the verdict on
-     the spec's open "websites" decision: **app-only for v1; web
-     domains as an opt-in v1.1 shown as their own rows, never merged;
-     never select browser app tokens alongside domains.** Every claim
-     evidence-tagged [doc]/[forum]/[device]. The five falsifiable
-     unknowns became device checks A17–A21 in `docs/device-checks.md`.
-    - **Research addendum (21 November), `docs/monitoring-analysis.md`
-      §7–§8:** unused report signal (per-app `numberOfPickups` /
-      `numberOfNotifications`, per-segment `longestActivity` /
-      `firstPickup` — zero-cost v1.1 candidates; a screenshot-reading
-      model rejected: no input stream on iOS); alternative capture
-      routes (Shortcuts personal automation is the only consumer-legal
-      app-open trigger — the one sec pattern, candidate opt-in nudge
-      mode; ManagedSettings shields give launch attempts but flip the
-      product to restrict-mode; NetworkExtension content filters see
-      `sourceAppIdentifier` but are supervised/child-device only;
-      per-app 1-min threshold pulses possible inside our existing API).
-      Verification became device checks A22–A24.
-   - **UK day tracker** — "Luxor" = Luxon = JavaScript-only; SwiftDate
-     and friends rejected under the Apple-frameworks-only rule.
-     `Core.AppCalendar.uk()` (gregorian, Europe/London) now drives the
-     Summary day pills, today-selection and elapsed underline, so the
-     UI's day boundary matches the monitor's schedule even abroad.
-     ASSUMED: UK-pinned time (alternative: device-local). 90 tests.
-   - **Earlier research already baked into the spec:** the sandbox
-     rules, the EU-only direct-data route (kept off), the Xcode 26 /
-     April 2027 Apple-silicon upload deadline, monitor-extension
-     memory ceiling and early-firing events.
-5. **Standing cautions learned the hard way:**
-   - Never push to `main` while a `[screens]` run is in flight — the
-     concurrency group cancels it, even for a docs-only push.
+1. **VISUAL REVIEW WAITING.** The 25 November run cleared the outage's
+   backlog: build run 28 is **green** (all three targets, Xcode 26.6)
+   and screens run 26 captured the 15 core screens with every marker
+   matching (`ci-logs/screenshots`, NOTE.txt clean). **Next: check the
+   PNGs against `design/reference/` and `SKINS/`** (GLM cannot view
+   images), then A5 of `09-AUDIT-AND-NEXT.md`: fix findings, push
+   `[screens-all]` once, raise `REVIEW.md` levels to what NOTE.txt
+   proves.
+2. **The billing-exhaustion diagnosis was wrong — the cloud never lost
+   minutes.** The probe (run 24) answered in 3 minutes. If runs go
+   quiet again, check the Actions tab before assuming billing.
+3. **Budget left (09 run): 6 build runs, 1 screenshot run.** New CI
+   rules in `docs/ci.md`: preflight before every push (never pipe it
+   through `tail`), never push while a run is in flight, `[screens]` =
+   core 15 / `[screens-all]` = full manifest, and **never put the
+   literal `[screens]` in a commit message unless a capture run is
+   meant** (the 0003a8d lesson).
+4. **Blocked on the person (unchanged):** a build Mac (Apple silicon);
+   the Apple Developer Program + `docs/portal-steps.md`; the
+   organisation identifier to replace `YOURORG`; decisions on every
+   ASSUMED row in `REVIEW.md` (both tables, including the ten
+   Summary-page defaults — each is now a one-line switch, B7);
+   `zai.rtf` still needs moving out of the folder.
+5. **Standing cautions learned the hard way (25 November additions
+   marked ▸):**
+   - Never push to `main` while a run is in flight — the concurrency
+     group cancels it, even for a docs-only push.
    - Always `grep -rn "import SharedUI"` before pushing: SharedUI is a
      source group, not a module; the phantom import has slipped in
-     three times now.
+     three times.
    - Deferred `let` initialisation inside ViewBuilder closures fails
      (`buildExpression`); use a helper function.
+   - ▸ A computed `some View` property without `@ViewBuilder` makes its
+     `if/else` an *if-expression* — branches must match types (run 26;
+     failure class 13 in `docs/failure-classes.md`).
+   - ▸ A mapping property must return a narrow enum, not the enum it
+     narrows, or downstream switches stop being exhaustive (run 27;
+     class 14).
+   - ▸ Chain checks with `set -o pipefail` or a pipeline masks the
+     failure (burned again on 25 November, preflight through `tail`).
    - In extension targets, `ApplicationToken` needs
      `import ManagedSettings`, and DeviceActivity overlay types need
      `import SwiftUI` alongside `import DeviceActivity`.
-   - Chain shell checks honestly: a `grep` in a `&&` chain can mask a
-     failing `swift test` (burned once; the fix landed same-session).
-6. `zai.rtf` still in the folder (credential; gitignored) — the person
-   means to move it.
+6. Research summary (18–21 November, all landed): `docs/monitoring-analysis.md`
+   — iOS behaviours, the browser matrix, the websites verdict
+   (app-only v1; opt-in domains v1.1, own rows, never merged), §7
+   unused report signal (pickups, notifications, longest session), §8
+   alternative capture routes (Shortcuts automation = the only
+   consumer-legal app-open trigger; shields; network-filter dead
+   ends). Device checks A17–A24. UK day tracker: `Core.AppCalendar.uk()`
+   drives the Summary day boundary (ASSUMED: UK-pinned). Earlier
+   findings: sandbox rules, EU-only direct-data route (off), Xcode 26 /
+   April 2027 Apple-silicon deadline, monitor memory ceiling.
 
 ## 1. What this is
 
@@ -85,12 +72,12 @@ Builder: GLM (AI coding model) writes the code on the Mac. The person handles Ap
 | GitHub repo | `github.com/SnoopyGOGO14/SMAPP`, branch `main` |
 | Live specification | `01-BUILD-SPEC-v2.md` in the repo (GLM has edited it since it was written; the repo copy is the authority) |
 | Build sessions | `02-SESSION-TASKS.md` (nine sessions, four device gates A to D) |
-| Run lists (in order) | `04-OVERNIGHT-TASKS.md` → `05-RUN-TO-REVIEW.md` → `06-FIXES-AFTER-REVIEW.md` → `07-NEXT-TASKS.md` → `08-SUMMARY-PAGE-PLAN.md` |
+| Run lists (in order) | `04-OVERNIGHT-TASKS.md` → `05-RUN-TO-REVIEW.md` → `06-FIXES-AFTER-REVIEW.md` → `07-NEXT-TASKS.md` → `08-SUMMARY-PAGE-PLAN.md` → `09-AUDIT-AND-NEXT.md`; index: `TASKS-INDEX.md` |
 | Checklists | `03-ENGINEER-CHECKLISTS.md` |
 | Running log | `PROGRESS.md` (GLM updates at the end of every session) |
 | Review pack | `REVIEW.md` (written for the product owner) |
 | Monitoring research | `docs/monitoring-analysis.md` (iOS behaviours, browser-linked usage, websites verdict) |
-| Device checks | `docs/device-checks.md` (Gates A–D; A17–A21 come from the research) |
+| Device checks | `docs/device-checks.md` (Gates A–D; A17–A24, essentials first; one-page card: `docs/gate-a-card.md`) |
 | Design references | `design/` (original mock-ups) and `SKINS/` (Summary page skins) |
 | Standing rules | `00-README-START-HERE.md` |
 | Claude doc (planning copy) | `https://claude.ai/artifact/94ykMFNWj2vKtZgKgc4i72` — matches spec v2 as first written; lacks GLM's later edits |
@@ -98,13 +85,12 @@ Builder: GLM (AI coding model) writes the code on the Mac. The person handles Ap
 
 ## 3. State at handoff
 
-**Done (end of the unattended run, 18 November ~02:00)**
+**Done (end of the 09 run, 25 November)**
 
-- All three targets **BUILD SUCCEEDED** on GitHub's macos-26 runner (Xcode 26.6, run 17, commit 324a148). 46 Core tests pass on both the 2016 Mac and in the cloud.
-- The full app as specified: onboarding, Home, App detail, All apps, Target + Settings, access banner, all states (Blocks A to O of `05-RUN-TO-REVIEW.md` — every box ticked or logged in `PROGRESS.md` §Skipped).
-- Demo mode renders the approved mock-up figures; the screenshot workflow pushes light+dark PNGs of five screens to `ci-logs/screenshots` (result of the final `[screens]` run recorded in `PROGRESS.md`).
-- Review pack: `REVIEW.md` (written for the product owner) + honesty table, budget, ASSUMED list and Apple-pages list in `PROGRESS.md`.
-- All portal and App Store documents drafted under `docs/`.
+- All three targets **BUILD SUCCEEDED** (run 28, `22895ca`, Xcode 26.6) — the 50 files written during the outage (visual fixes V1–V10, demo states, the whole Summary page) all compile. **104 Core tests** pass locally and in the cloud.
+- **15 core captures** on `ci-logs/screenshots` (screens run 26, commit `2997d30`): home/summary/detail in light+dark, the over/paused states, focus markers, month, target, onboarding 1 and 4. Every marker matched, all checksums unique, no crashes. Waiting for the person's visual review.
+- The 09 task list is complete except A5 (post-review): B1 preflight (`tools/preflight.sh`), B2 unbuilt review (`docs/unbuilt-review.md`, `docs/failure-classes.md`), B3 logic under test (SummaryText, DemoArguments, interval edges), B4 cheaper CI (tiers, caches, single build per push), B5 truthful records, B6 build-Mac readiness (`tools/first-run.sh`, `docs/gate-a-card.md`, reordered device checks), B7 ASSUMED defaults as one-line switches.
+- All portal and App Store documents drafted under `docs/`; research addenda in `docs/monitoring-analysis.md` §7–8.
 - GitHub access: same deploy key `SMAPP` (read/write), pushes work.
 
 **The honesty line**: everything above is *compiles* or *tested* at best; **nothing is proven on an iPhone** — the 2016 Mac cannot run Xcode, and every device gate (A–D) is open by rule.
@@ -161,22 +147,27 @@ Builder: GLM (AI coding model) writes the code on the Mac. The person handles Ap
 
 **GLM**
 
-1. Done for this run: every box in `05-RUN-TO-REVIEW.md` ticked or logged
-   under Skipped; review pack written; final push made.
-2. Next work waits on the person (Gate A needs a device build). When a
-   build Mac exists: rerun the portal-dependent items, then Session 2's
-   gate per `docs/device-checks.md`.
+1. The 09 list is done through A4. A5 (fix the review's findings,
+   `[screens-all]` once, raise REVIEW.md levels) runs after the
+   person's visual check.
+2. After that, new work waits on the person (Gate A needs a device
+   build). When a build Mac exists: `tools/first-run.sh`, then
+   `docs/gate-a-card.md`.
 
 **Person**
 
-1. Arrange the build Mac; follow `docs/build-mac-setup.md`.
-2. Join the Apple Developer Program; work through `docs/portal-steps.md`;
+1. **Visual review (now):** the 15 captures on `ci-logs/screenshots`
+   against `design/reference/` and `SKINS/*/screen.png` — list and
+   file names in `docs/screens.md`. Tell GLM the findings; A5 follows.
+2. Arrange the build Mac; follow `docs/build-mac-setup.md`, then
+   `tools/first-run.sh` on it.
+3. Join the Apple Developer Program; work through `docs/portal-steps.md`;
    submit the three Family Controls (Distribution) requests from
    `docs/AppStore/family-controls-request.md`.
-3. Give GLM the organisation identifier.
-4. Answer the ASSUMED decisions in `REVIEW.md`; choose the app name/icon.
-5. Review the screenshots on `ci-logs` against `design/reference/`
-   (GLM cannot view images) and run Gate A on a device.
+4. Give GLM the organisation identifier.
+5. Answer the ASSUMED decisions in `REVIEW.md` (both tables); choose
+   the app name/icon.
+6. Run Gate A on a device (`docs/gate-a-card.md`, ~1 hour).
 
 ## 9. Tool and access notes for the next assistant session
 

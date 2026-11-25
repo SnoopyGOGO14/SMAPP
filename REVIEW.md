@@ -13,11 +13,11 @@ through a compiler.** The capture branch held no screenshots of the
 current code. This file's earlier levels overstated four features as
 "screenshot" from captures of code since rewritten or removed.
 
-State now: the cloud answered again on 25 November (run 24 ran and
-published); the 25 November run series is fixing and re-proving the
-code — see `PROGRESS.md` (top) and `docs/unbuilt-review.md` for the
-file-by-file review. Levels below reflect the audit; they rise again
-only as new build/capture evidence lands.
+State now: the cloud answered on 25 November; run 28 (build) is
+**green** — the 50 files compile on Xcode 26.6 — and screens run 26
+captured the 15 core screens with every marker matching. **The visual
+review of those captures is the next step, and it is yours.** See
+`PROGRESS.md` (top) and `docs/unbuilt-review.md`.
 
 ## Corrections after review (18 November)
 
@@ -53,28 +53,31 @@ GitHub's Mac with Xcode 26.6), **screenshot** (rendered in a simulator),
 **unverified on device** (needs an iPhone — everything Screen Time).
 "uncompiled" = code changed since the last green build; not yet rebuilt.
 
-| # | Feature | Level (25 Nov audit) |
+| # | Feature | Level (25 Nov, after run 28) |
 | --- | --- | --- |
-| R1 | Choose apps via Apple's picker | uncompiled (onboarding rewritten); unverified on device |
-| R2 | Per-app on/off switch (App detail) | uncompiled (detail reworked); unverified on device |
-| R3 | Master switch (Target tab) | uncompiled (target reworked); unverified on device |
-| R4 | Usage statistics per app and combined | uncompiled (all views reworked); unverified on device |
-| R5 | Charts: ranked donut, daily bars, hero bars | uncompiled — rewritten; the old "screenshot" level withdrew with the captures of removed code |
-| R6 | Overall target, daily or weekly | tested (conversion logic); UI uncompiled |
-| R7 | Colour zones green/amber/orange-red | tested (boundaries at 75%/100%); UI uncompiled |
+| R1 | Choose apps via Apple's picker | compiles (run 28); unverified on device |
+| R2 | Per-app on/off switch (App detail) | compiles (run 28); unverified on device |
+| R3 | Master switch (Target tab) | compiles (run 28); unverified on device |
+| R4 | Usage statistics per app and combined | compiles (run 28); unverified on device |
+| R5 | Charts: ranked donut, daily bars, hero bars | compiles (run 28) + captured (screens 26; visual review pending) |
+| R6 | Overall target, daily or weekly | tested (conversion logic) + compiles (run 28) |
+| R7 | Colour zones green/amber/orange-red | tested (boundaries at 75%/100%) + compiles (run 28) |
 | R8 | Weekly average logic | tested |
-| R9 | Zone alerts at 75%/100% | run 24 compiled the monitor (unchanged since the last green build apart from a warning fix); unverified on device |
-| R10 | Privacy: everything on the phone | compiles (unchanged); privacy manifest + documents written |
-| R11 | One-minute setup with presets | uncompiled — onboarding relaid (V8); old captures withdrawn |
-| R12 | Access health check + banner | uncompiled (banner restyled); unverified on device |
-| R13 | Evening and Sunday recaps | compiles (unchanged); unverified on device |
-| R14 | Optional per-app targets | tested (cleanup logic); sheet restyled → uncompiled |
-| R15 | App detail screen | uncompiled — reworked (toolbar switch, focus); old captures withdrawn |
-| R16 | **Summary page** (ranked donut, share cards, period tabs, day pills, focus) | uncompiled — new; replaces the old All apps screen |
-| R17 | Focus effect (donut segment ↔ card, centre cross-fade) | uncompiled — new; Core logic tested |
+| R9 | Zone alerts at 75%/100% | compiles (run 28); unverified on device |
+| R10 | Privacy: everything on the phone | compiles; privacy manifest + documents written |
+| R11 | One-minute setup with presets | compiles (run 28) + captured (screens 26; visual review pending) |
+| R12 | Access health check + banner | compiles (run 28); unverified on device |
+| R13 | Evening and Sunday recaps | compiles; unverified on device |
+| R14 | Optional per-app targets | tested (cleanup logic) + compiles (run 28) |
+| R15 | App detail screen | compiles (run 28) + captured (screens 26; visual review pending) |
+| R16 | **Summary page** (ranked donut, share cards, period tabs, day pills, focus) | compiles (run 28) + captured (screens 26; visual review pending) |
+| R17 | Focus effect (donut segment ↔ card, centre cross-fade) | compiles (run 28) + captured (screens 26, focus1/focus4 markers); Core logic tested; visual review pending |
 
-Plus: **90 unit tests** pass (on the 2016 Mac and, on 25 November, in
-the cloud). The build series of 25 November is re-proving the app.
+Plus: **104 unit tests** pass (locally and in the cloud). Run 28
+(25 November) rebuilt everything the outage had left uncompiled; screens
+run 26 captured the 15 core screens — `NOTE.txt` on `ci-logs` is the
+evidence (markers, checksums, no crashes). Full "screenshot" credit
+waits for your visual review of those PNGs.
 
 ## Summary-page decisions GLM took as defaults (08 plan §11)
 

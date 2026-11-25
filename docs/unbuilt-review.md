@@ -25,10 +25,13 @@ package, covered by the 90 passing tests; **deleted** = removed.
 | Packages/Core/Sources/Core/StatusLine.swift | tested | zone wording source |
 | Packages/Core/Sources/Core/StatusParts.swift | tested | V4 fix |
 | Packages/Core/Sources/Core/SummaryPeriod.swift | tested | pills, intervals, raw values |
+| Packages/Core/Sources/Core/SummaryText.swift | tested (B3) | centre lines, focus on/off — wired into RankedDonutView |
+| Packages/Core/Sources/Core/DemoArguments.swift | tested (B3) | launch-arg parsing; DemoMode delegates, invalid args surface in the marker |
 | Packages/Core/Tests/CoreTests/AppCalendarTests.swift | tested | — |
 | Packages/Core/Tests/CoreTests/ChartGeometryStatusPartsTests.swift | tested | — |
 | Packages/Core/Tests/CoreTests/CoreTests.swift | tested | — |
 | Packages/Core/Tests/CoreTests/SummaryLogicTests.swift | tested | — |
+| Packages/Core/Tests/CoreTests/SummaryTextAndArgsTests.swift | tested (B3) | centre lines, arg parsing, UK interval edges across both clock changes |
 
 ## App target (17 files)
 
@@ -88,8 +91,11 @@ package, covered by the 90 passing tests; **deleted** = removed.
 
 ## Summary
 
-Defects found by this review: **5** (HomeScreen deferred-let — the run
-24 failure; DemoPeriod marker drift; three warnings; one missing
-import). All fixed for run 25 (A1). Everything else was read and either
-type-checked clean in run 24 or is test-covered. Level until a green
-build lands: **uncompiled**.
+Defects found by this review: **5** (HomeScreen deferred-let — the run 24
+failure; DemoPeriod marker drift; three warnings; one missing import).
+All fixed, then two more surfaced by the build runs and fixed:
+`homeCard` without `@ViewBuilder` (run 26, if-expression rule) and the
+non-exhaustive `dataSet` switches (run 27, narrow-enum fix). Final
+verdict: **run 28 BUILD SUCCEEDED** and screens run 26 captured the
+core 15 — the level for every file above is now **compiles** (and
+**captured** for the screens in the manifest).
