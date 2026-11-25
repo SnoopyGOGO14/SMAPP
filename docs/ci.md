@@ -28,7 +28,9 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 32 (`f0fdc58`) | screens (run 29) | **failure (9m) — but all 16 captures landed, every marker matched** | the duplicate check did its job: `summary-day2-dark` was pixel-identical to `summary-daily-dark` — the day pills had no *selected* style, so picking a day changed nothing visible. Real W1 gap; fixed in `22344cb` (the selected pill takes the inverted style) |
 | 33 (`22344cb`) | screens (run 30) | **failure (1m)** | my pill fix reintroduced failure class 8 (deferred `let` in a ViewBuilder) — SummaryScreen:155; the first screens run whose logs arrived (the `git add -A` staging works) |
 | 34 (`7377c25`) | screens (run 31) | **all 16 captures, markers clean; the only flag a benign duplicate** | day 2 = today (Wednesday), so `-day 2` and the plain daily capture correctly showed the same image; the workflow now uses `-day 0` (collides only on Mondays). Round 4 stands on these captures |
-| — (`012b8df`+) | — | — | close-out: READY banner, records, `-day 0` — no further runs (budget 4 of 2 screens, 1 of 4 builds) |
+| 35 (`124f776`) | build (run 34) | failure (1m) | failure class 15: the type-checker timed out on the untyped literal chain in `monthBase`; broken into typed sub-expressions |
+| 36 (`ec3f623`) | build (run 35) | **success (2m)** | X1–X9 compile; the round-5 capture run follows |
+| — | — | — | X-round budget: 2 of 3 builds used, 1 of 2 screens |
 
 ## Run numbering note
 
