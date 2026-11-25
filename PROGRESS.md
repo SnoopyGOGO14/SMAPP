@@ -66,10 +66,12 @@ summary below.
 
 ### State
 
-- 111 Core tests pass (7 new: DemoSeries ×6, arg-parser day handling
-  covered by existing suite); preflight passes (86 files parse, SF
+- **Run 30 (`3f9f517`): BUILD SUCCEEDED** — all W1–W14 fixes compiled
+  first try (2 minutes).
+- 111 Core tests pass (6 new: DemoSeries; arg-parser day handling
+  covered by the existing suite); preflight passes (86 files parse, SF
   Symbol allow-list, `-day`).
-- Builds used: 1 (the W push). Screenshots: 0 of 2 this round.
+- Builds used: 1 of 4. Screenshots: 0 of 2 this round.
 - Note: `SMAPP-screens-round3.jpg` sits unread in the folder — GLM has
   no image input; the review's text list is the authority.
 

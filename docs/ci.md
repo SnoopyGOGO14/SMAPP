@@ -23,7 +23,8 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 26 | `c9ad31b` | build | failure (1m) | one error: `homeCard` — computed property without `@ViewBuilder`, so Swift 5.9's if-expression rule demanded matching branch types. Everything else type-checked clean (Core-test skip + caches in effect). |
 | 27 | `e355b82` | build | failure (1m) | three errors: DemoData switches over `period.dataSet` not exhaustive — dataSet returned the *full* 6-case enum; fixed with a narrow `DataSet` enum (failure class 14) |
 | 28 | `22895ca` | build | **success (1m)** | A1 green — all three targets, Xcode 26.6; first green build since run 19 (18 Nov). This push slipped out with preflight failing (piped through `tail`, exit status masked — the classic chain hazard); the failure was a script artifact ("3-case enum" comment), regex since hardened |
-| 29 (`2997d30`) | screens | **success (9m, screens run 26)** | A2: 15 core captures, all markers matched, all checksums unique |
+| 30 (`3f9f517`) | build | **success (2m)** | all W1–W14 fixes compiled first try |
+| 31 | screens | pending | round-4 core captures (16, incl. `summary-day2-dark`) |
 
 ## Run numbering note
 
