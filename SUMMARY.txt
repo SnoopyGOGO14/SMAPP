@@ -1,39 +1,6 @@
-/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:73:13: warning: initialization of immutable value 'total' was never used; consider replacing with assignment to '_' or removing it
-/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:177:16: warning: value 'rank' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:73:13: warning: initialization of immutable value 'total' was never used; consider replacing with assignment to '_' or removing it
-/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:177:16: warning: value 'rank' was defined but never used; consider replacing with boolean test
-2026-11-25 11:29:15.859 appintentsmetadataprocessor[3813:14983] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-25 11:29:27.590 appintentsmetadataprocessor[4124:15789] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:29:25: error: type '()' cannot conform to 'View'
-/Users/runner/work/SMAPP/SMAPP/App/Monitoring/MonitoringScheduler.swift:42:24: warning: no calls to throwing functions occur within 'try' expression
-/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:73:13: warning: initialization of immutable value 'total' was never used; consider replacing with assignment to '_' or removing it
-/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:177:16: warning: value 'rank' was defined but never used; consider replacing with boolean test
+2026-11-25 11:45:06.544 appintentsmetadataprocessor[2484:11190] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 11:45:15.556 appintentsmetadataprocessor[2651:11714] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:105:17: error: branches have mismatching types 'some View' and 'ModifiedContent<HeroCardView, AccessibilityAttachmentModifier>'
 ** BUILD FAILED **
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.008 (0.011) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.009 (0.011) seconds
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 90 tests, with 0 failures (0 unexpected) in 0.051 (0.072) seconds
-	 Executed 90 tests, with 0 failures (0 unexpected) in 0.051 (0.076) seconds
-commit: c3a6e3bab9fe97f800548b2a89321fc92a7cb681 status: failure run: 24
+commit: c9ad31bb66e28f81155af5c223df531ee1f31ce5 status: failure run: 26
