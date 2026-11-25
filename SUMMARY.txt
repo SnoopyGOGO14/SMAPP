@@ -1,26 +1,39 @@
+/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:73:13: warning: initialization of immutable value 'total' was never used; consider replacing with assignment to '_' or removing it
+/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:177:16: warning: value 'rank' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:73:13: warning: initialization of immutable value 'total' was never used; consider replacing with assignment to '_' or removing it
+/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:177:16: warning: value 'rank' was defined but never used; consider replacing with boolean test
+2026-11-25 11:29:15.859 appintentsmetadataprocessor[3813:14983] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-25 11:29:27.590 appintentsmetadataprocessor[4124:15789] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:29:25: error: type '()' cannot conform to 'View'
 /Users/runner/work/SMAPP/SMAPP/App/Monitoring/MonitoringScheduler.swift:42:24: warning: no calls to throwing functions occur within 'try' expression
-/Users/runner/work/SMAPP/SMAPP/App/Monitoring/MonitoringScheduler.swift:42:24: warning: no calls to throwing functions occur within 'try' expression
-/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/App/Target/TargetScreen.swift:133:25: error: no exact matches in reference to static method 'buildExpression'
+/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:73:13: warning: initialization of immutable value 'total' was never used; consider replacing with assignment to '_' or removing it
+/Users/runner/work/SMAPP/SMAPP/SharedUI/RankedDonutView.swift:177:16: warning: value 'rank' was defined but never used; consider replacing with boolean test
 ** BUILD FAILED **
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.008 (0.011) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
 	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.009 (0.011) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
 	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 65 tests, with 0 failures (0 unexpected) in 0.020 (0.027) seconds
-	 Executed 65 tests, with 0 failures (0 unexpected) in 0.020 (0.032) seconds
-commit: 2a88ffe8c4102a840c56db3bbd02f5da19d6f84b status: failure run: 21
+	 Executed 90 tests, with 0 failures (0 unexpected) in 0.051 (0.072) seconds
+	 Executed 90 tests, with 0 failures (0 unexpected) in 0.051 (0.076) seconds
+commit: c3a6e3bab9fe97f800548b2a89321fc92a7cb681 status: failure run: 24
