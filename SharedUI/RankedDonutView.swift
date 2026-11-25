@@ -84,7 +84,7 @@ struct RankedDonutView: View {
                     DonutArc(
                         startFraction: start,
                         endFraction: cap,
-                        color: RankColors.color(item.rank),
+                        color: RankColors.color(item.rank, position: item.position),
                         lineWidth: diameter * (focusedRank == item.rank ? 0.15 : 0.12)
                     )
                     .opacity(focusedRank == nil || focusedRank == item.rank ? 1 : 0.22)
@@ -123,22 +123,40 @@ struct RankedDonutView: View {
 
     // MARK: - Centre
 
+    /// The three centre lines, pure logic in Core (B3): period label,
+    /// total and top app — or the focused app's name, time and share.
+    private var centreLines: Core.SummaryText.Lines {
+        let top = configuration.topItem.map { item in
+            (name: displayName(item), minutes: item.minutes)
+        }
+        var focused: (name: String, minutes: Double, sharePercent: Double)?
+        if let rank = focusedRank, let item = item(at: rank) {
+            focused = (name: displayName(item), minutes: item.minutes, sharePercent: item.sharePercent)
+        }
+        return Core.SummaryText.centre(
+            periodLabel: configuration.periodLabel,
+            totalMinutes: configuration.totalMinutes,
+            top: top,
+            focused: focused
+        )
+    }
+
     private var centre: some View {
         VStack(spacing: 2) {
-            Text(centreLabel)
-                .font(.system(size: 10, weight: .medium))
+            Text(centreLines.label)
+                .font(SummaryFonts.display(10, weight: .medium))
                 .tracking(2)
                 .textCase(.uppercase)
                 .foregroundStyle(focusedRank == nil ? Color("SecondaryText") : Color("Focus"))
-            Text(centreValue)
-                .font(.system(size: totalSize, weight: .bold))
+            Text(centreLines.value)
+                .font(SummaryFonts.display(totalSize))
                 .tracking(-0.5)
                 .foregroundStyle(Color("PrimaryText"))
                 .contentTransition(.numericText())
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-            Text(centreThird)
-                .font(.system(size: 11, weight: .semibold))
+            Text(centreLines.third)
+                .font(SummaryFonts.display(11, weight: .semibold))
                 .tracking(0.2)
                 .textCase(.uppercase)
                 .foregroundStyle(thirdColour)
@@ -148,36 +166,12 @@ struct RankedDonutView: View {
         .allowsHitTesting(false)
     }
 
-    private var centreLabel: String {
-        if let rank = focusedRank, let item = item(at: rank) {
-            return displayName(item)
-        }
-        return configuration.periodLabel
-    }
-
-    private var centreValue: String {
-        if let rank = focusedRank, let item = item(at: rank) {
-            return Core.HoursFormat.hours(minutes: item.minutes)
-        }
-        return Core.HoursFormat.total(minutes: configuration.totalMinutes)
-    }
-
-    private var centreThird: String {
-        if let rank = focusedRank, let item = item(at: rank) {
-            return String(format: "%.1f%% OF TOTAL", item.sharePercent)
-        }
-        if let top = configuration.topItem {
-            return "\(displayName(top).uppercased()) \(Core.HoursFormat.hours(minutes: top.minutes).uppercased())"
-        }
-        return ""
-    }
-
     private var thirdColour: Color {
         if focusedRank != nil {
             return Color("Focus")
         }
         if let top = configuration.topItem {
-            return RankColors.color(top.rank)
+            return RankColors.color(top.rank, position: top.position)
         }
         return Color("SecondaryText")
     }

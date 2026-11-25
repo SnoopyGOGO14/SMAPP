@@ -54,9 +54,13 @@ struct SummaryScreen: View {
     // MARK: - Period tabs
 
     private var periods: [Core.SummaryPeriod] {
-        // Yearly stays hidden until history depth is measured on a
-        // device (plan §4).
-        return [.daily(day: nil), .weekly, .monthly]
+        // B7: Yearly is one switch — hidden until a device proves a
+        // year of history (08 plan §11).
+        var list: [Core.SummaryPeriod] = [.daily(day: nil), .weekly, .monthly]
+        if SummaryDefaults.showYearly {
+            list.append(.yearly)
+        }
+        return list
     }
 
     private var periodTabs: some View {

@@ -61,7 +61,7 @@ Nothing else on this screen. The per-app on/off switch lives on App detail; the 
 5. Two stats: daily average, days within target.
 6. One button: "Target 1h a day · Change" (sheet with a stepper in 15-minute steps and "Remove target").
 
-## All apps (Stats tab)
+## All apps (Stats tab) — REPLACED 25 November by the Summary page (08 plan); kept for reference
 
 1. "All apps" and the date; period switch (Today, 7 days, Month).
 2. Donut: one segment per platform sized by time. Centre: total time and "of 3h". No labels on the ring.
@@ -79,9 +79,7 @@ Usage figures can only be drawn by the `UsageReport` extension. Navigation, swit
 | Home row: time and bar | `UsageReport`, context `appRow`, one small embedded report per row, single-token filter, `.allowsHitTesting(false)` so the host row receives the tap |
 | App detail: back, title, switch, period switch, target button | Main app |
 | App detail: today card, period card, two stats | `UsageReport`, context `appDetail` |
-| All apps: title, period switch | Main app |
-| All apps: donut and centre total | `UsageReport`, context `allApps` |
-| All apps row: colour dot, name, tap | Main app |
-| All apps row: time | `UsageReport`, context `appTime`, one per row, hit testing off |
+| Summary: period tabs, day pills, focus chrome | Main app |
+| Summary: ranked donut, centre text, app cards | `UsageReport`, context `summary` |
 
 One embedded report per row keeps taps in the main app. It is unproven on a device. Fallback if several embedded reports perform badly: one report drawing all rows at a fixed height, with the host overlaying transparent tap areas in the same order.

@@ -18,7 +18,7 @@ struct AppShareCard: View {
             HStack {
                 HStack(spacing: 10) {
                     Circle()
-                        .fill(RankColors.color(item.rank))
+                        .fill(RankColors.color(item.rank, position: item.position))
                         .frame(width: 10, height: 10)
                     name
                         .font(.subheadline.weight(.medium))
@@ -41,7 +41,7 @@ struct AppShareCard: View {
                 ZStack(alignment: .leading) {
                     Rectangle().fill(Color("BarTrack"))
                     Rectangle()
-                        .fill(RankColors.color(item.rank))
+                        .fill(RankColors.color(item.rank, position: item.position))
                         .frame(width: proxy.size.width * min(item.sharePercent / 100, 1))
                 }
             }
@@ -99,6 +99,24 @@ public struct SummaryView: View {
             ForEach(configuration.items) { item in
                 AppShareCard(item: item, focusedRank: $focusedRank)
             }
+            footerStrip
+        }
+    }
+
+    /// B7: the mock's footer strip, off by default (one switch).
+    @ViewBuilder
+    private var footerStrip: some View {
+        if SummaryDefaults.showFooterStrip {
+            HStack {
+                Text("Social Monitoring Stats")
+                    .font(.caption2.weight(.medium))
+                    .tracking(1.2)
+                    .textCase(.uppercase)
+                    .foregroundStyle(Color("MutedText"))
+                Spacer()
+            }
+            .padding(.top, 8)
+            .accessibilityHidden(true)
         }
     }
 }

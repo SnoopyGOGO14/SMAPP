@@ -155,6 +155,15 @@ def enum_cases(name):
     return set(re.findall(r"case\s+`?(\w+)`?", m.group(1))) if m else set()
 states = enum_cases("DemoState")
 periods = enum_cases("DemoPeriod")
+# B3: DemoMode's enums and Core.DemoArguments' legal sets must agree.
+coreargs = (root / "Packages/Core/Sources/Core/DemoArguments.swift").read_text()
+def core_list(name):
+    m = re.search(rf"public static let {name}\s*=\s*\[(.*?)\]", coreargs, re.S)
+    return set(re.findall(r'"([^"]+)"', m.group(1))) if m else set()
+if enum_cases("DemoState") != core_list("states"):
+    failures.append("6 DemoMode.DemoState cases and Core.DemoArguments.states drifted apart")
+if enum_cases("DemoPeriod") != core_list("periods"):
+    failures.append("6 DemoMode.DemoPeriod cases and Core.DemoArguments.periods drifted apart")
 screens_wf = (root / ".github/workflows/screens.yml").read_text()
 # routing table from SocialTimeMonitorApp.swift (switch DemoMode.screen)
 app = (root / "App/SocialTimeMonitorApp.swift").read_text()

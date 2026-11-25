@@ -18,14 +18,34 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # B4: the full history of the pushed branch, so HEAD^ and
+          # git diff against the previous commit work.
+          fetch-depth: 2
       - name: Toolchain
         run: |
           xcodebuild -version | tee ci-toolchain.log
+          echo "JOB_START_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
           brew install xcodegen
+      - name: Cache (B4)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            ~/Library/Developer/Xcode/DerivedData
+          key: xcode-${{ runner.os }}-${{ hashFiles('project.yml') }}
+          restore-keys: xcode-${{ runner.os }}-
       - name: Core tests
         run: |
           set -o pipefail
-          swift test --package-path Packages/Core 2>&1 | tee ci-core-tests.log
+          # B4: skip when Packages/Core is unchanged since the previous
+          # commit; the local pre-flight already ran them.
+          if git rev-parse --verify -q HEAD^ >/dev/null \
+             && git diff --quiet HEAD^ HEAD -- Packages/Core; then
+            echo "Packages/Core unchanged — Core tests skipped" | tee ci-core-tests.log
+          else
+            swift test --package-path Packages/Core 2>&1 | tee ci-core-tests.log
+          fi
       - name: Generate project
         run: |
           set -o pipefail
@@ -46,7 +66,8 @@ jobs:
           cp ci-*.log out/ 2>/dev/null || true
           grep -hE "error:|warning:|BUILD (SUCCEEDED|FAILED)|Executed .* tests|Unrecognized|not found" out/*.log > out/SUMMARY.txt 2>/dev/null || true
           echo "commit: $GITHUB_SHA status: ${{ job.status }} run: $GITHUB_RUN_NUMBER" >> out/SUMMARY.txt
-          echo "build: $GITHUB_SHA ${{ job.status }}" >> out/STATUS.txt
+          minutes=$(( ( $(date +%s) - ${JOB_START_EPOCH:-$(date +%s)} ) / 60 ))
+          echo "build: $GITHUB_SHA ${{ job.status }} ${minutes}m run:$GITHUB_RUN_NUMBER" >> out/STATUS.txt
           publish() {
             git clone -q --branch ci-logs --single-branch "$REPO" out_repo 2>/dev/null || { mkdir out_repo; cd out_repo; git init -q -b ci-logs; git remote add origin "$REPO"; cd ..; }
             mkdir -p out_repo

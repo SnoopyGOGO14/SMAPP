@@ -193,14 +193,14 @@ Per-app rows show time and share of total only; zones apply to the combined tota
 
 ## Screen specification
 
-Three tabs: **Apps**, **Stats**, **Target**. The three approved screens — Home (Apps tab), App detail, All apps (Stats tab) — are specified in **`design/DESIGN-NOTES.md`** (18 November, simplified), with exact sizes, spacing, copy and colours in `design/reference/*.dc.html`. Build exactly what those notes show; nothing extra.
+Three tabs: **Apps**, **Summary**, **Target**. Home (Apps tab) and App detail follow **`design/DESIGN-NOTES.md`** (18 November, simplified); the Stats tab is the **Summary page** per `08-SUMMARY-PAGE-PLAN.md` (25 November: it replaced the earlier All apps screen). Exact sizes, spacing, copy and colours live in `design/reference/*.dc.html` and `SKINS/`. Build exactly what those notes show; nothing extra.
 
 | Screen | Contents | Built in |
 | --- | --- | --- |
 | Onboarding (4 cards) | What the app does; what the app sees and never sees, then the system prompt; app picker (hint: tick Social and YouTube); target presets | Main app |
 | Home (Apps tab) | Per `DESIGN-NOTES.md`: "Today" + date, `homeTotal` report card, card of app rows (icon, name, time, thin bar via `appRow`) | Report card + row time/bar in `UsageReport`; rows and navigation in main app |
 | App detail | Per `DESIGN-NOTES.md`: back, icon, name, on/off switch, `appDetail` report (today card, period card, two stats), target button | Report in `UsageReport`; chrome in main app |
-| All apps (Stats tab) | Per `DESIGN-NOTES.md`: "All apps" + date, period switch, `allApps` donut report, card of rows (colour dot, name, time via `appTime`) | Donut + times in `UsageReport`; rows and period switch in main app |
+| Summary (Stats tab) | Per `08-SUMMARY-PAGE-PLAN.md` §3: period tabs with elapsed underline, day pills (Daily), one `summary` report (ranked donut with three-line centre, app cards with share and hairline bar), focus on tap | Donut + cards in `UsageReport`; tabs and pills in main app |
 | Target | Overall target: Daily or Weekly selector, presets 1h–4h a day, custom stepper (15-minute steps), live three-zone strip; master Monitoring switch; alerts switch; recaps switch; link to Settings | Main app |
 | Settings (from Target) | Amber threshold slider, week start day, permission status, privacy statement | Main app |
 

@@ -12,6 +12,9 @@ public struct SummaryItem: Identifiable, Equatable {
     public let id: Int
     /// Rank colour index (0 = largest). Also the focus identity.
     public let rank: Int
+    /// Position in the user's row order (B7: the colour-by-order
+    /// alternative); defaults to the rank.
+    public let position: Int
     /// Minutes over the chosen period.
     public let minutes: Double
     /// Share of total, percent, one decimal (e.g. 37.2).
@@ -27,10 +30,12 @@ public struct SummaryItem: Identifiable, Equatable {
         minutes: Double,
         sharePercent: Double,
         token: ApplicationToken? = nil,
-        demoName: String = ""
+        demoName: String = "",
+        position: Int? = nil
     ) {
         self.id = id
         self.rank = rank
+        self.position = position ?? rank
         self.minutes = minutes
         self.sharePercent = sharePercent
         self.token = token

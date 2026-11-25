@@ -22,7 +22,17 @@ jobs:
       - name: Toolchain
         run: |
           xcodebuild -version | tee ci-screens-toolchain.log
+          echo "JOB_START_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
           brew install xcodegen
+
+      - name: Cache (B4)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            build/DerivedData
+          key: xcode-screens-${{ runner.os }}-${{ hashFiles('project.yml') }}
+          restore-keys: xcode-screens-${{ runner.os }}-
 
       - name: Generate project
         run: xcodegen generate
@@ -184,7 +194,8 @@ jobs:
             rm -rf out_repo/screenshots
             mkdir -p out_repo/screenshots
             cp shots/* out_repo/screenshots/ 2>/dev/null || echo "no screenshots" >> out_repo/screenshots/NOTE.txt
-            echo "screens: $GITHUB_SHA ${{ job.status }}" >> out_repo/STATUS.txt
+            minutes=$(( ( $(date +%s) - ${JOB_START_EPOCH:-$(date +%s)} ) / 60 ))
+            echo "screens: $GITHUB_SHA ${{ job.status }} ${minutes}m run:$GITHUB_RUN_NUMBER" >> out_repo/STATUS.txt
             cd out_repo
             git config user.name ci
             git config user.email ci@users.noreply.github.com

@@ -5,9 +5,58 @@
 import SwiftUI
 import Core
 
+/// B7: every Summary-page ASSUMED default is one switch here, so a
+/// changed owner answer is a one-line change. The alternatives are
+/// listed in REVIEW.md ("Summary-page decisions").
+public enum SummaryDefaults {
+    /// Rank colours (default) vs the user's row order (position).
+    public static let colourByRank = true
+    /// Yearly tab hidden until a device proves a year of history.
+    public static let showYearly = false
+    /// The mock's footer strip above the tab bar (default: off).
+    public static let showFooterStrip = false
+    /// Rank palette: `rank` = Rank1–8 (default); `donut` = the Home
+    /// donut's categorical set.
+    public static let palette: Palette = .rank
+    /// Space Grotesk for display figures (needs the font bundled) vs
+    /// the system font (default).
+    public static let useSpaceGrotesk = false
+
+    public enum Palette {
+        case rank
+        case donut
+    }
+}
+
+/// Display fonts for the Summary page. System by default; Space
+/// Grotesk when `SummaryDefaults.useSpaceGrotesk` is flipped (font
+/// file must then be bundled — open licence; `Font.custom` falls back
+/// to system if it is missing, so flipping early is safe).
+public enum SummaryFonts {
+    public static func display(_ size: CGFloat, weight: Font.Weight = .bold) -> Font {
+        if SummaryDefaults.useSpaceGrotesk {
+            return Font.custom("Space Grotesk", size: size).weight(weight)
+        }
+        return .system(size: size, weight: weight)
+    }
+}
+
 public enum RankColors {
-    public static func color(_ rank: Int) -> Color {
-        return Color("Rank\(Core.Palette.index(for: rank) + 1)")
+    /// Colour for a card/segment: by rank (default) or by row order
+    /// (position), in the chosen palette set.
+    public static func color(_ rank: Int, position: Int = 0) -> Color {
+        let index: Int
+        if SummaryDefaults.colourByRank {
+            index = Core.Palette.index(for: rank)
+        } else {
+            index = Core.Palette.index(for: position)
+        }
+        switch SummaryDefaults.palette {
+        case .rank:
+            return Color("Rank\(index + 1)")
+        case .donut:
+            return PaletteColors.color(at: index)
+        }
     }
 }
 

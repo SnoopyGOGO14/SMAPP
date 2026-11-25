@@ -2,11 +2,14 @@
 // with the matching SharedUI view fed from DemoData; `-screen <name>`
 // opens one screen directly; `-card 1…4` picks the onboarding card;
 // `-state` and `-period` choose the situation shown (Part 2);
-// `-sheet target` opens the per-app target sheet. DemoMarker lets the
-// capture workflow verify the screen it photographed, including the
-// state and period suffixes. Release builds contain none of this.
+// `-sheet target` opens the per-app target sheet. Parsing is
+// `Core.DemoArguments` (B3): an invalid value is reported in the
+// marker instead of silently falling back. DemoMarker lets the capture
+// workflow verify the screen it photographed, including state, period
+// and focus suffixes. Release builds contain none of this.
 
 import Foundation
+import Core
 
 enum DemoMode {
 
@@ -40,9 +43,13 @@ enum DemoMode {
         }
     }
 
+    #if DEBUG
+    private static let parsed = Core.DemoArguments.parse(CommandLine.arguments)
+    #endif
+
     static var isEnabled: Bool {
         #if DEBUG
-        return CommandLine.arguments.contains("-demo")
+        return parsed.isEnabled
         #else
         return false
         #endif
@@ -50,7 +57,7 @@ enum DemoMode {
 
     static var screen: String? {
         #if DEBUG
-        return value(after: "-screen")
+        return parsed.screen
         #else
         return nil
         #endif
@@ -59,7 +66,7 @@ enum DemoMode {
     /// 1…4 for onboarding cards; nil otherwise.
     static var card: Int? {
         #if DEBUG
-        return value(after: "-card").flatMap(Int.init)
+        return parsed.card
         #else
         return nil
         #endif
@@ -67,7 +74,7 @@ enum DemoMode {
 
     static var state: DemoState {
         #if DEBUG
-        return value(after: "-state").flatMap(DemoState.init(rawValue:)) ?? .default
+        return DemoState(rawValue: parsed.state ?? "default") ?? .default
         #else
         return .default
         #endif
@@ -75,7 +82,7 @@ enum DemoMode {
 
     static var period: DemoPeriod? {
         #if DEBUG
-        return value(after: "-period").flatMap(DemoPeriod.init(rawValue:))
+        return parsed.period.flatMap(DemoPeriod.init(rawValue:))
         #else
         return nil
         #endif
@@ -84,7 +91,7 @@ enum DemoMode {
     /// "target" opens the per-app target sheet over App detail.
     static var sheet: String? {
         #if DEBUG
-        return value(after: "-sheet")
+        return parsed.sheet
         #else
         return nil
         #endif
@@ -93,13 +100,16 @@ enum DemoMode {
     /// Rank pre-focused on Summary or App detail (e.g. `-focus 1`).
     static var focus: Int? {
         #if DEBUG
-        return value(after: "-focus").flatMap(Int.init)
+        return parsed.focus
         #else
         return nil
         #endif
     }
 
     /// The marker a screen writes: "<screen>[/state][/period][/focus][/sheet]".
+    /// B3: a typo in the launch arguments surfaces here as
+    /// "/invalid(...)" — the capture workflow then records a MISMATCH
+    /// instead of silently photographing the default screen.
     static func markerFor(_ screen: String) -> String {
         var parts = [screen]
         if state != .default {
@@ -114,14 +124,12 @@ enum DemoMode {
         if sheet != nil {
             parts.append("sheet")
         }
+        #if DEBUG
+        if !parsed.invalid.isEmpty {
+            parts.append("invalid(" + parsed.invalid.joined(separator: ",") + ")")
+        }
+        #endif
         return parts.joined(separator: "/")
-    }
-
-    private static func value(after flag: String) -> String? {
-        let arguments = CommandLine.arguments
-        guard let index = arguments.firstIndex(of: flag),
-              index + 1 < arguments.count else { return nil }
-        return arguments[index + 1]
     }
 }
 

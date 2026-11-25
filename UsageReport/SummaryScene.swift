@@ -47,7 +47,8 @@ struct SummaryScene: DeviceActivityReportScene {
                 rank: rankedApp.rank,
                 minutes: rankedApp.seconds / 60,
                 sharePercent: rankedApp.sharePercent,
-                token: entry.token
+                token: entry.token,
+                position: entry.position
             )
         }
 
