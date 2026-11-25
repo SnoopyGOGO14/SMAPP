@@ -152,7 +152,10 @@ for f in swift_files():
 dm = (root / "App/Demo/DemoMode.swift").read_text()
 def enum_cases(name):
     m = re.search(rf"enum\s+{name}[^{{]*\{{(.*?)\}}", dm, re.S)
-    return set(re.findall(r"case\s+`?(\w+)`?", m.group(1))) if m else set()
+    if not m:
+        return set()
+    # (?<![\w-]) keeps comments like "a 3-case enum" from matching.
+    return set(re.findall(r"(?<![\w-])case\s+`?(\w+)`?", m.group(1)))
 states = enum_cases("DemoState")
 periods = enum_cases("DemoPeriod")
 # B3: DemoMode's enums and Core.DemoArguments' legal sets must agree.
