@@ -58,6 +58,10 @@ jobs:
           echo "UDID=$UDID" | tee -a ci-screens-build.log
           xcrun simctl boot "$UDID" || true
           xcrun simctl bootstatus "$UDID" -b
+          # W6: let the system settle after boot so no notification
+          # banner lands over a capture (one did, in detail-focus4-dark).
+          sleep 30
+          echo "SETTLED 30s after boot" >> shots/NOTE.txt
           xcrun simctl install "$UDID" "$APP"
           mkdir -p shots
 
@@ -157,6 +161,8 @@ jobs:
           done
           capture summary/weekly/focus1 summary-weekly-focus1-dark dark -screen summary -period weekly -focus 1
           capture summary/daily summary-daily-dark dark -screen summary -period daily
+          # W1: the day pills, with a non-today pill selected.
+          capture summary/daily summary-day2-dark dark -screen summary -period daily -day 2
           capture home/over home-over-dark dark -screen home -state over
           capture home/paused home-paused-dark dark -screen home -state paused
           capture detail/week/focus4 detail-focus4-dark dark -screen detail -period week -focus 4

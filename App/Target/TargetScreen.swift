@@ -182,8 +182,16 @@ struct TargetScreen: View {
     }
 
     private var zonePreviewLine: String {
+        #if DEBUG
+        // W10: demo shows its own coherent caption — never "No target
+        // set" beneath the demo stepper's "3h a day".
+        if DemoMode.isEnabled {
+            return "Amber from 2h 15m of 3h a day"
+        }
+        #endif
         guard let target = appState.targetMinutes else { return "No target set" }
         let amberAt = Int((Double(target) * appState.settings.amberFraction).rounded())
-        return "Amber from \(DurationFormat.short(minutes: amberAt)) of \(DurationFormat.short(minutes: target))"
+        let unit = appState.targetMode == .weekly ? " a week" : " a day"
+        return "Amber from \(DurationFormat.short(minutes: amberAt)) of \(DurationFormat.short(minutes: target))\(unit)"
     }
 }

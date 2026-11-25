@@ -27,11 +27,6 @@ struct RankedDonutView: View {
     var body: some View {
         ZStack {
             donutShape(items: configuration.items)
-            if let rank = focusedRank,
-               item(at: rank) != nil,
-               let segment = segmentFractions(items: configuration.items)[safe: rank] {
-                focusOutline(start: segment.start, end: segment.end)
-            }
             centre
         }
         .frame(width: diameter, height: diameter)
@@ -81,6 +76,21 @@ struct RankedDonutView: View {
                     let start = (fraction.start + 90) / 360 // 0 at 12 o'clock
                     let end = (fraction.end + 90) / 360
                     let cap = min(end, start + max(end - start, 0) * 1 * progress)
+                    // W2: the focused segment keeps its own rank colour
+                    // and thickens; the gold outline is drawn *behind* it
+                    // (a wider arc) so it frames the segment instead of
+                    // covering it — the previous overlay recoloured the
+                    // segment solid yellow.
+                    if focusedRank == item.rank {
+                        DonutArc(
+                            startFraction: start,
+                            endFraction: cap,
+                            color: Color("Focus"),
+                            lineWidth: diameter * 0.19
+                        )
+                        .shadow(color: Color("Focus").opacity(reduceMotion ? 0 : 0.6), radius: 5)
+                        .allowsHitTesting(false)
+                    }
                     DonutArc(
                         startFraction: start,
                         endFraction: cap,
@@ -95,18 +105,6 @@ struct RankedDonutView: View {
                 }
             }
         }
-    }
-
-    private func focusOutline(start: Double, end: Double) -> some View {
-        DonutArc(
-            startFraction: (start + 90) / 360,
-            endFraction: (end + 90) / 360,
-            color: Color("Focus"),
-            lineWidth: diameter * 0.17
-        )
-        .opacity(0.9)
-        .shadow(color: Color("Focus").opacity(reduceMotion ? 0 : 0.6), radius: 5)
-        .allowsHitTesting(false)
     }
 
     private func toggleFocus(rank: Int) {

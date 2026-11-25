@@ -113,6 +113,15 @@ enum DemoMode {
         #endif
     }
 
+    /// 0…6: the day pill pre-selected on Summary's Daily view (W1).
+    static var day: Int? {
+        #if DEBUG
+        return parsed.day
+        #else
+        return nil
+        #endif
+    }
+
     /// The marker a screen writes: "<screen>[/state][/period][/focus][/sheet]".
     /// B3: a typo in the launch arguments surfaces here as
     /// "/invalid(...)" — the capture workflow then records a MISMATCH

@@ -1,7 +1,8 @@
-// RootTabs — Apps, Stats, Target. Each tab gets its own NavigationStack;
+// RootTabs — Apps, Summary, Target. Each tab gets its own NavigationStack;
 // rows navigate to App detail by token value.
 
 import SwiftUI
+import UIKit
 import FamilyControls
 
 struct RootTabs: View {
@@ -12,6 +13,9 @@ struct RootTabs: View {
     init(initialTab: Int = 0) {
         self.initialTab = initialTab
         _selection = State(initialValue: initialTab)
+        // W11: selected tab = PrimaryText, unselected = SecondaryText —
+        // no system blue anywhere (the design's rule).
+        UITabBar.appearance().unselectedItemTintColor = UIColor(named: "SecondaryText")
     }
 
     var body: some View {
@@ -25,7 +29,9 @@ struct RootTabs: View {
             NavigationStack {
                 SummaryScreen()
             }
-            .tabItem { Label("Summary", systemImage: "chart.donut") }
+            // W3: chart.pie (iOS 13+); "chart.donut" does not exist and
+            // rendered blank.
+            .tabItem { Label("Summary", systemImage: "chart.pie") }
             .tag(1)
 
             NavigationStack {
@@ -34,8 +40,8 @@ struct RootTabs: View {
             .tabItem { Label("Target", systemImage: "flag") }
             .tag(2)
         }
-        // V2/V6: no global tint — primary buttons use PrimaryButtonStyle,
-        // switches keep the system green.
+        // W11: the selected tab's icon and label take the tint.
+        .tint(Color("PrimaryText"))
         .onReceive(NotificationCenter.default.publisher(for: NotificationManager.openAppsTab)) { _ in
             selection = 0
         }

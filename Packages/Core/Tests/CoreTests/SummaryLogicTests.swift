@@ -50,9 +50,20 @@ final class HoursFormatTests: XCTestCase {
         XCTAssertEqual(Core.HoursFormat.hours(minutes: 2220), "37 hrs")
     }
 
-    func testTotalsAlwaysOneDecimal() {
+    func testWholeHoursDropTheDecimal() {
+        // W5: "8 hrs", "6 hrs", exactly one is "1 hr"; "5.3 hrs" keeps
+        // its decimal.
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 480), "8 hrs")
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 360), "6 hrs")
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 60), "1 hr")
+        XCTAssertEqual(Core.HoursFormat.hours(minutes: 421), "7 hrs")
+    }
+
+    func testTotalsFollowTheSameRule() {
         XCTAssertEqual(Core.HoursFormat.total(minutes: 5970), "99.5 hrs")
-        XCTAssertEqual(Core.HoursFormat.total(minutes: 2220), "37.0 hrs")
+        // W5: whole totals drop the ".0".
+        XCTAssertEqual(Core.HoursFormat.total(minutes: 2220), "37 hrs")
+        XCTAssertEqual(Core.HoursFormat.total(minutes: 60), "1 hr")
     }
 }
 

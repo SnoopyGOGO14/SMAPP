@@ -27,7 +27,8 @@ struct SummaryScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                periodTabs
+                titleRow
+                periodTabsControl
                 if showsDayPills {
                     dayPills
                 }
@@ -38,16 +39,33 @@ struct SummaryScreen: View {
         }
         .background(Color("Ground"))
         .navigationBarHidden(true)
-        #if DEBUG
-        .onAppear { DemoMarker.mark("summary") }
+        // W5: the last card must clear the floating tab bar when scrolled.
+        .contentMargins(.bottom, 100, for: .scrollContent)
         .onAppear {
-            if let raw = DemoMode.period {
-                period = Core.SummaryPeriod.from(rawValue: raw.rawValue)
+            #if DEBUG
+            DemoMarker.mark("summary")
+            // W1: demo arguments win over stored settings — two separate
+            // onAppears used to race, the stored period overwriting the
+            // demo one, which is why the day pills never appeared.
+            applyDemoArguments()
+            if DemoMode.isEnabled, DemoMode.period != nil || DemoMode.day != nil {
+                return
             }
-        }
-        #endif
-        .onAppear {
+            #endif
             period = appState.settings.summaryPeriod
+        }
+    }
+
+    /// The page title row, like the other tabs (W5).
+    private var titleRow: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text("Summary")
+                .font(.largeTitle.weight(.bold))
+                .foregroundStyle(Color("PrimaryText"))
+            Spacer()
+            Text(HomeScreen.dateLine)
+                .font(.footnote)
+                .foregroundStyle(Color("SecondaryText"))
         }
     }
 
@@ -63,51 +81,41 @@ struct SummaryScreen: View {
         return list
     }
 
-    private var periodTabs: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                ForEach(periods, id: \.rawValueString) { candidate in
-                    periodTab(candidate)
-                }
-            }
-            Rectangle()
-                .fill(Color("Divider"))
-                .frame(height: 1)
+    /// W12: the one period control, shared with App detail.
+    private var periodTabsControl: some View {
+        PeriodTabsControl(
+            tabs: periods.map { candidate in
+                PeriodTabsControl.Tab(
+                    title: title(candidate),
+                    elapsed: elapsedFraction(for: candidate)
+                )
+            },
+            selected: title(period)
+        ) { selectedTitle in
+            guard let candidate = periods.first(where: { title($0) == selectedTitle }) else { return }
+            period = candidate
+            appState.settings.summaryPeriod = candidate
         }
     }
 
-    private func periodTab(_ candidate: Core.SummaryPeriod) -> some View {
-        let isActive = period.rawValueString == candidate.rawValueString
-        return VStack(spacing: 4) {
-            Button {
-                period = candidate
-                appState.settings.summaryPeriod = candidate
-            } label: {
-                Text(title(candidate))
-                    .font(.caption.weight(isActive ? .bold : .semibold))
-                    .tracking(0.6)
-                    .textCase(.uppercase)
-                    .foregroundStyle(isActive ? Color("PrimaryText") : Color("MutedText"))
-            }
-            .buttonStyle(.plain)
-            .accessibilityAddTraits(isActive ? [.isSelected] : [])
-
-            // The filled part shows how much of the period has elapsed.
-            GeometryReader { proxy in
-                ZStack(alignment: .leading) {
-                    Rectangle().fill(Color("BarTrack"))
-                    if isActive {
-                        Rectangle()
-                            .fill(Color("Rank1"))
-                            .frame(width: proxy.size.width * elapsedFraction)
-                    }
-                }
-            }
-            .frame(height: 2)
-            .padding(.horizontal, 8)
+    #if DEBUG
+    /// W1: `-period` and `-day` (a pre-selected day pill) applied in one
+    /// place, before the stored period is read.
+    private func applyDemoArguments() {
+        if let raw = DemoMode.period {
+            period = Core.SummaryPeriod.from(rawValue: raw.rawValue)
         }
-        .frame(maxWidth: .infinity)
+        if let day = DemoMode.day {
+            period = .daily(
+                day: Core.SummaryPeriod.pillDate(
+                    index: day,
+                    weekStartsOn: appState.settings.weekStartsOn,
+                    calendar: ukCalendar
+                )
+            )
+        }
     }
+    #endif
 
     private func title(_ period: Core.SummaryPeriod) -> String {
         switch period {
@@ -118,15 +126,13 @@ struct SummaryScreen: View {
         }
     }
 
-    private var elapsedFraction: Double {
-        switch period {
+    private func elapsedFraction(for candidate: Core.SummaryPeriod) -> Double {
+        switch candidate {
         case .daily:
             return Core.PeriodProgress.dayFraction(calendar: ukCalendar)
         case .weekly:
             return Core.PeriodProgress.weekFraction(weekStartsOn: appState.settings.weekStartsOn, calendar: ukCalendar)
-        case .monthly:
-            return Core.PeriodProgress.monthFraction(calendar: ukCalendar)
-        case .yearly:
+        case .monthly, .yearly:
             return Core.PeriodProgress.monthFraction(calendar: ukCalendar)
         }
     }

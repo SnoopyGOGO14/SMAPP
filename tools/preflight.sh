@@ -148,6 +148,25 @@ for f in swift_files():
         if name not in images:
             failures.append(f'5 Image("{name}") not in any catalogue (in {f})')
 
+# ---- 5b SF Symbol names (W3): every systemImage:/systemName: must be
+# on the allow-list in tools/sf-symbols.txt (verified for iOS 17.4).
+sf_allowed = set()
+sf_path = root / "tools" / "sf-symbols.txt"
+if sf_path.exists():
+    for line in sf_path.read_text().splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            sf_allowed.add(line)
+else:
+    failures.append("5b tools/sf-symbols.txt missing")
+for f in swift_files():
+    t = f.read_text()
+    names = re.findall(r'systemImage:\s*"([^"]+)"', t)
+    names += re.findall(r'Image\(systemName:\s*"([^"]+)"\)', t)
+    for name in names:
+        if name not in sf_allowed:
+            failures.append(f"5b SF Symbol \"{name}\" not on the allow-list (in {f}) — check it against iOS 17.4")
+
 # ---- 6 screens.yml launch args and markers, mirrored from DemoMode.swift
 dm = (root / "App/Demo/DemoMode.swift").read_text()
 def enum_cases(name):
@@ -176,7 +195,7 @@ for line in app.splitlines():
     if stripped.startswith("case "):
         routed |= set(re.findall(r'"(\w+)"', stripped))
 routed |= {"home"}  # home = default tab
-known_flags = {"-demo", "-screen", "-state", "-period", "-sheet", "-focus", "-card"}
+known_flags = {"-demo", "-screen", "-state", "-period", "-sheet", "-focus", "-card", "-day"}
 for line in screens_wf.splitlines():
     # In the raw workflow the third argument is either the literal
     # $appearance (the light/dark loop) or an explicit appearance.
@@ -219,6 +238,9 @@ for line in screens_wf.splitlines():
         elif flag == "-card":
             if val not in {"1", "2", "3", "4", "$card"}:
                 failures.append(f"6 screens.yml -card {val} out of range ({name})")
+        elif flag == "-day":
+            if not (val.isdigit() and 0 <= int(val) <= 6):
+                failures.append(f"6 screens.yml -day {val} out of 0-6 ({name})")
         i += 2
     # markerFor mirror: screen[/state][/period][/focus][/sheet]
     parts = [screen or "?"]

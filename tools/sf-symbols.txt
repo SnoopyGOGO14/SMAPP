@@ -1,0 +1,12 @@
+# SF Symbol allow-list (W3) — every `systemImage:` / `systemName:`
+# name used in the app must appear here, verified to exist in SF
+# Symbols for iOS 17.4. A name that does not exist renders blank
+# ("chart.donut" was invented and drew nothing).
+#
+# Add a line ONLY after checking the name against Apple's SF Symbols
+# catalogue for the 17.4 era.
+chart.pie
+flag
+square.grid.2x2
+chevron.left
+chevron.right

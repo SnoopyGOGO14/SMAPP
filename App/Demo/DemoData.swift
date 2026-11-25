@@ -29,7 +29,8 @@ enum DemoData {
     static var homeTotal: HomeTotalConfiguration {
         switch DemoMode.state {
         case .default:
-            return HomeTotalConfiguration(usedMinutes: 166, allowanceMinutes: 180)
+            // W4: the same total the Summary's Daily view adds up.
+            return HomeTotalConfiguration(usedMinutes: Core.DemoSeries.dailyTotal, allowanceMinutes: 180)
         case .over:
             // 3h 20m of 3h — red.
             return HomeTotalConfiguration(usedMinutes: 200, allowanceMinutes: 180)
@@ -37,9 +38,9 @@ enum DemoData {
             // 1h 05m of 3h — green.
             return HomeTotalConfiguration(usedMinutes: 65, allowanceMinutes: 180)
         case .notarget:
-            return HomeTotalConfiguration(usedMinutes: 166, allowanceMinutes: nil)
+            return HomeTotalConfiguration(usedMinutes: Core.DemoSeries.dailyTotal, allowanceMinutes: nil)
         case .paused, .noapps, .noaccess:
-            return HomeTotalConfiguration(usedMinutes: 166, allowanceMinutes: 180)
+            return HomeTotalConfiguration(usedMinutes: Core.DemoSeries.dailyTotal, allowanceMinutes: 180)
         }
     }
 
@@ -54,44 +55,54 @@ enum DemoData {
     }
 
 
-    /// A per-app total over a period: today as-is; week and month from
-    /// the deterministic series so charts and rows agree.
+    /// A per-app total over a period (W4): today from the app's daily
+    /// figure; week and month from the same per-app series App detail
+    /// draws (`Core.DemoSeries`).
     static func periodMinutes(_ app: DemoApp, period: DemoMode.DemoPeriod) -> Double {
         switch period.dataSet {
         case .today:
             return app.todayMinutes
         case .week:
-            return weekSeries(index: app.paletteIndex).reduce(0, +)
+            return Core.DemoSeries.weekTotal(index: app.paletteIndex)
         case .month:
-            return monthSeries(index: app.paletteIndex).reduce(0, +)
+            return Core.DemoSeries.monthTotal(index: app.paletteIndex)
         }
     }
 
     // MARK: - Detail by period
 
-    /// App detail for TikTok. `period` picks the card's data; the week
-    /// values are the mock's (44, 61, 38, 82, 49, 41, 58 against a
-    /// 60-minute target); the month comes from the 30-day series.
+    /// App detail for TikTok, drawn from `Core.DemoSeries` (W4/W8/W9):
+    /// the design's week series with 40 s on today, the month series
+    /// ending on the same today figure, and per-day titles for the
+    /// focused line (W7).
     static func appDetail(period: DemoMode.DemoPeriod = .week) -> AppDetailConfiguration {
         let values: [Double]
         let labels: [String]
+        let titles: [String]
         let todayMinutes: Double
         switch period.dataSet {
         case .today:
-            values = [58]
+            values = [Core.DemoSeries.dailyMinutes[0] + 40.0 / 60]
             labels = ["T"]
-            todayMinutes = 58
+            titles = ["Today"]
+            todayMinutes = values[0]
         case .week:
-            values = [44, 61, 38, 82, 49, 41, 58]
+            let series = Core.DemoSeries.week(index: 0)
+            values = series
             labels = ["W", "T", "F", "S", "S", "M", "T"]
-            todayMinutes = 58
+            titles = ["Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"]
+            // W9: today's figure is identical across periods.
+            todayMinutes = series.last ?? Core.DemoSeries.dailyMinutes[0]
         case .month:
-            let series = monthSeries(index: 0)
+            let series = Core.DemoSeries.month(index: 0)
             values = series
             labels = series.enumerated().map { index, _ in
                 Core.DayAxis.label(for: index, inWeek: false, weekdayInitials: [], weekdayIndex: 0)
             }
-            todayMinutes = series.last ?? 58
+            titles = series.enumerated().map { index, _ in
+                Self.monthTitle(index)
+            }
+            todayMinutes = series.last ?? Core.DemoSeries.dailyMinutes[0]
         }
 
         let totalSeconds = Int(values.reduce(0, +) * 60)
@@ -103,9 +114,10 @@ enum DemoData {
         let days = values.enumerated().map { index, minutes in
             AppDetailConfiguration.DayValue(
                 id: index,
-                label: period == .month ? labels[index] : labels[index],
+                label: labels[index],
                 minutes: minutes,
-                isToday: index == values.count - 1
+                isToday: index == values.count - 1,
+                title: titles[index]
             )
         }
 
@@ -121,65 +133,58 @@ enum DemoData {
         )
     }
 
-    // MARK: - All apps by period
-
+    /// "12 Nov" — a date in the current month at the day the index
+    /// represents (W7, month focus line).
+    private static func monthTitle(_ index: Int) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM"
+        var comps = Calendar.current.dateComponents([.year, .month], from: Date())
+        comps.day = min(index + 1, 28)
+        let date = Calendar.current.date(from: comps) ?? Date()
+        return formatter.string(from: date)
+    }
 
     // MARK: - Summary (08 plan §9)
 
-    /// The mock's six figures: weekly 37/29/19/8/6/0.5 hrs (total
-    /// 99.5), monthly 148/116/76/32/24/2, daily the shared five only
-    /// (total 2h 46m), ranked largest-first.
+    /// W4: one coherent data set — daily = Home's five figures; weekly
+    /// and monthly built from the same per-app series App detail draws
+    /// (`Core.DemoSeries`). Ranked largest-first.
     static func summary(period: DemoMode.DemoPeriod) -> SummaryConfiguration {
-        let names = ["TikTok", "WhatsApp", "Facebook", "YouTube", "X", "Instagram"]
-        let daily = [58.0, 52.0, 31.0, 14.0, 11.0]
-        let weekly = [2220.0, 1740.0, 1140.0, 480.0, 360.0, 30.0]
-        let monthly = [8880.0, 6960.0, 4560.0, 1920.0, 1440.0, 120.0]
-
+        let apps = DemoData.apps
         let minutes: [Double]
         let label: String
         switch period.dataSet {
         case .today:
-            minutes = daily
+            minutes = apps.map { $0.todayMinutes }
             label = "Daily usage"
         case .week:
-            minutes = weekly
+            minutes = apps.map { Core.DemoSeries.weekTotal(index: $0.paletteIndex) }
             label = "Weekly usage"
         case .month:
-            minutes = monthly
+            minutes = apps.map { Core.DemoSeries.monthTotal(index: $0.paletteIndex) }
             label = "Monthly usage"
         }
 
         let total = minutes.reduce(0, +)
-        let items = minutes.enumerated().map { index, value in
-            SummaryItem(
-                id: index,
-                rank: index,
-                minutes: value,
-                sharePercent: (value / total * 1000).rounded() / 10,
-                demoName: names[index]
-            )
-        }
+        // Rank by time (largest first); position keeps palette order.
+        let items = minutes.enumerated()
+            .sorted { $0.element > $1.element }
+            .enumerated()
+            .map { rank, entry in
+                SummaryItem(
+                    id: rank,
+                    rank: rank,
+                    minutes: entry.element,
+                    sharePercent: total > 0 ? (entry.element / total * 1000).rounded() / 10 : 0,
+                    demoName: apps[entry.offset].name,
+                    position: entry.offset
+                )
+            }
         return SummaryConfiguration(
             periodLabel: label,
             totalMinutes: total,
             items: items
         )
-    }
-
-    // MARK: - Deterministic series
-
-    /// Seven values in the mock's range, stable for a given app index.
-    static func weekSeries(index: Int) -> [Double] {
-        return (0..<7).map { day in
-            Double(((index + 1) * ((day + 3) % 5) * 11 + day * 7 + 24) % 58 + 20)
-        }
-    }
-
-    /// Thirty values for the month view, stable for a given app index.
-    static func monthSeries(index: Int) -> [Double] {
-        return (0..<30).map { day in
-            Double(((index + 1) * ((day + 2) % 7) * 9 + (day % 5) * 8 + 16) % 74 + 8)
-        }
     }
 }
 #endif

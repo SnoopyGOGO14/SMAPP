@@ -177,20 +177,24 @@ struct HomeScreen: View {
 
     #if DEBUG
     private func demoRow(_ app: DemoData.DemoApp) -> some View {
-        HStack(spacing: 14) {
-            // V9: the original tile set, palette-matched to the donut.
-            Image("DemoIcon0\(app.paletteIndex + 1)Solid")
-                .resizable()
-                .frame(width: 36, height: 36)
-            Text(app.name)
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(Color("PrimaryText"))
-            Spacer()
+        // W13/W14: the report (time + bar) spans the full row width;
+        // the tile+name label sits over its first line. Demo rows are
+        // in descending usage order, so the row index is the rank —
+        // the tile colour matches the Summary's rank colours.
+        AppRowShell {
+            HStack(spacing: 10) {
+                DemoTile(rank: demoRowIndex(of: app), initials: app.initials)
+                Text(app.name)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Color("PrimaryText"))
+            }
+        } report: {
             AppRowReportView(configuration: DemoData.appRow(app))
-                .frame(width: 150)
         }
-        .padding(.horizontal, 16)
-        .frame(height: 64)
+    }
+
+    private func demoRowIndex(of app: DemoData.DemoApp) -> Int {
+        return DemoData.apps.firstIndex(where: { $0.name == app.name }) ?? 0
     }
     #endif
 

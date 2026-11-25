@@ -20,6 +20,8 @@ public struct DemoArguments: Equatable {
     public let sheet: String?
     /// 1…4 for onboarding cards.
     public let card: Int?
+    /// 0…6: the day pill pre-selected on Summary's Daily view (W1).
+    public let day: Int?
     /// Flags that carried values outside the legal sets.
     public let invalid: [String]
 
@@ -31,7 +33,7 @@ public struct DemoArguments: Equatable {
     public static let sheets = ["target"]
 
     /// Parses `-demo -screen home -state over -period weekly -focus 1
-    /// -sheet target -card 2` style arguments. Unknown flags are
+    /// -sheet target -card 2 -day 3` style arguments. Unknown flags are
     /// ignored; known flags with invalid values land in `invalid`.
     public static func parse(_ arguments: [String]) -> DemoArguments {
         var screen: String?
@@ -40,6 +42,7 @@ public struct DemoArguments: Equatable {
         var focus: Int?
         var sheet: String?
         var card: Int?
+        var day: Int?
         var invalid: [String] = []
         var enabled = false
 
@@ -93,6 +96,13 @@ public struct DemoArguments: Equatable {
                     invalid.append("card=\(value)")
                 }
                 index += 2
+            case "-day":
+                if let value, let n = Int(value), (0...6).contains(n) {
+                    day = n
+                } else if let value {
+                    invalid.append("day=\(value)")
+                }
+                index += 2
             default:
                 index += 1
             }
@@ -106,6 +116,7 @@ public struct DemoArguments: Equatable {
             focus: focus,
             sheet: sheet,
             card: card,
+            day: day,
             invalid: invalid
         )
     }

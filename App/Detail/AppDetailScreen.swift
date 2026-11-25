@@ -58,9 +58,8 @@ struct AppDetailScreen: View {
         HStack(spacing: 10) {
             #if DEBUG
             if DemoMode.isEnabled {
-                Image("DemoIcon01Solid")
-                    .resizable()
-                    .frame(width: 32, height: 32)
+                // W14: the demo tile in the Summary's rank colour.
+                DemoTile(rank: 0, initials: "Ti", size: 32)
                 Text("TikTok")
                     .font(.headline)
                     .foregroundStyle(Color("PrimaryText"))
@@ -78,16 +77,47 @@ struct AppDetailScreen: View {
     }
 
     private var periodSwitch: some View {
-        Picker("Period", selection: Binding(
-            get: { appState.statsPeriod },
-            set: { appState.setStatsPeriod($0) }
-        )) {
-            Text("Today").tag(Core.Period.day)
-            Text("7 days").tag(Core.Period.week)
-            Text("Month").tag(Core.Period.month)
+        // W12: the one period control — the Summary's tab style and
+        // wording (Daily, Weekly, Monthly) with the elapsed underline.
+        let uk = Core.AppCalendar.uk()
+        return PeriodTabsControl(
+            tabs: [
+                PeriodTabsControl.Tab(
+                    title: "Daily",
+                    elapsed: Core.PeriodProgress.dayFraction(calendar: uk)
+                ),
+                PeriodTabsControl.Tab(
+                    title: "Weekly",
+                    elapsed: Core.PeriodProgress.weekFraction(
+                        weekStartsOn: appState.settings.weekStartsOn,
+                        calendar: uk
+                    )
+                ),
+                PeriodTabsControl.Tab(
+                    title: "Monthly",
+                    elapsed: Core.PeriodProgress.monthFraction(calendar: uk)
+                )
+            ],
+            selected: titleForPeriod(appState.statsPeriod)
+        ) { selected in
+            appState.setStatsPeriod(periodForTitle(selected))
         }
-        .pickerStyle(.segmented)
-        .frame(height: 40)
+    }
+
+    private func titleForPeriod(_ period: Core.Period) -> String {
+        switch period {
+        case .day, .hour: return "Daily"
+        case .week: return "Weekly"
+        case .month: return "Monthly"
+        }
+    }
+
+    private func periodForTitle(_ title: String) -> Core.Period {
+        switch title {
+        case "Weekly": return .week
+        case "Monthly": return .month
+        default: return .day
+        }
     }
 
     private var targetButton: some View {

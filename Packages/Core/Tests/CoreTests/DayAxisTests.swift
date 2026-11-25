@@ -28,9 +28,10 @@ final class DayAxisTests: XCTestCase {
     }
 
     func testMonthLabelPositions() {
-        XCTAssertEqual(Core.DayAxis.labelIndexes(count: 31), [0, 7, 14, 21, 28])
-        XCTAssertEqual(Core.DayAxis.labelIndexes(count: 28), [0, 7, 14, 21])
-        XCTAssertEqual(Core.DayAxis.labelIndexes(count: 30), [0, 7, 14, 21, 28])
+        // W9: three labels only (1, 15, 29) — five truncated at 30 slots.
+        XCTAssertEqual(Core.DayAxis.labelIndexes(count: 31), [0, 14, 28])
+        XCTAssertEqual(Core.DayAxis.labelIndexes(count: 28), [0, 14])
+        XCTAssertEqual(Core.DayAxis.labelIndexes(count: 30), [0, 14, 28])
     }
 
     func testLabelsMayRepeat() {
@@ -44,7 +45,7 @@ final class DayAxisTests: XCTestCase {
 
     func testMonthLabelIsDayNumber() {
         XCTAssertEqual(Core.DayAxis.label(for: 0, inWeek: false, weekdayInitials: [], weekdayIndex: 0), "1")
-        XCTAssertEqual(Core.DayAxis.label(for: 7, inWeek: false, weekdayInitials: [], weekdayIndex: 0), "8")
+        XCTAssertEqual(Core.DayAxis.label(for: 14, inWeek: false, weekdayInitials: [], weekdayIndex: 0), "15")
         XCTAssertEqual(Core.DayAxis.label(for: 28, inWeek: false, weekdayInitials: [], weekdayIndex: 0), "29")
         XCTAssertEqual(Core.DayAxis.label(for: 3, inWeek: false, weekdayInitials: [], weekdayIndex: 0), "")
     }

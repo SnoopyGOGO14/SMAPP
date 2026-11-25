@@ -43,9 +43,8 @@ struct DemoDetailScreen: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 10) {
-                    Image("DemoIcon01Solid")
-                        .resizable()
-                        .frame(width: 32, height: 32)
+                    // W14: the demo tile in the Summary's rank colour.
+                    DemoTile(rank: 0, initials: "Ti", size: 32)
                     Text("TikTok")
                         .font(.headline)
                         .foregroundStyle(Color("PrimaryText"))
@@ -75,13 +74,50 @@ struct DemoDetailScreen: View {
     }
 
     private var periodSwitch: some View {
-        Picker("Period", selection: $period) {
-            Text("Today").tag(DemoMode.DemoPeriod.today)
-            Text("7 days").tag(DemoMode.DemoPeriod.week)
-            Text("Month").tag(DemoMode.DemoPeriod.month)
+        // W12: the one period control — the Summary's tab style and
+        // wording (Daily, Weekly, Monthly) with the elapsed underline.
+        let uk = Core.AppCalendar.uk()
+        return PeriodTabsControl(
+            tabs: [
+                PeriodTabsControl.Tab(
+                    title: "Daily",
+                    elapsed: Core.PeriodProgress.dayFraction(calendar: uk)
+                ),
+                PeriodTabsControl.Tab(
+                    title: "Weekly",
+                    elapsed: Core.PeriodProgress.weekFraction(
+                        weekStartsOn: SharedSettings().weekStartsOn,
+                        calendar: uk
+                    )
+                ),
+                PeriodTabsControl.Tab(
+                    title: "Monthly",
+                    elapsed: Core.PeriodProgress.monthFraction(calendar: uk)
+                )
+            ],
+            selected: titleForDataSet(period.dataSet)
+        ) { selected in
+            if let period = periodForTitle(selected) {
+                self.period = period
+            }
         }
-        .pickerStyle(.segmented)
-        .frame(height: 40)
+    }
+
+    private func titleForDataSet(_ dataSet: DemoMode.DemoPeriod.DataSet) -> String {
+        switch dataSet {
+        case .today: return "Daily"
+        case .week: return "Weekly"
+        case .month: return "Monthly"
+        }
+    }
+
+    private func periodForTitle(_ title: String) -> DemoMode.DemoPeriod? {
+        switch title {
+        case "Daily": return .today
+        case "Weekly": return .week
+        case "Monthly": return .month
+        default: return nil
+        }
     }
 }
 

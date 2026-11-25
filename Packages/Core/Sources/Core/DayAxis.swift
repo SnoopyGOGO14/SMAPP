@@ -17,14 +17,15 @@ public enum DayAxis {
 
     /// Positions that carry a visible label.
     /// - A week (≤ 7 days): every position.
-    /// - Longer (month): day numbers 1, 8, 15, 22 and 29 — indexes
-    ///   0, 7, 14, 21, 28, clamped to the count.
+    /// - Longer (month): days 1, 15 and 29 — indexes 0, 14, 28, clamped
+    ///   to the count. Three labels only (W9): the five-label layout
+    ///   truncated ("1, 8, …") at 30 slots.
     public static func labelIndexes(count: Int) -> Set<Int> {
         guard count > 0 else { return [] }
         if count <= 7 {
             return Set(0..<count)
         }
-        return Set([0, 7, 14, 21, 28].filter { $0 < count })
+        return Set([0, 14, 28].filter { $0 < count })
     }
 
     /// The label for a position: the weekday initial for weeks, the day

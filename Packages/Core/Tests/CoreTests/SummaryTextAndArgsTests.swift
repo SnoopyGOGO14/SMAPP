@@ -37,14 +37,15 @@ final class SummaryTextTests: XCTestCase {
         XCTAssertEqual(lines.third, "29.1% OF TOTAL")
     }
 
-    func testFocusedOverTenHoursWhole() {
+    func testFocusedOverTenHoursDecimal() {
         let lines = Core.SummaryText.centre(
             periodLabel: "monthly",
             totalMinutes: 500,
             top: nil,
             focused: (name: "X", minutes: 620, sharePercent: 8.2)
         )
-        XCTAssertEqual(lines.value, "10 hrs")
+        // W5: whole hours drop the decimal.
+        XCTAssertEqual(lines.value, "10.3 hrs")
         XCTAssertEqual(lines.third, "8.2% OF TOTAL")
     }
 

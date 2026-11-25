@@ -56,6 +56,10 @@ struct AppDetailScene: DeviceActivityReportScene {
             String(symbol.prefix(1))
         }
         let inWeek = settings.statsPeriod != .month
+        // W7: the focused line's name — "Sun" on weeks, "12 Nov" on
+        // months (single initials were ambiguous: two S days, two T).
+        let titleFormatter = DateFormatter()
+        titleFormatter.dateFormat = inWeek ? "EEE" : "d MMM"
 
         let days = daySeconds.enumerated().map { index, entry in
             AppDetailConfiguration.DayValue(
@@ -67,7 +71,8 @@ struct AppDetailScene: DeviceActivityReportScene {
                     weekdayIndex: calendar.component(.weekday, from: entry.start) - 1
                 ),
                 minutes: entry.seconds / 60,
-                isToday: entry.start == todayStart
+                isToday: entry.start == todayStart,
+                title: titleFormatter.string(from: entry.start)
             )
         }
 

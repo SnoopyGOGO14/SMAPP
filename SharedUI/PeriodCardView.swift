@@ -57,8 +57,10 @@ public struct PeriodCardView: View {
     private var linkedText: String {
         if let id = focusedDayID,
            let day = configuration.periodDays.first(where: { $0.id == id }) {
-            let weekday = day.label.isEmpty ? "Day" : day.label
-            return "\(weekday) · \(DurationFormat.short(minutes: Int(day.minutes.rounded())))"
+            // W7: the short weekday name ("Sun"), or "12 Nov" on month —
+            // single initials were ambiguous (two S days, two T days).
+            let name = day.title.isEmpty ? (day.label.isEmpty ? "Day" : day.label) : day.title
+            return "\(name) · \(DurationFormat.short(minutes: Int(day.minutes.rounded())))"
         }
         return DurationParts(seconds: configuration.periodTotalSeconds).line
     }

@@ -36,14 +36,18 @@ public struct AppDetailConfiguration: Equatable {
     public struct DayValue: Equatable, Identifiable {
         /// Unique per period (0-based index) — labels repeat (T/T, S/S).
         public let id: Int
-        /// Visible label; empty for unlabelled positions in month view.
+        /// Visible axis label; empty for unlabelled positions in month view.
         public let label: String
+        /// The focused line's name (W7): "Sun" for weeks, "12 Nov" for
+        /// months; falls back to `label` when empty.
+        public let title: String
         public let minutes: Double
         public let isToday: Bool
 
-        public init(id: Int, label: String, minutes: Double, isToday: Bool) {
+        public init(id: Int, label: String, minutes: Double, isToday: Bool, title: String = "") {
             self.id = id
             self.label = label
+            self.title = title
             self.minutes = minutes
             self.isToday = isToday
         }

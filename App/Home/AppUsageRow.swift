@@ -1,6 +1,7 @@
-// AppUsageRow — the host row: icon and name from Label(token), the report
-// drawing time and thin bar, and the NavigationLink to App detail. The
-// embedded report has hit testing off so the whole row is tappable.
+// AppUsageRow — a Home row. W13: the hairline bar runs under the name
+// and time across the full row width, so the report (time + bar)
+// spans the whole row and the host's label sits over its first line.
+// Writes detailToken before the detail report appears.
 
 import SwiftUI
 import DeviceActivity
@@ -15,24 +16,54 @@ struct AppUsageRow: View {
 
     var body: some View {
         NavigationLink(value: token) {
-            HStack(spacing: 14) {
+            AppRowShell(dimmed: dimmed) {
                 Label(token)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(Color("PrimaryText"))
                     .labelStyle(.titleAndIcon)
-                    .frame(minWidth: 96, alignment: .leading)
-
+            } report: {
                 DeviceActivityReport(
                     .appRow,
                     filter: Filters.appRow(token: token)
                 )
                 .allowsHitTesting(false)
             }
-            .padding(.horizontal, 16)
-            .frame(height: 64)
-            .opacity(dimmed ? 0.45 : 1)
         }
         .buttonStyle(HomeRowStyle())
+    }
+}
+
+/// The row layout (W13): the report draws the time right-aligned on
+/// the first line and the hairline bar beneath, both full row width;
+/// the label overlays the first line's leading side. One report per
+/// row is preserved (device check A9).
+struct AppRowShell<Label: View, Report: View>: View {
+
+    var dimmed: Bool = false
+    private let label: Label
+    private let report: Report
+
+    init(
+        dimmed: Bool = false,
+        @ViewBuilder label: () -> Label,
+        @ViewBuilder report: () -> Report
+    ) {
+        self.dimmed = dimmed
+        self.label = label()
+        self.report = report()
+    }
+
+    var body: some View {
+        report
+            .overlay(alignment: .topLeading) {
+                label
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.trailing, 88)
+            }
+            .padding(.horizontal, 16)
+            .frame(height: 64, alignment: .center)
+            .opacity(dimmed ? 0.45 : 1)
     }
 }
 

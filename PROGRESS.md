@@ -5,6 +5,74 @@ GLM updates at the end of every session. Honesty levels (05-RUN-TO-REVIEW):
 succeeded), **screenshot** (rendered in the simulator), **unverified on
 device** (all Screen Time behaviour). Device gates A to D stay open.
 
+## READY FOR VISUAL REVIEW, round 4 (pending the captures below)
+
+W1–W14 from `10-VISUAL-REVIEW-ROUND3.md` are fixed and building; the
+`[screens]` run of 25 November captures the round-4 set. See the run
+summary below.
+
+---
+
+## Run of 25 November (evening) — W1 to W14 (10-VISUAL-REVIEW-ROUND3)
+
+### Fixes
+
+- **W1** Day pills: the two `onAppear`s raced — the stored period
+  overwrote the demo one every time, so `.daily` never stuck and the
+  pills never rendered. Merged into one `onAppear` with demo-wins
+  precedence; new `-day <n>` argument pre-selects a pill; new capture
+  `summary-day2-dark`.
+- **W2** Focused segment: the gold "outline" was drawn *on top* of the
+  segment and wider than it — covering the rank colour (solid yellow).
+  Now the gold arc is drawn *behind* (wider, so it frames), the segment
+  keeps its own colour and thickens; glow on the outline.
+- **W3** Tab icon: `chart.donut` does not exist — rendered blank.
+  `chart.pie` (iOS 13+). New preflight allow-list
+  (`tools/sf-symbols.txt`) for every systemImage/systemName.
+- **W4** One coherent demo data set: new `Core.DemoSeries` (Home's five
+  daily figures, TikTok's approved mock week, derived months);
+  `DemoData` builds Summary, Home and detail from it. The 99.5-hour
+  sample is gone. Tests: daily total = 166 (Home's hero), TikTok weekly
+  = 373m40s (App detail's period total).
+- **W5** HoursFormat: whole hours drop the ".0" ("8 hrs"), exactly one
+  is "1 hr"; tests updated. Bottom `contentMargins` (100 pt) so the
+  last card clears the floating tab bar. Title row ("Summary" + date)
+  added above the tabs.
+- **W6** System banner: the simulator now settles 30 s after boot
+  before captures (logged `SETTLED`). **Skipped:** the "retake if two
+  captures differ" option — a static banner yields equal checksums, so
+  the check cannot detect it; the settle window is the honest fix.
+- **W7** Focused line: "Sun · 49m" / "12 Nov · 49m" — `DayValue` gains
+  `title` (demo and live scene both fill it).
+- **W8** Seconds: the demo series carry 40 s on today (373m40s reads
+  "0d 6h 13m 40s"). Real path confirmed: `Aggregator` sums
+  `totalActivityDuration` unrounded; `periodTotalSeconds` is exact.
+- **W9** Month: the series ends on today's figure (58m — same as the
+  week hero). Axis labels: 1, 15, 29 only — five labels truncated at 30
+  slots.
+- **W10** Target caption: demo shows its own coherent line; live is
+  mode-aware ("… of 3h a day" / "… of 21h a week") or "No target set".
+- **W11** Tab bar: tint `PrimaryText`; unselected items
+  `SecondaryText` via `UITabBar.appearance()`. No system blue.
+- **W12** One period control: new shared `PeriodTabsControl` (Summary's
+  tab style + elapsed underline) on Summary, App detail and demo
+  detail — same wording (Daily, Weekly, Monthly) everywhere.
+- **W13** Home row: the report (time + hairline bar) now spans the full
+  row width via `AppRowShell` — the bar runs under the name and time;
+  one report per row is preserved (device check A9).
+- **W14** Demo tiles: `DemoTile` filled with the Summary's rank colour
+  (Home rows, detail toolbars) — TikTok is one colour everywhere in
+  demo captures.
+
+### State
+
+- 111 Core tests pass (7 new: DemoSeries ×6, arg-parser day handling
+  covered by existing suite); preflight passes (86 files parse, SF
+  Symbol allow-list, `-day`).
+- Builds used: 1 (the W push). Screenshots: 0 of 2 this round.
+- Note: `SMAPP-screens-round3.jpg` sits unread in the folder — GLM has
+  no image input; the review's text list is the authority.
+
 ## READY FOR VISUAL REVIEW
 
 **Commit `2997d30`, screens run 26 (25 November, 9 m): 15 core captures

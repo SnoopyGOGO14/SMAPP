@@ -23,6 +23,7 @@ public struct AppRowReportView: View {
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(Color("PrimaryText"))
             }
+            .frame(minHeight: 24, alignment: .center)
             BarView(
                 geometry: .perApp(
                     usedMinutes: configuration.usedMinutes,
