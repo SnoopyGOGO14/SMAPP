@@ -155,27 +155,40 @@ struct SummaryScreen: View {
             ForEach(0..<7, id: \.self) { index in
                 let isToday = index == todayIndex
                 let isFuture = future.contains(index)
+                let pillDate = Core.SummaryPeriod.pillDate(index: index, weekStartsOn: weekStartsOn, calendar: ukCalendar)
+                // The selected pill takes the inverted style — today by
+                // default, the picked day once one is chosen (W1: without
+                // this, selecting a day changed nothing visible and the
+                // day2 capture was a pixel-duplicate of the daily one).
+                let isSelected: Bool
+                if case .daily(let day) = period, let day, ukCalendar.isDate(day, inSameDayAs: pillDate) {
+                    isSelected = true
+                } else if case .daily(nil) = period {
+                    isSelected = isToday
+                } else {
+                    isSelected = false
+                }
                 Button {
-                    period = .daily(day: Core.SummaryPeriod.pillDate(index: index, weekStartsOn: weekStartsOn, calendar: ukCalendar))
+                    period = .daily(day: pillDate)
                 } label: {
                     Text(pillTitle(index, weekStartsOn: weekStartsOn))
-                        .font(.caption2.weight(isToday ? .bold : .medium))
+                        .font(.caption2.weight(isToday ? .bold : (isSelected ? .semibold : .medium)))
                         .frame(maxWidth: .infinity)
                         .frame(height: 28)
                         .background(
-                            isToday ? AnyShapeStyle(Color("PrimaryText")) : AnyShapeStyle(Color("Card")),
+                            isSelected ? AnyShapeStyle(Color("PrimaryText")) : AnyShapeStyle(Color("Card")),
                             in: RoundedRectangle(cornerRadius: 8)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(isToday ? Color.clear : Color("Divider"), lineWidth: 1)
+                                .stroke(isSelected ? Color.clear : Color("Divider"), lineWidth: 1)
                         )
-                        .foregroundStyle(isToday ? Color("Ground") : Color("MutedText"))
+                        .foregroundStyle(isSelected ? Color("Ground") : Color("MutedText"))
                 }
                 .buttonStyle(.plain)
                 .disabled(isFuture)
                 .opacity(isFuture ? 0.4 : 1)
-                .accessibilityAddTraits(isToday ? [.isSelected] : [])
+                .accessibilityAddTraits(isSelected ? [.isSelected] : [])
             }
         }
     }
