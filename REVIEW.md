@@ -13,11 +13,14 @@ through a compiler.** The capture branch held no screenshots of the
 current code. This file's earlier levels overstated four features as
 "screenshot" from captures of code since rewritten or removed.
 
-State now: the cloud answered on 25 November; run 28 (build) is
-**green** — the 50 files compile on Xcode 26.6 — and screens run 26
-captured the 15 core screens with every marker matching. **The visual
-review of those captures is the next step, and it is yours.** See
-`PROGRESS.md` (top) and `docs/unbuilt-review.md`.
+State now (26 November, the close): every screen compiles (builds
+green through run 39) and **the full 36-capture manifest verified —
+every marker matched, no crashes, no duplicates (screens run 40,
+NOTE.txt clean).** Visual reviews passed rounds 3–6; the last few
+captures (Settings, the hourly Daily chart, the accessibility pair)
+await your final eye-check. What remains unproven is everything that
+needs a real iPhone: the Screen Time data itself, the alerts, and
+interaction inside Apple's sealed usage view (Gates A–D).
 
 ## Corrections after review (18 November)
 
@@ -58,22 +61,22 @@ GitHub's Mac with Xcode 26.6), **screenshot** (rendered in a simulator),
 | R1 | Choose apps via Apple's picker | compiles (run 28); unverified on device |
 | R2 | Per-app on/off switch (App detail) | compiles (run 28); unverified on device |
 | R3 | Master switch (Target tab) | compiles (run 28); unverified on device |
-| R4 | Usage statistics per app and combined | compiles (run 28); unverified on device |
-| R5 | Charts: ranked donut, daily bars, hero bars | compiles (run 28) + captured (screens 26; visual review pending) |
+| R4 | Usage statistics per app and combined | screenshot (demo figures, all periods incl. the hourly Daily chart — run 40); live data unverified on device |
+| R5 | Charts: ranked donut, daily bars, hero bars | screenshot — captured in both appearances, verified by the round 3–6 reviews |
 | R6 | Overall target, daily or weekly | tested (conversion logic) + compiles (run 28) |
 | R7 | Colour zones green/amber/orange-red | tested (boundaries at 75%/100%) + compiles (run 28) |
 | R8 | Weekly average logic | tested |
 | R9 | Zone alerts at 75%/100% | compiles (run 28); unverified on device |
 | R10 | Privacy: everything on the phone | compiles; privacy manifest + documents written |
-| R11 | One-minute setup with presets | compiles (run 28) + captured (screens 26; visual review pending) |
-| R12 | Access health check + banner | compiles (run 28); unverified on device |
+| R11 | One-minute setup with presets | screenshot — onboarding cards 1–4, both appearances (run 40) |
+| R12 | Access health check + banner | captured (the noaccess state, run 40); the live health check unverified on device |
 | R13 | Evening and Sunday recaps | compiles; unverified on device |
 | R14 | Optional per-app targets | tested (cleanup logic) + compiles (run 28) |
-| R15 | App detail screen | compiles (run 28) + captured (screens 26; visual review pending) |
-| R16 | **Summary page** (ranked donut, share cards, period tabs, day pills, focus) | compiles (run 28) + captured (screens 26; visual review pending) |
-| R17 | Focus effect (donut segment ↔ card, centre cross-fade) | compiles (run 28) + captured (screens 26, focus1/focus4 markers); Core logic tested; visual review pending |
+| R15 | App detail screen | screenshot — week/month/hourly-Daily, focus, sheet (run 40) |
+| R16 | **Summary page** (ranked donut, share cards, period tabs, day pills, focus) | screenshot — all periods, day selection, end-scroll (run 40) |
+| R17 | Focus effect (donut segment ↔ card, centre cross-fade) | screenshot — focus1/focus4 markers, both appearances (run 40); Core logic tested |
 
-Plus: **104 unit tests** pass (locally and in the cloud). Run 28
+Plus: **124 unit tests** pass (locally and in the cloud).
 (25 November) rebuilt everything the outage had left uncompiled; screens
 run 26 captured the 15 core screens — `NOTE.txt` on `ci-logs` is the
 evidence (markers, checksums, no crashes). Full "screenshot" credit

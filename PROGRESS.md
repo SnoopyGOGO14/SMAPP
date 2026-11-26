@@ -5,18 +5,33 @@ GLM updates at the end of every session. Honesty levels (05-RUN-TO-REVIEW):
 succeeded), **screenshot** (rendered in the simulator), **unverified on
 device** (all Screen Time behaviour). Device gates A to D stay open.
 
-## READY FOR VISUAL REVIEW, round 5
+## THE CLOSE — everything possible without hardware is done
 
-**Commit `9623dfd`, screens run 34 (25 November, 8 m): 17 captures on
-`ci-logs/screenshots`, every marker matched — including
-`summary/daily/day0` (X1: the chosen day provably took effect) and
-`summary/weekly/end` (X9) — no duplicates, no crashes.** Check them
-against `design/reference/*.dc.html` and `SKINS/*/screen.png` (GLM
-cannot view images); the list and what each file evidences is in
-`docs/screens.md`. Round-4 history is below: run 31's one flagged pair
-was benign (day 2 was today, a Wednesday), and the round-4 review
-confirmed W2, W3, W5–W12 and the pills rendering before this round's
-X1–X9 fixes landed on top.
+**Commit `d7083e7`, screens run 40 (26 November, 12 m): the full
+36-capture manifest verified — every marker matched (Settings
+included), no crashes, no duplicates, no retakes.** Builds green
+through run 39; 124 Core tests; preflight clean. The app is now as
+far as it can go without an iPhone: every screen compiled and
+screenshot-verified, every review round passed (3–6), all pure logic
+under test. What remains unproven is the device-only list — the
+Screen Time data itself, the alerts, and interaction inside Apple's
+sealed usage view (Gates A–D, `docs/device-checks.md`).
+
+**Last eye-check for the owner** (the only captures not yet visually
+reviewed): `settings-light/dark` (the marker bug — Settings never
+wrote its demo marker — meant no round could prove them; run 40
+does), `detail-today-dark` (the new hourly chart), `home-a11y-dark`
+and `detail-a11y-dark` (the Z2 accessibility fixes), and
+`home-noapps-dark` (Z1: no hero, empty state only). See
+`docs/screens.md`.
+
+**After that, everything left is yours:** the build Mac
+(`tools/first-run.sh`), the Developer Program and portal steps, the
+organisation identifier for `YOURORG`, and the ASSUMED decisions in
+the tables above.
+
+(Round-5 history: run 34's 17 core captures verified W/X; the round-4
+flagged pair was benign — day 2 was today.)
 
 ---
 
@@ -38,8 +53,13 @@ fixes left, both done in `5f6e165`:
   reserved the large-title area above the tabs. Now inline; X7's 12 pt
   margin holds beneath the compact bar.
 
-Then the `[screens-all]` run (the full manifest) and the final record
-raise — see the banner above.
+**Z1–Z4 (26 November, the final round):** no hero in the noapps
+state; accessibility tabs/stats wrap and scale (never hyphenate);
+Daily on App detail is 24 hourly bars with busiest-hour stats
+(`Core.HourlyStats`, live scene + demo); the settings marker bug
+found and fixed (Settings never called `DemoMarker.mark`). Build runs
+38–39 (one burn: tuple-typed helpers vs `Aggregator.DayTotal`);
+screens run 40 — the full manifest, NOTE.txt clean.
 
 ## Run of 25 November (late) — X1 to X9 (11-VISUAL-REVIEW-ROUND4)
 

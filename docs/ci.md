@@ -36,7 +36,7 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 40 (`eed83ce`) | screens (run 37) | **success (14m) — 36 captures; detail-dark fixed (1 RETAKEN, the stale-launch race); settings still mismatched** | root cause found, and it was never a race: **SettingsScreen never called `DemoMarker.mark`** — every settings capture read the previous screen's stale marker file. One-line fix in `ac1781f` |
 | 42 (`ac1781f`) | build (run 38) | failure (0m) | the hourly helpers were typed with tuples; `Aggregator.DayTotal` is a struct — annotation fix |
 | 43 (`d165792`) | build (run 39) | **success (1m)** | Z1–Z4 compile |
-| 44 | screens | pending | the final `[screens-all]` |
+| 45 (`d7083e7`) | screens (run 40) | **success (12m) — 36 captures, every marker matched (settings included), zero problems, zero retakes** | the final full-manifest verification; Z-round closed at 2 of 2 builds, 1 of 1 screens |
 | — | — | — | Y-round budget: 1 of 2 builds, 0 of 1 screens at this point |
 
 ## Run numbering note

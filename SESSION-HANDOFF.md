@@ -4,18 +4,21 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
 
 ## Todos — state at this handoff (25 November, after round-3 fixes)
 
-1. **ROUND-5 VISUAL REVIEW WAITING.** X1–X9 from
-   `11-VISUAL-REVIEW-ROUND4.md` are fixed, build run 35 is green, and
-   screens run 34 put **17 clean captures** on `ci-logs/screenshots`
-   (every marker matched — `day0` and `weekly/end` included; no
-   duplicates). **Next: check the PNGs against `design/reference/` and
-   `SKINS/`** (GLM cannot view images), then `[screens-all]` once,
-   raise `REVIEW.md` levels to what NOTE.txt proves, update records.
-   Round-4 history: run 31's flagged pair was benign (day 2 = today).
+1. **THE PROJECT IS CLOSED AS FAR AS IT GOES WITHOUT HARDWARE
+   (26 November).** The full 36-capture manifest verified clean
+   (screens run 40, `d7083e7`); builds green through run 39; 124 Core
+   tests; rounds 3–6 of visual review passed. One last eye-check for
+   the owner: the settings pair, the hourly Daily chart, the a11y
+   pair and the noapps empty state (see PROGRESS's banner). After
+   that, every remaining item is the person's: the build Mac
+   (`tools/first-run.sh` day one, then `docs/gate-a-card.md`),
+   Developer Program + portal steps, the organisation identifier, and
+   the ASSUMED decisions. GLM resumes from Gate A results in
+   `PROGRESS.md`.
 2. **The billing-exhaustion diagnosis was wrong — the cloud never lost
    minutes.** The probe (run 24) answered in 3 minutes. If runs go
    quiet again, check the Actions tab before assuming billing.
-3. **Round-3 budget closed at 1 of 4 builds, 4 of 2 screenshot runs; round-4/X round at 2 of 3 builds, 1 of 2 screens** (two over — my W6 workflow bug, a genuine W1 gap the duplicate-check caught, and a class-8 regression; all logged in `docs/ci.md`). New CI
+3. **Budgets closed:** round-3 1/4 builds + 4/2 screens; X round 2/3 + 1/2; Z round 2/2 + 1/1 (one tuple-typing burn) (two over — my W6 workflow bug, a genuine W1 gap the duplicate-check caught, and a class-8 regression; all logged in `docs/ci.md`). New CI
    rules in `docs/ci.md`: preflight before every push (never pipe it
    through `tail`), never push while a run is in flight, `[screens]` =
    core 15 / `[screens-all]` = full manifest, and **never put the
