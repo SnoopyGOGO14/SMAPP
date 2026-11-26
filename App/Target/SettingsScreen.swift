@@ -114,6 +114,11 @@ struct SettingsScreen: View {
         .navigationTitle("Settings")
         .familyActivityPicker(isPresented: $showPicker, selection: $state.selection)
         .onAppear {
+            #if DEBUG
+            // Z4: Settings never wrote its marker — every settings
+            // capture read the previous screen's stale file.
+            DemoMarker.mark("settings")
+            #endif
             amberPercent = appState.settings.amberFraction * 100
             weekStartIndex = appState.settings.weekStartsOn
         }
