@@ -20,7 +20,9 @@ struct HomeScreen: View {
                 header
 
                 if appState.monitoringEnabled {
-                    homeCard
+                    if showsHeroCard {
+                        homeCard
+                    }
                     // Failure class 8: no deferred `let` inside a
                     // ViewBuilder — the test lives in a helper.
                     if showsSetTargetButton {
@@ -87,6 +89,17 @@ struct HomeScreen: View {
     }
 
     @ViewBuilder
+    /// Z1: with no apps chosen there is nothing to total — the empty
+    /// state replaces the hero (no figure, no bar).
+    private var showsHeroCard: Bool {
+        #if DEBUG
+        if DemoMode.isEnabled {
+            return DemoMode.state != .noapps
+        }
+        #endif
+        return !appState.orderedTokens.isEmpty
+    }
+
     /// V1/Part 2: demo states drive the branch — `notarget` shows the
     /// button; live mode shows it when no target is set.
     private var showsSetTargetButton: Bool {

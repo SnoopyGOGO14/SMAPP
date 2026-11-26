@@ -63,6 +63,13 @@ public struct AppDetailConfiguration: Equatable {
     public let dailyAverageMinutes: Int
     public let daysWithinTarget: Int
     public let daysCounted: Int
+    /// Z3: the Daily view draws 24 hourly bars instead of day bars —
+    /// no target rule, and the stats become hourly.
+    public var hourly: Bool = false
+    /// 0–23, the peak hour; nil for an empty day.
+    public var busiestHour: Int? = nil
+    /// Hour buckets at or over 15 minutes.
+    public var sessionsOver15: Int = 0
 
     public init(
         todayMinutes: Double,

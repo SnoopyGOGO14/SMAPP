@@ -80,9 +80,17 @@ enum Filters {
     }
 
 
-    /// App detail: that app, daily segments over the chosen period.
+    /// App detail: that app, daily segments over the chosen period
+    /// (Z3: hourly segments on Daily).
     static func appDetail(token: ApplicationToken, period: Core.Period) -> DeviceActivityFilter {
-        return make(segment: .daily(during: interval(for: period)), tokens: [token])
+        let segment: DeviceActivityFilter.SegmentInterval
+        switch period {
+        case .day, .hour:
+            segment = .hourly(during: interval(for: .day))
+        case .week, .month:
+            segment = .daily(during: interval(for: period))
+        }
+        return make(segment: segment, tokens: [token])
     }
 
 

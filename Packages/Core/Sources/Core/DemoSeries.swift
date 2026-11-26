@@ -33,6 +33,21 @@ public enum DemoSeries {
         return dailyMinutes.reduce(0, +)
     }
 
+    /// TikTok's day by hour (Z3): 24 values, evening-heavy, summing to
+    /// today's 58 m 40 s and peaking at 21:00 (17 min).
+    public static let hourlyDay: [Double] = {
+        var hours = Array(repeating: 0.0, count: 24)
+        hours[9] = 2
+        hours[12] = 6
+        hours[17] = 4
+        hours[19] = 5
+        hours[20] = 7
+        hours[21] = 17
+        hours[22] = 15
+        hours[23] = 2 + 40.0 / 60
+        return hours
+    }()
+
     // MARK: - Per-day figures (X1)
 
     /// The five apps' minutes on a given day of the demo week

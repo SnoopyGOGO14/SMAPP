@@ -212,3 +212,47 @@ final class DurationFormatSecondsTests: XCTestCase {
         XCTAssertEqual(Core.DurationFormat.fromSeconds(0), "0m")
     }
 }
+
+final class HourlyStatsTests: XCTestCase {
+
+    func testBusiestHourAndSessions() {
+        // Z3: TikTok's demo day — 21:00 peaks at 17 min; two hour
+        // buckets reach 15 min (21 and 22).
+        var hours = Array(repeating: 0.0, count: 24)
+        hours[9] = 2
+        hours[12] = 6
+        hours[17] = 4
+        hours[19] = 5
+        hours[20] = 7
+        hours[21] = 17
+        hours[22] = 15
+        hours[23] = 9 + 40.0 / 60
+        let summary = Core.HourlyStats.summarize(hours: hours)
+        XCTAssertEqual(summary.busiestHour, 21)
+        XCTAssertEqual(summary.sessionsOver15, 2)
+    }
+
+    func testEmptyDay() {
+        let summary = Core.HourlyStats.summarize(hours: Array(repeating: 0.0, count: 24))
+        XCTAssertNil(summary.busiestHour)
+        XCTAssertEqual(summary.sessionsOver15, 0)
+    }
+
+    func testHourLabels() {
+        XCTAssertEqual(Core.HourlyStats.hourLabel(21), "9pm")
+        XCTAssertEqual(Core.HourlyStats.hourLabel(0), "12am")
+        XCTAssertEqual(Core.HourlyStats.hourLabel(12), "12pm")
+        XCTAssertEqual(Core.HourlyStats.hourLabel(9), "9am")
+        XCTAssertEqual(Core.HourlyStats.hourLabel(nil), "—")
+    }
+
+    func testDemoHourlyDayCoheres() {
+        // Z3: the hourly demo day totals today's figure and peaks at 21.
+        let day = Core.DemoSeries.hourlyDay
+        XCTAssertEqual(day.count, 24)
+        XCTAssertEqual(day.reduce(0, +), Core.DemoSeries.dailyMinutes[0] + 40.0 / 60, accuracy: 0.001)
+        let stats = Core.HourlyStats.summarize(hours: day)
+        XCTAssertEqual(stats.busiestHour, 21)
+        XCTAssertEqual(stats.sessionsOver15, 2)
+    }
+}

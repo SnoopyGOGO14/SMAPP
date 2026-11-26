@@ -27,9 +27,13 @@ public struct HeroCardView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 if let allowance = configuration.allowanceMinutes {
+                    // Z2: at accessibility sizes this wraps to a second
+                    // line — never truncates.
                     Text("of \(DurationFormat.short(minutes: allowance))\(captionSuffix)")
                         .font(.subheadline)
                         .foregroundStyle(Color("SecondaryText"))
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
 

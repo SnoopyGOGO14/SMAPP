@@ -82,10 +82,15 @@ enum DemoData {
         let todayMinutes: Double
         switch period.dataSet {
         case .today:
-            values = [Core.DemoSeries.dailyMinutes[0] + 40.0 / 60]
-            labels = ["T"]
-            titles = ["Today"]
-            todayMinutes = values[0]
+            // Z3: 24 hourly bars for the day — evening-heavy, total
+            // 58 m 40 s, no target rule on the hourly chart.
+            let hours = Core.DemoSeries.hourlyDay
+            values = hours
+            labels = hours.enumerated().map { index, _ in
+                index % 6 == 0 ? "\(index)" : ""
+            }
+            titles = hours.indices.map { Core.HourlyStats.hourLabel($0) }
+            todayMinutes = hours.reduce(0, +)
         case .week:
             let series = Core.DemoSeries.week(index: 0)
             values = series
@@ -121,16 +126,25 @@ enum DemoData {
             )
         }
 
-        return AppDetailConfiguration(
+        let isToday = period.dataSet == .today
+        var config = AppDetailConfiguration(
             todayMinutes: todayMinutes,
             todayTargetMinutes: 60,
             periodTotalSeconds: totalSeconds,
             periodDays: days,
-            periodTargetMinutes: 60,
+            // Z3: no dashed target rule on the hourly chart.
+            periodTargetMinutes: isToday ? nil : 60,
             dailyAverageMinutes: stats.dailyAverageMinutes,
-            daysWithinTarget: stats.daysWithinTarget,
-            daysCounted: stats.daysCounted
+            daysWithinTarget: isToday ? 0 : stats.daysWithinTarget,
+            daysCounted: isToday ? values.count : stats.daysCounted
         )
+        if isToday {
+            let hourly = Core.HourlyStats.summarize(hours: values)
+            config.hourly = true
+            config.busiestHour = hourly.busiestHour
+            config.sessionsOver15 = hourly.sessionsOver15
+        }
+        return config
     }
 
     /// "12 Nov" — a date in the current month at the day the index

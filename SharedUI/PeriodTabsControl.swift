@@ -56,6 +56,11 @@ public struct PeriodTabsControl: View {
                     .tracking(0.6)
                     .textCase(.uppercase)
                     .foregroundStyle(isActive ? Color("PrimaryText") : Color("MutedText"))
+                    // Z2: one line, scaled down to fit — never wrapped
+                    // or hyphenated ("WEEK-LY") at accessibility sizes.
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .fixedSize(horizontal: true, vertical: false)
             }
             .buttonStyle(.plain)
             .accessibilityAddTraits(isActive ? [.isSelected] : [])
