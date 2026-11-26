@@ -1,40 +1,40 @@
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
 /Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
-2026-11-25 22:02:45.519 appintentsmetadataprocessor[3919:15394] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-25 22:02:45.543 appintentsmetadataprocessor[3920:15396] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-25 22:03:06.379 appintentsmetadataprocessor[4386:16536] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:95:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+2026-11-26 15:44:15.479 appintentsmetadataprocessor[3748:15579] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-26 15:44:15.510 appintentsmetadataprocessor[3749:15580] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-26 15:44:34.928 appintentsmetadataprocessor[4181:16574] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 ** BUILD SUCCEEDED **
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.006 (0.008) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
 	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 10 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.006 (0.007) seconds
 	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
-	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
-	 Executed 6 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-	 Executed 119 tests, with 0 failures (0 unexpected) in 0.062 (0.087) seconds
-	 Executed 119 tests, with 0 failures (0 unexpected) in 0.062 (0.090) seconds
-commit: ec3f62343f9c6d1ba86e90051a0ac86dd6bd0a78 status: success run: 35
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 120 tests, with 0 failures (0 unexpected) in 0.061 (0.090) seconds
+	 Executed 120 tests, with 0 failures (0 unexpected) in 0.061 (0.092) seconds
+commit: 5f6e165de49f95bca73c5b547b4d2a33bed1d42f status: success run: 36

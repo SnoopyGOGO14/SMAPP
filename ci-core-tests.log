@@ -2,16 +2,16 @@ Building for debugging...
 [0/7] /Users/runner/work/SMAPP/SMAPP/Packages/Core/.build/arm64-apple-macosx/debug/CorePackageTests.derived/runner.swift
 [1/7] Write sources
 [4/7] Write swift-version-7974D3F7F03D5E95.txt
-[6/26] Compiling Core AlertLedger.swift
-[7/26] Compiling Core AppCalendar.swift
-[8/26] Compiling Core AppZone.swift
-[9/26] Compiling Core BarGeometry.swift
-[10/26] Compiling Core ChartGeometry.swift
-[11/26] Compiling Core Checkpoint.swift
-[12/26] Compiling Core DayAxis.swift
-[13/26] Compiling Core DemoArguments.swift
-[14/26] Compiling Core DemoSeries.swift
-[15/26] Emitting module Core
+[6/26] Emitting module Core
+[7/35] Compiling Core AlertLedger.swift
+[8/35] Compiling Core AppCalendar.swift
+[9/35] Compiling Core AppZone.swift
+[10/35] Compiling Core BarGeometry.swift
+[11/35] Compiling Core ChartGeometry.swift
+[12/35] Compiling Core Checkpoint.swift
+[13/35] Compiling Core DayAxis.swift
+[14/35] Compiling Core DemoArguments.swift
+[15/35] Compiling Core DemoSeries.swift
 [16/35] Compiling Core DonutMath.swift
 [17/35] Compiling Core DurationFormat.swift
 [18/35] Compiling Core DurationParts.swift
@@ -30,56 +30,56 @@ Building for debugging...
 [31/35] Compiling Core TargetMath.swift
 [32/35] Compiling Core TokenCleanup.swift
 [33/35] Compiling Core Zone.swift
-[34/43] Emitting module CoreTests
-[35/43] Compiling CoreTests AlertLedgerTests.swift
-[36/43] Compiling CoreTests AppCalendarTests.swift
-[37/43] Compiling CoreTests ChartGeometryStatusPartsTests.swift
-[38/43] Compiling CoreTests CoreTests.swift
-[39/43] Compiling CoreTests DayAxisTests.swift
-[40/43] Compiling CoreTests DemoSeriesTests.swift
-[41/43] Compiling CoreTests DesignTests.swift
+[34/43] Compiling CoreTests DayAxisTests.swift
+[35/43] Compiling CoreTests DemoSeriesTests.swift
+[36/43] Compiling CoreTests DesignTests.swift
+[37/43] Compiling CoreTests AlertLedgerTests.swift
+[38/43] Compiling CoreTests AppCalendarTests.swift
+[39/43] Compiling CoreTests ChartGeometryStatusPartsTests.swift
+[40/43] Compiling CoreTests CoreTests.swift
+[41/43] Emitting module CoreTests
 [42/46] Compiling CoreTests SummaryLogicTests.swift
 [43/46] Compiling CoreTests SummaryTextAndArgsTests.swift
 [44/46] Compiling CoreTests TokenCleanupTests.swift
-[45/48] Compiling CorePackageTests runner.swift
-[46/48] Emitting module CorePackageTests
+[45/48] Emitting module CorePackageTests
+[46/48] Compiling CorePackageTests runner.swift
 [46/48] Write Objects.LinkFileList
 [47/48] Linking CorePackageTests
-Build complete! (33.82s)
-Test Suite 'All tests' started at 2026-11-25 22:01:48.387.
-Test Suite 'CorePackageTests.xctest' started at 2026-11-25 22:01:48.389.
-Test Suite 'AlertLedgerTests' started at 2026-11-25 22:01:48.389.
+Build complete! (33.46s)
+Test Suite 'All tests' started at 2026-11-26 15:43:12.856.
+Test Suite 'CorePackageTests.xctest' started at 2026-11-26 15:43:12.858.
+Test Suite 'AlertLedgerTests' started at 2026-11-26 15:43:12.858.
 Test Case '-[CoreTests.AlertLedgerTests testFirstAlertSends]' started.
-Test Case '-[CoreTests.AlertLedgerTests testFirstAlertSends]' passed (0.004 seconds).
+Test Case '-[CoreTests.AlertLedgerTests testFirstAlertSends]' passed (0.003 seconds).
 Test Case '-[CoreTests.AlertLedgerTests testHigherPercentSends]' started.
-Test Case '-[CoreTests.AlertLedgerTests testHigherPercentSends]' passed (0.001 seconds).
+Test Case '-[CoreTests.AlertLedgerTests testHigherPercentSends]' passed (0.000 seconds).
 Test Case '-[CoreTests.AlertLedgerTests testLowerPercentAfterHigherSuppressed]' started.
-Test Case '-[CoreTests.AlertLedgerTests testLowerPercentAfterHigherSuppressed]' passed (0.001 seconds).
+Test Case '-[CoreTests.AlertLedgerTests testLowerPercentAfterHigherSuppressed]' passed (0.000 seconds).
 Test Case '-[CoreTests.AlertLedgerTests testNextIntervalSendsAgain]' started.
-Test Case '-[CoreTests.AlertLedgerTests testNextIntervalSendsAgain]' passed (0.001 seconds).
+Test Case '-[CoreTests.AlertLedgerTests testNextIntervalSendsAgain]' passed (0.000 seconds).
 Test Case '-[CoreTests.AlertLedgerTests testRepeatSuppressed]' started.
-Test Case '-[CoreTests.AlertLedgerTests testRepeatSuppressed]' passed (0.000 seconds).
-Test Suite 'AlertLedgerTests' passed at 2026-11-25 22:01:48.397.
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.006 (0.008) seconds
-Test Suite 'AppCalendarTests' started at 2026-11-25 22:01:48.397.
+Test Case '-[CoreTests.AlertLedgerTests testRepeatSuppressed]' passed (0.001 seconds).
+Test Suite 'AlertLedgerTests' passed at 2026-11-26 15:43:12.863.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+Test Suite 'AppCalendarTests' started at 2026-11-26 15:43:12.864.
 Test Case '-[CoreTests.AppCalendarTests testLondonZoneAvailable]' started.
 Test Case '-[CoreTests.AppCalendarTests testLondonZoneAvailable]' passed (0.001 seconds).
 Test Case '-[CoreTests.AppCalendarTests testSummaryPillsUseUkCalendar]' started.
-Test Case '-[CoreTests.AppCalendarTests testSummaryPillsUseUkCalendar]' passed (0.003 seconds).
+Test Case '-[CoreTests.AppCalendarTests testSummaryPillsUseUkCalendar]' passed (0.004 seconds).
 Test Case '-[CoreTests.AppCalendarTests testTodayPillFollowsUkDayNotDeviceDay]' started.
 Test Case '-[CoreTests.AppCalendarTests testTodayPillFollowsUkDayNotDeviceDay]' passed (0.000 seconds).
 Test Case '-[CoreTests.AppCalendarTests testUkCalendarIsLondonAndGregorian]' started.
 Test Case '-[CoreTests.AppCalendarTests testUkCalendarIsLondonAndGregorian]' passed (0.000 seconds).
-Test Suite 'AppCalendarTests' passed at 2026-11-25 22:01:48.403.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
-Test Suite 'AppZoneTests' started at 2026-11-25 22:01:48.403.
+Test Suite 'AppCalendarTests' passed at 2026-11-26 15:43:12.871.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
+Test Suite 'AppZoneTests' started at 2026-11-26 15:43:12.871.
 Test Case '-[CoreTests.AppZoneTests testExactlyOnTargetIsAmber]' started.
 Test Case '-[CoreTests.AppZoneTests testExactlyOnTargetIsAmber]' passed (0.000 seconds).
 Test Case '-[CoreTests.AppZoneTests testZonesAgainstOwnTarget]' started.
 Test Case '-[CoreTests.AppZoneTests testZonesAgainstOwnTarget]' passed (0.000 seconds).
-Test Suite 'AppZoneTests' passed at 2026-11-25 22:01:48.404.
+Test Suite 'AppZoneTests' passed at 2026-11-26 15:43:12.872.
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-Test Suite 'BarGeometryTests' started at 2026-11-25 22:01:48.404.
+Test Suite 'BarGeometryTests' started at 2026-11-26 15:43:12.872.
 Test Case '-[CoreTests.BarGeometryTests testEmptyDayWithNoTarget]' started.
 Test Case '-[CoreTests.BarGeometryTests testEmptyDayWithNoTarget]' passed (0.000 seconds).
 Test Case '-[CoreTests.BarGeometryTests testNoTargetScalesAgainstLargestApp]' started.
@@ -90,31 +90,31 @@ Test Case '-[CoreTests.BarGeometryTests testOverScaleClamps]' started.
 Test Case '-[CoreTests.BarGeometryTests testOverScaleClamps]' passed (0.000 seconds).
 Test Case '-[CoreTests.BarGeometryTests testPerAppMockValues]' started.
 Test Case '-[CoreTests.BarGeometryTests testPerAppMockValues]' passed (0.000 seconds).
-Test Suite 'BarGeometryTests' passed at 2026-11-25 22:01:48.405.
+Test Suite 'BarGeometryTests' passed at 2026-11-26 15:43:12.874.
 	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'ChartGeometryTests' started at 2026-11-25 22:01:48.405.
+Test Suite 'ChartGeometryTests' started at 2026-11-26 15:43:12.874.
 Test Case '-[CoreTests.ChartGeometryTests testMaximumUsesLargerOfTargetScaleAndTallestDay]' started.
-Test Case '-[CoreTests.ChartGeometryTests testMaximumUsesLargerOfTargetScaleAndTallestDay]' passed (0.001 seconds).
+Test Case '-[CoreTests.ChartGeometryTests testMaximumUsesLargerOfTargetScaleAndTallestDay]' passed (0.000 seconds).
 Test Case '-[CoreTests.ChartGeometryTests testNoTargetHidesRule]' started.
 Test Case '-[CoreTests.ChartGeometryTests testNoTargetHidesRule]' passed (0.000 seconds).
 Test Case '-[CoreTests.ChartGeometryTests testOnlyOverTargetDaysExceedTheRule]' started.
-Test Case '-[CoreTests.ChartGeometryTests testOnlyOverTargetDaysExceedTheRule]' passed (0.001 seconds).
+Test Case '-[CoreTests.ChartGeometryTests testOnlyOverTargetDaysExceedTheRule]' passed (0.000 seconds).
 Test Case '-[CoreTests.ChartGeometryTests testRuleAtTwoThirdsWhenWeekInsideTarget]' started.
 Test Case '-[CoreTests.ChartGeometryTests testRuleAtTwoThirdsWhenWeekInsideTarget]' passed (0.000 seconds).
-Test Suite 'ChartGeometryTests' passed at 2026-11-25 22:01:48.409.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-Test Suite 'CheckpointTests' started at 2026-11-25 22:01:48.409.
+Test Suite 'ChartGeometryTests' passed at 2026-11-26 15:43:12.875.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'CheckpointTests' started at 2026-11-26 15:43:12.875.
 Test Case '-[CoreTests.CheckpointTests testCheckpointCodableRoundTrip]' started.
 Test Case '-[CoreTests.CheckpointTests testCheckpointCodableRoundTrip]' passed (0.001 seconds).
 Test Case '-[CoreTests.CheckpointTests testCheckpointPercents]' started.
-Test Case '-[CoreTests.CheckpointTests testCheckpointPercents]' passed (0.001 seconds).
+Test Case '-[CoreTests.CheckpointTests testCheckpointPercents]' passed (0.000 seconds).
 Test Case '-[CoreTests.CheckpointTests testSanityGuard]' started.
 Test Case '-[CoreTests.CheckpointTests testSanityGuard]' passed (0.000 seconds).
 Test Case '-[CoreTests.CheckpointTests testThresholdMinutesForThreeHourTarget]' started.
 Test Case '-[CoreTests.CheckpointTests testThresholdMinutesForThreeHourTarget]' passed (0.000 seconds).
-Test Suite 'CheckpointTests' passed at 2026-11-25 22:01:48.412.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-Test Suite 'DayAxisTests' started at 2026-11-25 22:01:48.412.
+Test Suite 'CheckpointTests' passed at 2026-11-26 15:43:12.877.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DayAxisTests' started at 2026-11-26 15:43:12.877.
 Test Case '-[CoreTests.DayAxisTests testEmpty]' started.
 Test Case '-[CoreTests.DayAxisTests testEmpty]' passed (0.000 seconds).
 Test Case '-[CoreTests.DayAxisTests testLabelsMayRepeat]' started.
@@ -129,9 +129,9 @@ Test Case '-[CoreTests.DayAxisTests testWeekIdsUnique]' started.
 Test Case '-[CoreTests.DayAxisTests testWeekIdsUnique]' passed (0.000 seconds).
 Test Case '-[CoreTests.DayAxisTests testWeekLabelsAllPositions]' started.
 Test Case '-[CoreTests.DayAxisTests testWeekLabelsAllPositions]' passed (0.000 seconds).
-Test Suite 'DayAxisTests' passed at 2026-11-25 22:01:48.414.
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
-Test Suite 'DemoArgumentsTests' started at 2026-11-25 22:01:48.414.
+Test Suite 'DayAxisTests' passed at 2026-11-26 15:43:12.879.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DemoArgumentsTests' started at 2026-11-26 15:43:12.879.
 Test Case '-[CoreTests.DemoArgumentsTests testDayAndScrollParse]' started.
 Test Case '-[CoreTests.DemoArgumentsTests testDayAndScrollParse]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoArgumentsTests testFullArgumentList]' started.
@@ -146,15 +146,17 @@ Test Case '-[CoreTests.DemoArgumentsTests testUnknownFlagsIgnoredAndMissingValue
 Test Case '-[CoreTests.DemoArgumentsTests testUnknownFlagsIgnoredAndMissingValuesSafe]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoArgumentsTests testWithoutDemoFlagNothingIsEnabled]' started.
 Test Case '-[CoreTests.DemoArgumentsTests testWithoutDemoFlagNothingIsEnabled]' passed (0.000 seconds).
-Test Suite 'DemoArgumentsTests' passed at 2026-11-25 22:01:48.417.
+Test Suite 'DemoArgumentsTests' passed at 2026-11-26 15:43:12.881.
 	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'DemoSeriesTests' started at 2026-11-25 22:01:48.417.
+Test Suite 'DemoSeriesTests' started at 2026-11-26 15:43:12.881.
 Test Case '-[CoreTests.DemoSeriesTests testChosenDayDiffersFromToday]' started.
 Test Case '-[CoreTests.DemoSeriesTests testChosenDayDiffersFromToday]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testDailyMinutesAreHomeFiveInPaletteOrder]' started.
 Test Case '-[CoreTests.DemoSeriesTests testDailyMinutesAreHomeFiveInPaletteOrder]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testDailyTotalMatchesHomeHero]' started.
 Test Case '-[CoreTests.DemoSeriesTests testDailyTotalMatchesHomeHero]' passed (0.000 seconds).
+Test Case '-[CoreTests.DemoSeriesTests testFiveDemoAppsResolveToFiveDifferentColourIndices]' started.
+Test Case '-[CoreTests.DemoSeriesTests testFiveDemoAppsResolveToFiveDifferentColourIndices]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testMonthHasThirtyDays]' started.
 Test Case '-[CoreTests.DemoSeriesTests testMonthHasThirtyDays]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testMonthlyTotalsPreserveTheDailyOrder]' started.
@@ -164,84 +166,84 @@ Test Case '-[CoreTests.DemoSeriesTests testMonthTodayMatchesTheHeroFigure]' pass
 Test Case '-[CoreTests.DemoSeriesTests testTikTokWeekIsTheApprovedMockWithFortySeconds]' started.
 Test Case '-[CoreTests.DemoSeriesTests testTikTokWeekIsTheApprovedMockWithFortySeconds]' passed (0.000 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testTodayFiguresAreHomeFivePlusTikToksFortySeconds]' started.
-Test Case '-[CoreTests.DemoSeriesTests testTodayFiguresAreHomeFivePlusTikToksFortySeconds]' passed (0.000 seconds).
+Test Case '-[CoreTests.DemoSeriesTests testTodayFiguresAreHomeFivePlusTikToksFortySeconds]' passed (0.001 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testWeeklyTotalsPreserveTheDailyOrder]' started.
-Test Case '-[CoreTests.DemoSeriesTests testWeeklyTotalsPreserveTheDailyOrder]' passed (0.000 seconds).
+Test Case '-[CoreTests.DemoSeriesTests testWeeklyTotalsPreserveTheDailyOrder]' passed (0.001 seconds).
 Test Case '-[CoreTests.DemoSeriesTests testWeekTotalCarriesSeconds]' started.
-Test Case '-[CoreTests.DemoSeriesTests testWeekTotalCarriesSeconds]' passed (0.000 seconds).
-Test Suite 'DemoSeriesTests' passed at 2026-11-25 22:01:48.420.
-	 Executed 10 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-Test Suite 'DonutMathTests' started at 2026-11-25 22:01:48.420.
+Test Case '-[CoreTests.DemoSeriesTests testWeekTotalCarriesSeconds]' passed (0.001 seconds).
+Test Suite 'DemoSeriesTests' passed at 2026-11-26 15:43:12.887.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'DonutMathTests' started at 2026-11-26 15:43:12.887.
 Test Case '-[CoreTests.DonutMathTests testAnglesStartAtNoonAndAreContiguous]' started.
-Test Case '-[CoreTests.DonutMathTests testAnglesStartAtNoonAndAreContiguous]' passed (0.000 seconds).
+Test Case '-[CoreTests.DonutMathTests testAnglesStartAtNoonAndAreContiguous]' passed (0.001 seconds).
 Test Case '-[CoreTests.DonutMathTests testFractionsSumToOne]' started.
-Test Case '-[CoreTests.DonutMathTests testFractionsSumToOne]' passed (0.000 seconds).
+Test Case '-[CoreTests.DonutMathTests testFractionsSumToOne]' passed (0.001 seconds).
 Test Case '-[CoreTests.DonutMathTests testOrderAndPalettePreserved]' started.
-Test Case '-[CoreTests.DonutMathTests testOrderAndPalettePreserved]' passed (0.000 seconds).
+Test Case '-[CoreTests.DonutMathTests testOrderAndPalettePreserved]' passed (0.001 seconds).
 Test Case '-[CoreTests.DonutMathTests testTotalZeroIsEmpty]' started.
-Test Case '-[CoreTests.DonutMathTests testTotalZeroIsEmpty]' passed (0.000 seconds).
+Test Case '-[CoreTests.DonutMathTests testTotalZeroIsEmpty]' passed (0.001 seconds).
 Test Case '-[CoreTests.DonutMathTests testZeroTimeOmitted]' started.
-Test Case '-[CoreTests.DonutMathTests testZeroTimeOmitted]' passed (0.000 seconds).
-Test Suite 'DonutMathTests' passed at 2026-11-25 22:01:48.422.
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'DonutMinSweepTests' started at 2026-11-25 22:01:48.422.
+Test Case '-[CoreTests.DonutMathTests testZeroTimeOmitted]' passed (0.001 seconds).
+Test Suite 'DonutMathTests' passed at 2026-11-26 15:43:12.892.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'DonutMinSweepTests' started at 2026-11-26 15:43:12.892.
 Test Case '-[CoreTests.DonutMinSweepTests testTinyShareStillVisible]' started.
-Test Case '-[CoreTests.DonutMinSweepTests testTinyShareStillVisible]' passed (0.000 seconds).
+Test Case '-[CoreTests.DonutMinSweepTests testTinyShareStillVisible]' passed (0.001 seconds).
 Test Case '-[CoreTests.DonutMinSweepTests testTotalStays360]' started.
-Test Case '-[CoreTests.DonutMinSweepTests testTotalStays360]' passed (0.000 seconds).
-Test Suite 'DonutMinSweepTests' passed at 2026-11-25 22:01:48.422.
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-Test Suite 'DurationFormatSecondsTests' started at 2026-11-25 22:01:48.422.
+Test Case '-[CoreTests.DonutMinSweepTests testTotalStays360]' passed (0.001 seconds).
+Test Suite 'DonutMinSweepTests' passed at 2026-11-26 15:43:12.894.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DurationFormatSecondsTests' started at 2026-11-26 15:43:12.894.
 Test Case '-[CoreTests.DurationFormatSecondsTests testTruncationNotRounding]' started.
-Test Case '-[CoreTests.DurationFormatSecondsTests testTruncationNotRounding]' passed (0.000 seconds).
-Test Suite 'DurationFormatSecondsTests' passed at 2026-11-25 22:01:48.423.
-	 Executed 1 test, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
-Test Suite 'DurationFormatTests' started at 2026-11-25 22:01:48.423.
+Test Case '-[CoreTests.DurationFormatSecondsTests testTruncationNotRounding]' passed (0.001 seconds).
+Test Suite 'DurationFormatSecondsTests' passed at 2026-11-26 15:43:12.895.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'DurationFormatTests' started at 2026-11-26 15:43:12.895.
 Test Case '-[CoreTests.DurationFormatTests testLeft]' started.
-Test Case '-[CoreTests.DurationFormatTests testLeft]' passed (0.000 seconds).
+Test Case '-[CoreTests.DurationFormatTests testLeft]' passed (0.001 seconds).
 Test Case '-[CoreTests.DurationFormatTests testShort]' started.
-Test Case '-[CoreTests.DurationFormatTests testShort]' passed (0.000 seconds).
-Test Suite 'DurationFormatTests' passed at 2026-11-25 22:01:48.423.
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-Test Suite 'DurationPartsTests' started at 2026-11-25 22:01:48.423.
+Test Case '-[CoreTests.DurationFormatTests testShort]' passed (0.001 seconds).
+Test Suite 'DurationFormatTests' passed at 2026-11-26 15:43:12.897.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DurationPartsTests' started at 2026-11-26 15:43:12.897.
 Test Case '-[CoreTests.DurationPartsTests testMockValue]' started.
-Test Case '-[CoreTests.DurationPartsTests testMockValue]' passed (0.000 seconds).
+Test Case '-[CoreTests.DurationPartsTests testMockValue]' passed (0.001 seconds).
 Test Case '-[CoreTests.DurationPartsTests testOverADay]' started.
-Test Case '-[CoreTests.DurationPartsTests testOverADay]' passed (0.000 seconds).
+Test Case '-[CoreTests.DurationPartsTests testOverADay]' passed (0.001 seconds).
 Test Case '-[CoreTests.DurationPartsTests testUnderAMinute]' started.
 Test Case '-[CoreTests.DurationPartsTests testUnderAMinute]' passed (0.001 seconds).
 Test Case '-[CoreTests.DurationPartsTests testZero]' started.
-Test Case '-[CoreTests.DurationPartsTests testZero]' passed (0.001 seconds).
-Test Suite 'DurationPartsTests' passed at 2026-11-25 22:01:48.425.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'FocusStateTests' started at 2026-11-25 22:01:48.425.
+Test Case '-[CoreTests.DurationPartsTests testZero]' passed (0.000 seconds).
+Test Suite 'DurationPartsTests' passed at 2026-11-26 15:43:12.901.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'FocusStateTests' started at 2026-11-26 15:43:12.901.
 Test Case '-[CoreTests.FocusStateTests testPeriodChangeKeepsOnlyIfPresent]' started.
 Test Case '-[CoreTests.FocusStateTests testPeriodChangeKeepsOnlyIfPresent]' passed (0.001 seconds).
 Test Case '-[CoreTests.FocusStateTests testTapOutsideClears]' started.
 Test Case '-[CoreTests.FocusStateTests testTapOutsideClears]' passed (0.001 seconds).
 Test Case '-[CoreTests.FocusStateTests testTapSameClears]' started.
-Test Case '-[CoreTests.FocusStateTests testTapSameClears]' passed (0.000 seconds).
+Test Case '-[CoreTests.FocusStateTests testTapSameClears]' passed (0.001 seconds).
 Test Case '-[CoreTests.FocusStateTests testTapSetsFocus]' started.
 Test Case '-[CoreTests.FocusStateTests testTapSetsFocus]' passed (0.001 seconds).
-Test Suite 'FocusStateTests' passed at 2026-11-25 22:01:48.429.
+Test Suite 'FocusStateTests' passed at 2026-11-26 15:43:12.904.
 	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
-Test Suite 'HoursFormatTests' started at 2026-11-25 22:01:48.429.
+Test Suite 'HoursFormatTests' started at 2026-11-26 15:43:12.904.
 Test Case '-[CoreTests.HoursFormatTests testRules]' started.
-Test Case '-[CoreTests.HoursFormatTests testRules]' passed (0.001 seconds).
+Test Case '-[CoreTests.HoursFormatTests testRules]' passed (0.000 seconds).
 Test Case '-[CoreTests.HoursFormatTests testTotalsFollowTheSameRule]' started.
-Test Case '-[CoreTests.HoursFormatTests testTotalsFollowTheSameRule]' passed (0.001 seconds).
+Test Case '-[CoreTests.HoursFormatTests testTotalsFollowTheSameRule]' passed (0.000 seconds).
 Test Case '-[CoreTests.HoursFormatTests testWholeHoursDropTheDecimal]' started.
 Test Case '-[CoreTests.HoursFormatTests testWholeHoursDropTheDecimal]' passed (0.000 seconds).
-Test Suite 'HoursFormatTests' passed at 2026-11-25 22:01:48.431.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
-Test Suite 'PaletteTests' started at 2026-11-25 22:01:48.431.
+Test Suite 'HoursFormatTests' passed at 2026-11-26 15:43:12.905.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'PaletteTests' started at 2026-11-26 15:43:12.905.
 Test Case '-[CoreTests.PaletteTests testEightNames]' started.
 Test Case '-[CoreTests.PaletteTests testEightNames]' passed (0.000 seconds).
 Test Case '-[CoreTests.PaletteTests testIndexWrapsAtEight]' started.
 Test Case '-[CoreTests.PaletteTests testIndexWrapsAtEight]' passed (0.000 seconds).
-Test Suite 'PaletteTests' passed at 2026-11-25 22:01:48.432.
+Test Suite 'PaletteTests' passed at 2026-11-26 15:43:12.906.
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
-Test Suite 'PeriodMathTests' started at 2026-11-25 22:01:48.432.
+Test Suite 'PeriodMathTests' started at 2026-11-26 15:43:12.906.
 Test Case '-[CoreTests.PeriodMathTests testCurrentIntervals]' started.
 Test Case '-[CoreTests.PeriodMathTests testCurrentIntervals]' passed (0.001 seconds).
 Test Case '-[CoreTests.PeriodMathTests testDayAcrossClockChange]' started.
@@ -249,137 +251,137 @@ Test Case '-[CoreTests.PeriodMathTests testDayAcrossClockChange]' passed (0.000 
 Test Case '-[CoreTests.PeriodMathTests testMonthLengths]' started.
 Test Case '-[CoreTests.PeriodMathTests testMonthLengths]' passed (0.001 seconds).
 Test Case '-[CoreTests.PeriodMathTests testOffsets]' started.
-Test Case '-[CoreTests.PeriodMathTests testOffsets]' passed (0.002 seconds).
+Test Case '-[CoreTests.PeriodMathTests testOffsets]' passed (0.003 seconds).
 Test Case '-[CoreTests.PeriodMathTests testWeekWithMondayAndSundayStarts]' started.
 Test Case '-[CoreTests.PeriodMathTests testWeekWithMondayAndSundayStarts]' passed (0.002 seconds).
-Test Suite 'PeriodMathTests' passed at 2026-11-25 22:01:48.439.
-	 Executed 5 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
-Test Suite 'PeriodProgressTests' started at 2026-11-25 22:01:48.439.
+Test Suite 'PeriodMathTests' passed at 2026-11-26 15:43:12.913.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.006 (0.007) seconds
+Test Suite 'PeriodProgressTests' started at 2026-11-26 15:43:12.913.
 Test Case '-[CoreTests.PeriodProgressTests testFirstAndLastInstant]' started.
-Test Case '-[CoreTests.PeriodProgressTests testFirstAndLastInstant]' passed (0.000 seconds).
+Test Case '-[CoreTests.PeriodProgressTests testFirstAndLastInstant]' passed (0.001 seconds).
 Test Case '-[CoreTests.PeriodProgressTests testMiddayIsHalf]' started.
 Test Case '-[CoreTests.PeriodProgressTests testMiddayIsHalf]' passed (0.000 seconds).
 Test Case '-[CoreTests.PeriodProgressTests testThursdayMiddayHalfwayThroughMondayWeek]' started.
-Test Case '-[CoreTests.PeriodProgressTests testThursdayMiddayHalfwayThroughMondayWeek]' passed (0.000 seconds).
-Test Suite 'PeriodProgressTests' passed at 2026-11-25 22:01:48.440.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'PeriodStatsTests' started at 2026-11-25 22:01:48.440.
+Test Case '-[CoreTests.PeriodProgressTests testThursdayMiddayHalfwayThroughMondayWeek]' passed (0.001 seconds).
+Test Suite 'PeriodProgressTests' passed at 2026-11-26 15:43:12.917.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'PeriodStatsTests' started at 2026-11-26 15:43:12.917.
 Test Case '-[CoreTests.PeriodStatsTests testEmpty]' started.
-Test Case '-[CoreTests.PeriodStatsTests testEmpty]' passed (0.000 seconds).
+Test Case '-[CoreTests.PeriodStatsTests testEmpty]' passed (0.001 seconds).
 Test Case '-[CoreTests.PeriodStatsTests testMockWeek]' started.
-Test Case '-[CoreTests.PeriodStatsTests testMockWeek]' passed (0.000 seconds).
-Test Suite 'PeriodStatsTests' passed at 2026-11-25 22:01:48.441.
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-Test Suite 'RankingTests' started at 2026-11-25 22:01:48.441.
+Test Case '-[CoreTests.PeriodStatsTests testMockWeek]' passed (0.001 seconds).
+Test Suite 'PeriodStatsTests' passed at 2026-11-26 15:43:12.920.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'RankingTests' started at 2026-11-26 15:43:12.920.
 Test Case '-[CoreTests.RankingTests testEmpty]' started.
-Test Case '-[CoreTests.RankingTests testEmpty]' passed (0.000 seconds).
+Test Case '-[CoreTests.RankingTests testEmpty]' passed (0.001 seconds).
 Test Case '-[CoreTests.RankingTests testLargestFirstWithRanksAndShares]' started.
 Test Case '-[CoreTests.RankingTests testLargestFirstWithRanksAndShares]' passed (0.001 seconds).
 Test Case '-[CoreTests.RankingTests testTieKeepsInputOrder]' started.
 Test Case '-[CoreTests.RankingTests testTieKeepsInputOrder]' passed (0.001 seconds).
 Test Case '-[CoreTests.RankingTests testZeroTimeDropsOut]' started.
 Test Case '-[CoreTests.RankingTests testZeroTimeDropsOut]' passed (0.001 seconds).
-Test Suite 'RankingTests' passed at 2026-11-25 22:01:48.446.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
-Test Suite 'SettingsKeysTests' started at 2026-11-25 22:01:48.446.
+Test Suite 'RankingTests' passed at 2026-11-26 15:43:12.924.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'SettingsKeysTests' started at 2026-11-26 15:43:12.924.
 Test Case '-[CoreTests.SettingsKeysTests testAllKeysUnique]' started.
 Test Case '-[CoreTests.SettingsKeysTests testAllKeysUnique]' passed (0.001 seconds).
 Test Case '-[CoreTests.SettingsKeysTests testKeysMatchTheSpecDataModel]' started.
 Test Case '-[CoreTests.SettingsKeysTests testKeysMatchTheSpecDataModel]' passed (0.001 seconds).
-Test Suite 'SettingsKeysTests' passed at 2026-11-25 22:01:48.448.
+Test Suite 'SettingsKeysTests' passed at 2026-11-26 15:43:12.926.
 	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'StatusLineTests' started at 2026-11-25 22:01:48.448.
+Test Suite 'StatusLineTests' started at 2026-11-26 15:43:12.926.
 Test Case '-[CoreTests.StatusLineTests testExactlyOnTarget]' started.
-Test Case '-[CoreTests.StatusLineTests testExactlyOnTarget]' passed (0.003 seconds).
+Test Case '-[CoreTests.StatusLineTests testExactlyOnTarget]' passed (0.000 seconds).
 Test Case '-[CoreTests.StatusLineTests testMockLines]' started.
-Test Case '-[CoreTests.StatusLineTests testMockLines]' passed (0.001 seconds).
+Test Case '-[CoreTests.StatusLineTests testMockLines]' passed (0.000 seconds).
 Test Case '-[CoreTests.StatusLineTests testNeutralIsEmpty]' started.
-Test Case '-[CoreTests.StatusLineTests testNeutralIsEmpty]' passed (0.001 seconds).
-Test Suite 'StatusLineTests' passed at 2026-11-25 22:01:48.455.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
-Test Suite 'StatusPartsTests' started at 2026-11-25 22:01:48.455.
+Test Case '-[CoreTests.StatusLineTests testNeutralIsEmpty]' passed (0.000 seconds).
+Test Suite 'StatusLineTests' passed at 2026-11-26 15:43:12.927.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'StatusPartsTests' started at 2026-11-26 15:43:12.927.
 Test Case '-[CoreTests.StatusPartsTests testNeutralIsEmpty]' started.
-Test Case '-[CoreTests.StatusPartsTests testNeutralIsEmpty]' passed (0.001 seconds).
+Test Case '-[CoreTests.StatusPartsTests testNeutralIsEmpty]' passed (0.000 seconds).
 Test Case '-[CoreTests.StatusPartsTests testStatusLineJoinsWithOneSeparator]' started.
-Test Case '-[CoreTests.StatusPartsTests testStatusLineJoinsWithOneSeparator]' passed (0.001 seconds).
+Test Case '-[CoreTests.StatusPartsTests testStatusLineJoinsWithOneSeparator]' passed (0.000 seconds).
 Test Case '-[CoreTests.StatusPartsTests testZones]' started.
-Test Case '-[CoreTests.StatusPartsTests testZones]' passed (0.001 seconds).
-Test Suite 'StatusPartsTests' passed at 2026-11-25 22:01:48.459.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
-Test Suite 'SummaryIntervalEdgeTests' started at 2026-11-25 22:01:48.459.
+Test Case '-[CoreTests.StatusPartsTests testZones]' passed (0.000 seconds).
+Test Suite 'StatusPartsTests' passed at 2026-11-26 15:43:12.928.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SummaryIntervalEdgeTests' started at 2026-11-26 15:43:12.928.
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyFebruaryNonLeap]' started.
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyFebruaryNonLeap]' passed (0.002 seconds).
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyMarchLosesAnHour]' started.
-Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyMarchLosesAnHour]' passed (0.000 seconds).
+Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyMarchLosesAnHour]' passed (0.001 seconds).
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyOctoberGainsAnHour]' started.
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testMonthlyOctoberGainsAnHour]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testPillIndexOfIsTheInverseOfPillDate]' started.
-Test Case '-[CoreTests.SummaryIntervalEdgeTests testPillIndexOfIsTheInverseOfPillDate]' passed (0.000 seconds).
+Test Case '-[CoreTests.SummaryIntervalEdgeTests testPillIndexOfIsTheInverseOfPillDate]' passed (0.001 seconds).
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testWeeklyIntervalStartsMondayLondonAcrossMarchChange]' started.
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testWeeklyIntervalStartsMondayLondonAcrossMarchChange]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryIntervalEdgeTests testWeeklyOctoberChangeDayStillStartsMonday]' started.
-Test Case '-[CoreTests.SummaryIntervalEdgeTests testWeeklyOctoberChangeDayStillStartsMonday]' passed (0.001 seconds).
-Test Suite 'SummaryIntervalEdgeTests' passed at 2026-11-25 22:01:48.464.
-	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
-Test Suite 'SummaryPeriodTests' started at 2026-11-25 22:01:48.464.
+Test Case '-[CoreTests.SummaryIntervalEdgeTests testWeeklyOctoberChangeDayStillStartsMonday]' passed (0.000 seconds).
+Test Suite 'SummaryIntervalEdgeTests' passed at 2026-11-26 15:43:12.933.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'SummaryPeriodTests' started at 2026-11-26 15:43:12.933.
 Test Case '-[CoreTests.SummaryPeriodTests testDailyIntervalIsThatDay]' started.
-Test Case '-[CoreTests.SummaryPeriodTests testDailyIntervalIsThatDay]' passed (0.002 seconds).
+Test Case '-[CoreTests.SummaryPeriodTests testDailyIntervalIsThatDay]' passed (0.001 seconds).
 Test Case '-[CoreTests.SummaryPeriodTests testMonthlyIsTheWholeCalendarMonth]' started.
-Test Case '-[CoreTests.SummaryPeriodTests testMonthlyIsTheWholeCalendarMonth]' passed (0.001 seconds).
+Test Case '-[CoreTests.SummaryPeriodTests testMonthlyIsTheWholeCalendarMonth]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryPeriodTests testPillDate]' started.
-Test Case '-[CoreTests.SummaryPeriodTests testPillDate]' passed (0.001 seconds).
+Test Case '-[CoreTests.SummaryPeriodTests testPillDate]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryPeriodTests testRoundTrip]' started.
 Test Case '-[CoreTests.SummaryPeriodTests testRoundTrip]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryPeriodTests testTodayPillIndexAndFuturePills]' started.
-Test Case '-[CoreTests.SummaryPeriodTests testTodayPillIndexAndFuturePills]' passed (0.001 seconds).
+Test Case '-[CoreTests.SummaryPeriodTests testTodayPillIndexAndFuturePills]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryPeriodTests testWeeklySpansWeekToDate]' started.
-Test Case '-[CoreTests.SummaryPeriodTests testWeeklySpansWeekToDate]' passed (0.000 seconds).
-Test Suite 'SummaryPeriodTests' passed at 2026-11-25 22:01:48.471.
-	 Executed 6 tests, with 0 failures (0 unexpected) in 0.005 (0.007) seconds
-Test Suite 'SummaryTextTests' started at 2026-11-25 22:01:48.471.
+Test Case '-[CoreTests.SummaryPeriodTests testWeeklySpansWeekToDate]' passed (0.001 seconds).
+Test Suite 'SummaryPeriodTests' passed at 2026-11-26 15:43:12.937.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'SummaryTextTests' started at 2026-11-26 15:43:12.937.
 Test Case '-[CoreTests.SummaryTextTests testEmptyRing]' started.
-Test Case '-[CoreTests.SummaryTextTests testEmptyRing]' passed (0.000 seconds).
+Test Case '-[CoreTests.SummaryTextTests testEmptyRing]' passed (0.001 seconds).
 Test Case '-[CoreTests.SummaryTextTests testFocusedCentre]' started.
-Test Case '-[CoreTests.SummaryTextTests testFocusedCentre]' passed (0.000 seconds).
+Test Case '-[CoreTests.SummaryTextTests testFocusedCentre]' passed (0.001 seconds).
 Test Case '-[CoreTests.SummaryTextTests testFocusedOverTenHoursDecimal]' started.
 Test Case '-[CoreTests.SummaryTextTests testFocusedOverTenHoursDecimal]' passed (0.000 seconds).
 Test Case '-[CoreTests.SummaryTextTests testUnfocusedCentrePerPeriod]' started.
-Test Case '-[CoreTests.SummaryTextTests testUnfocusedCentrePerPeriod]' passed (0.000 seconds).
-Test Suite 'SummaryTextTests' passed at 2026-11-25 22:01:48.472.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-Test Suite 'TargetMathTests' started at 2026-11-25 22:01:48.472.
+Test Case '-[CoreTests.SummaryTextTests testUnfocusedCentrePerPeriod]' passed (0.001 seconds).
+Test Suite 'SummaryTextTests' passed at 2026-11-26 15:43:12.941.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'TargetMathTests' started at 2026-11-26 15:43:12.941.
 Test Case '-[CoreTests.TargetMathTests testAllowanceTableDailyMode]' started.
-Test Case '-[CoreTests.TargetMathTests testAllowanceTableDailyMode]' passed (0.000 seconds).
+Test Case '-[CoreTests.TargetMathTests testAllowanceTableDailyMode]' passed (0.001 seconds).
 Test Case '-[CoreTests.TargetMathTests testAllowanceTableWeeklyMode]' started.
 Test Case '-[CoreTests.TargetMathTests testAllowanceTableWeeklyMode]' passed (0.000 seconds).
 Test Case '-[CoreTests.TargetMathTests testConversionRoundTrips]' started.
-Test Case '-[CoreTests.TargetMathTests testConversionRoundTrips]' passed (0.000 seconds).
+Test Case '-[CoreTests.TargetMathTests testConversionRoundTrips]' passed (0.001 seconds).
 Test Case '-[CoreTests.TargetMathTests testWeekToDateAverage]' started.
-Test Case '-[CoreTests.TargetMathTests testWeekToDateAverage]' passed (0.000 seconds).
-Test Suite 'TargetMathTests' passed at 2026-11-25 22:01:48.473.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-Test Suite 'TokenCleanupTests' started at 2026-11-25 22:01:48.473.
+Test Case '-[CoreTests.TargetMathTests testWeekToDateAverage]' passed (0.001 seconds).
+Test Suite 'TargetMathTests' passed at 2026-11-26 15:43:12.944.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'TokenCleanupTests' started at 2026-11-26 15:43:12.944.
 Test Case '-[CoreTests.TokenCleanupTests testEmptyAvailableClearsEverything]' started.
-Test Case '-[CoreTests.TokenCleanupTests testEmptyAvailableClearsEverything]' passed (0.000 seconds).
+Test Case '-[CoreTests.TokenCleanupTests testEmptyAvailableClearsEverything]' passed (0.001 seconds).
 Test Case '-[CoreTests.TokenCleanupTests testKeepsOrder]' started.
-Test Case '-[CoreTests.TokenCleanupTests testKeepsOrder]' passed (0.000 seconds).
+Test Case '-[CoreTests.TokenCleanupTests testKeepsOrder]' passed (0.001 seconds).
 Test Case '-[CoreTests.TokenCleanupTests testNothingToRemoveIsUnchanged]' started.
 Test Case '-[CoreTests.TokenCleanupTests testNothingToRemoveIsUnchanged]' passed (0.000 seconds).
 Test Case '-[CoreTests.TokenCleanupTests testRemovesMissingTokensFromAllThreeLists]' started.
 Test Case '-[CoreTests.TokenCleanupTests testRemovesMissingTokensFromAllThreeLists]' passed (0.000 seconds).
-Test Suite 'TokenCleanupTests' passed at 2026-11-25 22:01:48.474.
-	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-Test Suite 'ZoneTests' started at 2026-11-25 22:01:48.474.
+Test Suite 'TokenCleanupTests' passed at 2026-11-26 15:43:12.947.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'ZoneTests' started at 2026-11-26 15:43:12.947.
 Test Case '-[CoreTests.ZoneTests testBoundaries]' started.
-Test Case '-[CoreTests.ZoneTests testBoundaries]' passed (0.001 seconds).
+Test Case '-[CoreTests.ZoneTests testBoundaries]' passed (0.000 seconds).
 Test Case '-[CoreTests.ZoneTests testZeroAllowanceIsGreen]' started.
 Test Case '-[CoreTests.ZoneTests testZeroAllowanceIsGreen]' passed (0.000 seconds).
-Test Suite 'ZoneTests' passed at 2026-11-25 22:01:48.476.
-	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
-Test Suite 'CorePackageTests.xctest' passed at 2026-11-25 22:01:48.476.
-	 Executed 119 tests, with 0 failures (0 unexpected) in 0.062 (0.087) seconds
-Test Suite 'All tests' passed at 2026-11-25 22:01:48.476.
-	 Executed 119 tests, with 0 failures (0 unexpected) in 0.062 (0.090) seconds
+Test Suite 'ZoneTests' passed at 2026-11-26 15:43:12.948.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CorePackageTests.xctest' passed at 2026-11-26 15:43:12.948.
+	 Executed 120 tests, with 0 failures (0 unexpected) in 0.061 (0.090) seconds
+Test Suite 'All tests' passed at 2026-11-26 15:43:12.948.
+	 Executed 120 tests, with 0 failures (0 unexpected) in 0.061 (0.092) seconds
 ◇ Test run started.
 ↳ Testing Library Version: 1902
 ↳ Target Platform: arm64e-apple-macos14.0
