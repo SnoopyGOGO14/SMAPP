@@ -73,6 +73,9 @@ jobs:
             local appearance="$1"; shift
             xcrun simctl ui "$UDID" appearance "$appearance"
             xcrun simctl terminate "$UDID" "$BUNDLE" || true
+            # Give the terminate time to land — launching into a dying
+            # instance is how the stale-screen race starts.
+            sleep 2
             xcrun simctl launch "$UDID" "$BUNDLE" -demo "$@" || {
               echo "LAUNCH-FAILED $name" >> shots/NOTE.txt
               return
@@ -90,8 +93,29 @@ jobs:
             # F2: the app must name the screen it is showing.
             CONTAINER=$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data 2>/dev/null || true)
             MARKER="unreadable"
+            CONTAINER=$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data 2>/dev/null || true)
             if [ -n "$CONTAINER" ] && [ -f "$CONTAINER/Documents/demo-screen.txt" ]; then
               MARKER=$(cat "$CONTAINER/Documents/demo-screen.txt" | tr -d '[:space:]')
+            fi
+            if [ "$MARKER" != "$expected" ]; then
+              # Stale launch — the simulator sometimes foregrounds the
+              # previous instance instead of starting fresh (the three
+              # round-6 mismatches all showed the *previous* capture's
+              # screen). Terminate properly, relaunch, wait longer, and
+              # retake once. A real mismatch survives and is logged.
+              xcrun simctl terminate "$UDID" "$BUNDLE" || true
+              sleep 3
+              if xcrun simctl launch "$UDID" "$BUNDLE" -demo "$@" 2>>ci-screens-build.log; then
+                sleep 5
+                MARKER="unreadable"
+                CONTAINER=$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data 2>/dev/null || true)
+                if [ -n "$CONTAINER" ] && [ -f "$CONTAINER/Documents/demo-screen.txt" ]; then
+                  MARKER=$(cat "$CONTAINER/Documents/demo-screen.txt" | tr -d '[:space:]')
+                fi
+                if [ "$MARKER" == "$expected" ]; then
+                  echo "RETAKEN $name (first launch showed a stale screen)" >> shots/NOTE.txt
+                fi
+              fi
             fi
             if [ "$MARKER" != "$expected" ]; then
               echo "MISMATCH $name expected=$expected marker=$MARKER" >> shots/NOTE.txt

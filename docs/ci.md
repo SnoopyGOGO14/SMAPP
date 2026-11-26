@@ -32,7 +32,8 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 36 (`ec3f623`) | build (run 35) | **success (2m)** | X1–X9 compile; the round-5 capture run follows |
 | 37 (`9623dfd`) | screens (run 34) | **success (8m) — 17 captures, markers clean, day0 and end included, no duplicates** | round 5 stands on these captures |
 | 38 (`5f6e165`) | build (run 36) | **success (2m)** | Y1 (tile colours) + Y2 (inline title mode) compile |
-| 39 | screens | pending | the final `[screens-all]` — full manifest, both appearances |
+| 39 (`ce87fe5`) | screens (run 36) | success (13m) — 36 captures, 33 markers clean, **3 MISMATCHes** | all three showed the *previous* capture's screen (`detail-dark`→`summary/monthly`, `settings-*`→`detail/sheet`): the simulator terminate/launch race, not an app bug (the same screens matched with other args in the same run). capture() now retakes once on mismatch + settles the terminate; one more `[screens-all]` follows — **1 screenshot run over budget**, logged |
+| 40 | screens | pending | the retake run |
 | — | — | — | Y-round budget: 1 of 2 builds, 0 of 1 screens at this point |
 
 ## Run numbering note
