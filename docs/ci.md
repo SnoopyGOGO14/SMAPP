@@ -34,7 +34,9 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 38 (`5f6e165`) | build (run 36) | **success (2m)** | Y1 (tile colours) + Y2 (inline title mode) compile |
 | 39 (`ce87fe5`) | screens (run 36) | success (13m) — 36 captures, 33 markers clean, **3 MISMATCHes** | all three showed the *previous* capture's screen (`detail-dark`→`summary/monthly`, `settings-*`→`detail/sheet`): the simulator terminate/launch race, not an app bug (the same screens matched with other args in the same run). capture() now retakes once on mismatch + settles the terminate; one more `[screens-all]` follows — **1 screenshot run over budget**, logged |
 | 40 (`eed83ce`) | screens (run 37) | **success (14m) — 36 captures; detail-dark fixed (1 RETAKEN, the stale-launch race); settings still mismatched** | root cause found, and it was never a race: **SettingsScreen never called `DemoMarker.mark`** — every settings capture read the previous screen's stale marker file. One-line fix in `ac1781f` |
-| 41 (`ac1781f`) | build | pending | Z1–Z4: the plain push before the final `[screens-all]` |
+| 42 (`ac1781f`) | build (run 38) | failure (0m) | the hourly helpers were typed with tuples; `Aggregator.DayTotal` is a struct — annotation fix |
+| 43 (`d165792`) | build (run 39) | **success (1m)** | Z1–Z4 compile |
+| 44 | screens | pending | the final `[screens-all]` |
 | — | — | — | Y-round budget: 1 of 2 builds, 0 of 1 screens at this point |
 
 ## Run numbering note
