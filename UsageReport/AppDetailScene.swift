@@ -35,7 +35,7 @@ struct AppDetailScene: DeviceActivityReportScene {
     // MARK: - Z3: the day hour by hour
 
     private func hourlyConfiguration(
-        daily: [(dayStart: Date, seconds: TimeInterval)],
+        daily: [Aggregator.DayTotal],
         target: Int?,
         calendar: Calendar
     ) -> AppDetailConfiguration {
@@ -79,7 +79,7 @@ struct AppDetailScene: DeviceActivityReportScene {
     // MARK: - Weeks and months
 
     private func periodConfiguration(
-        daily: [(dayStart: Date, seconds: TimeInterval)],
+        daily: [Aggregator.DayTotal],
         target: Int?,
         calendar: Calendar,
         settings: SharedSettings
