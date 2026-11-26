@@ -1,4 +1,9 @@
-/Users/runner/work/SMAPP/SMAPP/UsageReport/AppDetailScene.swift:30:47: error: cannot convert value of type '[Aggregator.DayTotal]' to expected argument type '[(dayStart: Date, seconds: TimeInterval)]' (aka 'Array<(dayStart: Date, seconds: Double)>')
-/Users/runner/work/SMAPP/SMAPP/UsageReport/AppDetailScene.swift:32:43: error: cannot convert value of type '[Aggregator.DayTotal]' to expected argument type '[(dayStart: Date, seconds: TimeInterval)]' (aka 'Array<(dayStart: Date, seconds: Double)>')
-** BUILD FAILED **
-commit: ac1781f82fd3eca7b8e5fff81f48f864024eba5e status: failure run: 38
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:71:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+2026-11-26 16:31:01.877 appintentsmetadataprocessor[2447:10983] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-26 16:31:01.910 appintentsmetadataprocessor[2457:11002] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-26 16:31:18.048 appintentsmetadataprocessor[2649:11560] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+** BUILD SUCCEEDED **
+commit: d165792ff7792dfe480a273969fc3f4cade63dca status: success run: 39
