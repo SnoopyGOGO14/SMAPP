@@ -31,7 +31,9 @@ Live state: `git show origin/ci-logs:STATUS.txt` (each line:
 | 35 (`124f776`) | build (run 34) | failure (1m) | failure class 15: the type-checker timed out on the untyped literal chain in `monthBase`; broken into typed sub-expressions |
 | 36 (`ec3f623`) | build (run 35) | **success (2m)** | X1–X9 compile; the round-5 capture run follows |
 | 37 (`9623dfd`) | screens (run 34) | **success (8m) — 17 captures, markers clean, day0 and end included, no duplicates** | round 5 stands on these captures |
-| — | — | — | X-round closed: 2 of 3 builds (one burn: failure class 15), 1 of 2 screens |
+| 38 (`5f6e165`) | build (run 36) | **success (2m)** | Y1 (tile colours) + Y2 (inline title mode) compile |
+| 39 | screens | pending | the final `[screens-all]` — full manifest, both appearances |
+| — | — | — | Y-round budget: 1 of 2 builds, 0 of 1 screens at this point |
 
 ## Run numbering note
 
