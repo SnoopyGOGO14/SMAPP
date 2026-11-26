@@ -20,6 +20,27 @@ X1–X9 fixes landed on top.
 
 ---
 
+## Run of 26 November — Y1/Y2 (round-5 review) + the final full manifest
+
+Round 5 passed ("day pills work, one colour per app, minutes under an
+hour, sensible weekly figures, layout clean, focus correct") with two
+fixes left, both done in `5f6e165`:
+
+- **Y1 — demo tiles one colour**: `DemoTile` called the colour function
+  whose `position` parameter defaulted to 0, so after the X2 flip all
+  five tiles took position 0's colour. `DemoTile(position:)` now takes
+  the app's row-order colour (the same one its Summary dot uses), and
+  `RankColors.color(position:)` is the explicit entry point. Core test:
+  the five demo positions map to five distinct colour indices (120
+  tests now).
+- **Y2 — the ~80 pt band on App detail**: `DemoDetailScreen` never set
+  `.navigationBarTitleDisplayMode(.inline)`, so the NavigationStack
+  reserved the large-title area above the tabs. Now inline; X7's 12 pt
+  margin holds beneath the compact bar.
+
+Then the `[screens-all]` run (the full manifest) and the final record
+raise — see the banner above.
+
 ## Run of 25 November (late) — X1 to X9 (11-VISUAL-REVIEW-ROUND4)
 
 Round 4's verdict confirmed W2, W3, W5–W12 and W1-in-part fixed
