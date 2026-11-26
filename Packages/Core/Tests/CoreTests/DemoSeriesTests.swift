@@ -43,6 +43,16 @@ final class DemoSeriesTests: XCTestCase {
         XCTAssertEqual(Core.DemoSeries.week(index: 0).count, 7)
     }
 
+    // MARK: - Y1: one colour per app
+
+    func testFiveDemoAppsResolveToFiveDifferentColourIndices() {
+        // Y1: the five demo tiles all rendered one colour because
+        // DemoTile's colour call fell back to position 0. The palette
+        // must give five distinct indices for the five row positions.
+        let indices = (0..<5).map { Core.Palette.index(for: $0) }
+        XCTAssertEqual(Set(indices).count, 5, "positions 0-4 must map to distinct colour indices")
+    }
+
     // MARK: - X1: per-day figures
 
     func testTodayFiguresAreHomeFivePlusTikToksFortySeconds() {

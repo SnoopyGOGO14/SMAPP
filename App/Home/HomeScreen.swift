@@ -183,7 +183,9 @@ struct HomeScreen: View {
         // the tile colour matches the Summary's rank colours.
         AppRowShell {
             HStack(spacing: 10) {
-                DemoTile(rank: demoRowIndex(of: app), initials: app.initials)
+                // Y1: the tile takes the app's row-order colour — the
+                // same one its Summary dot uses.
+                DemoTile(position: demoRowIndex(of: app), initials: app.initials)
                 Text(app.name)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(Color("PrimaryText"))

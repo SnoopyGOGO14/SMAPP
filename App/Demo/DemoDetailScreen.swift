@@ -39,13 +39,16 @@ struct DemoDetailScreen: View {
             .padding(.horizontal, 20)
         }
         .background(Color("Ground"))
-        // X7: tabs 12 pt below the navigation bar.
+        // Y2: the NavigationStack reserved the large-title area (~80 pt)
+        // between the bar and the tabs — inline mode removes it; X7's
+        // 12 pt margin then holds.
+        .navigationBarTitleDisplayMode(.inline)
         .contentMargins(.top, 12, for: .scrollContent)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 10) {
                     // W14: the demo tile in the Summary's rank colour.
-                    DemoTile(rank: 0, initials: "Ti", size: 32)
+                    DemoTile(position: 0, initials: "Ti", size: 32)
                     Text("TikTok")
                         .font(.headline)
                         .foregroundStyle(Color("PrimaryText"))

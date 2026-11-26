@@ -61,7 +61,7 @@ struct AppDetailScreen: View {
             #if DEBUG
             if DemoMode.isEnabled {
                 // W14: the demo tile in the Summary's rank colour.
-                DemoTile(rank: 0, initials: "Ti", size: 32)
+                DemoTile(position: 0, initials: "Ti", size: 32)
                 Text("TikTok")
                     .font(.headline)
                     .foregroundStyle(Color("PrimaryText"))

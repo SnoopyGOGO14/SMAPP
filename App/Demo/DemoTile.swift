@@ -1,7 +1,8 @@
-// DemoTile — the demo app tile (W14): filled with the rank colour the
-// Summary uses, so TikTok is the same colour on Home, Summary and
-// detail in demo captures. Real builds show the real icon via
-// Label(token). Debug builds only.
+// DemoTile — the demo app tile (W14, Y1): filled with the app's
+// row-order colour — the same one its Summary dot uses — so each of
+// the five apps keeps one distinct colour everywhere in demo captures
+// (X2: colour follows position, never rank). Real builds show the real
+// icon via Label(token). Debug builds only.
 
 #if DEBUG
 import SwiftUI
@@ -9,13 +10,14 @@ import Core
 
 struct DemoTile: View {
 
-    let rank: Int
+    /// The app's position in the user's row order — its colour index.
+    let position: Int
     let initials: String
     var size: CGFloat = 36
 
     var body: some View {
         RoundedRectangle(cornerRadius: size * 0.28)
-            .fill(RankColors.color(rank))
+            .fill(RankColors.color(position: position))
             .frame(width: size, height: size)
             .overlay(
                 Text(initials)

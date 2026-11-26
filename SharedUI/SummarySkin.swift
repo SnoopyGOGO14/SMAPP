@@ -44,15 +44,25 @@ public enum SummaryFonts {
 }
 
 public enum RankColors {
-    /// Colour for a card/segment: by rank (default) or by row order
-    /// (position), in the chosen palette set.
-    public static func color(_ rank: Int, position: Int = 0) -> Color {
-        let index: Int
-        if SummaryDefaults.colourByRank {
-            index = Core.Palette.index(for: rank)
-        } else {
-            index = Core.Palette.index(for: position)
+    /// Colour for a row-order position (X2's default, Y1's fix): the
+    /// app keeps this colour on every screen and in every period.
+    public static func color(position: Int) -> Color {
+        let index = Core.Palette.index(for: position)
+        switch SummaryDefaults.palette {
+        case .rank:
+            return Color("Rank\(index + 1)")
+        case .donut:
+            return PaletteColors.color(at: index)
         }
+    }
+
+    /// Colour for a card/segment: by rank or by row order (position),
+    /// in the chosen palette set.
+    public static func color(_ rank: Int, position: Int = 0) -> Color {
+        if !SummaryDefaults.colourByRank {
+            return color(position: position)
+        }
+        let index = Core.Palette.index(for: rank)
         switch SummaryDefaults.palette {
         case .rank:
             return Color("Rank\(index + 1)")
