@@ -1,7 +1,8 @@
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
-/Users/runner/work/SMAPP/SMAPP/App/Diagnostics/DiagnosticsScreen.swift:218:17: error: invalid redeclaration of 'deviceModelName'
+/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Summary/SummaryScreen.swift:36:24: error: cannot find 'showsHistoryCaption' in scope
 ** BUILD FAILED **
-commit: a6cf1d8c983fa104e9debc4314a65e4f25608950 status: failure run: 42
+commit: 978bb4de31c1bb43bda6a4e8e26f593df65785b3 status: failure run: 43
