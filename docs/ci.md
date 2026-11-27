@@ -51,3 +51,13 @@ disambiguate.
 Last green build before the outage: run 19, `337203d`, 18 Nov 11:13.
 Run 21: the `2a88ffe` TargetScreen `buildExpression` failure. Runs 17–19
 details in `PROGRESS.md` (18 November section).
+
+## The public-repo series (28 November)
+
+| Run | Commit | Kind | Result |
+| --- | --- | --- | --- |
+| 46 (`a6cf1d8`) | build (run 42) | failure (0m) | one error: duplicated `deviceModelName` (the Part 1 split) |
+| 47 (`978bb4d`) | build (run 43) | failure (0m) | one error: `showsHistoryCaption` lost with the parked legend |
+| 48 (`ce7fa67`) | build (run 44) | failure (1m) | three errors: `AlertRecord.date` (no such member — `intervalStart`), private `appState` for the support extension |
+| 49 (`5bf632f`) | build (run 45) | **success (1m)** | **GREEN** — the trimmed app compiles; four builds of the six budget |
+| 50 | screens | pending | the Part 3.3 capture run |
