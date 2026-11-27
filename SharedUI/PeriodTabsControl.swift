@@ -56,8 +56,11 @@ public struct PeriodTabsControl: View {
                     .tracking(0.6)
                     .textCase(.uppercase)
                     .foregroundStyle(isActive ? Color("PrimaryText") : Color("MutedText"))
-                    // Z2: one line, scaled down to fit — never wrapped
-                    // or hyphenated ("WEEK-LY") at accessibility sizes.
+                    // S5: a 12 pt gutter between tab texts (6 + 6) so
+                    // they never touch at accessibility sizes, while the
+                    // underline row beneath stays continuous; one line,
+                    // scaled down to fit — never wrapped or hyphenated.
+                    .padding(.horizontal, 6)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .fixedSize(horizontal: true, vertical: false)

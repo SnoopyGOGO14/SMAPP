@@ -19,11 +19,8 @@ struct SettingsScreen: View {
 
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Settings")
-                    .font(.largeTitle.weight(.bold))
-                    .foregroundStyle(Color("PrimaryText"))
-                    .padding(.top, 24)
-
+                // S1: the navigation title carries the name — no
+                // second in-page heading above it.
                 VStack(spacing: 0) {
                     Stepper(
                         "Amber from \(Int(amberPercent))%",
@@ -38,10 +35,19 @@ struct SettingsScreen: View {
 
                     Divider().overlay(Color("Divider"))
 
-                    Picker("Week starts on", selection: $weekStartIndex) {
-                        ForEach(Array(weekDays.enumerated()), id: \.offset) { index, day in
-                            Text(day).tag(index + 1)
+                    // S2: labelled on the left, value in PrimaryText —
+                    // the last system-blue control is gone.
+                    HStack {
+                        Text("Week starts on")
+                            .font(.subheadline.weight(.semibold))
+                        Spacer()
+                        Picker("Week starts on", selection: $weekStartIndex) {
+                            ForEach(Array(weekDays.enumerated()), id: \.offset) { index, day in
+                                Text(day).tag(index + 1)
+                            }
                         }
+                        .pickerStyle(.menu)
+                        .tint(Color("PrimaryText"))
                     }
                     .padding(16)
                     .onChange(of: weekStartIndex) { _, newValue in
@@ -99,12 +105,13 @@ struct SettingsScreen: View {
                 }
                 .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
 
-                appTargetsCard
+                PerAppTargetsCard()
 
                 Text("Privacy")
                     .font(.headline)
                     .foregroundStyle(Color("PrimaryText"))
-                Text("Everything stays on this phone. No account, no server, no analytics. Usage figures are drawn by a sealed Apple extension and never leave it.")
+                // S4: plain words, no jargon.
+                Text("Everything stays on this phone. No account, no server, no analytics. Your usage figures never leave it.")
                     .font(.footnote)
                     .foregroundStyle(Color("SecondaryText"))
             }
@@ -124,29 +131,4 @@ struct SettingsScreen: View {
         }
     }
 
-    private var appTargetsCard: some View {
-        VStack(spacing: 0) {
-            if appState.appTargets.isEmpty {
-                Text("No per-app targets")
-                    .font(.footnote)
-                    .foregroundStyle(Color("SecondaryText"))
-                    .padding(16)
-            } else {
-                ForEach(Array(appState.appTargets.enumerated()), id: \.offset) { _, target in
-                    HStack {
-                        Label(target.token)
-                            .font(.subheadline)
-                            .foregroundStyle(Color("PrimaryText"))
-                        Spacer()
-                        Text(DurationFormat.short(minutes: target.minutes))
-                            .font(.subheadline.weight(.bold))
-                            .foregroundStyle(Color("PrimaryText"))
-                    }
-                    .padding(16)
-                    Divider().overlay(Color("Divider"))
-                }
-            }
-        }
-        .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
-    }
 }

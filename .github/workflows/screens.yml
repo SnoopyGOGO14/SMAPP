@@ -200,6 +200,17 @@ jobs:
           capture target target-dark dark -screen target
           capture onboarding onboarding-card1-dark dark -screen onboarding -card 1
           capture onboarding onboarding-card4-dark dark -screen onboarding -card 4
+          # The final round's extras: Settings in both appearances
+          # (the marker write is now proven) and the accessibility
+          # detail (S5's tab gutter).
+          capture settings settings-light light -screen settings
+          capture settings settings-dark dark -screen settings
+          if xcrun simctl ui "$UDID" content_size accessibility-extra-large 2>>ci-screens-build.log; then
+            capture detail detail-a11y-dark dark -screen detail
+            xcrun simctl ui "$UDID" content_size large || true
+          else
+            echo "SKIPPED large-text capture: content_size unavailable" >> shots/NOTE.txt
+          fi
           fi
 
           # F2: checksums; duplicates fail the job.
