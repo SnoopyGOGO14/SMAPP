@@ -49,6 +49,17 @@ Fixes F1–F9 in `06-FIXES-AFTER-REVIEW.md` address all eight; the
 screenshot workflow now verifies every capture itself (screen marker,
 process alive, no duplicate checksums) because GLM cannot see images.
 
+## Audit of 27 November (the no-cloud round)
+
+Parts 1–5 of `12-NEXT-WITHOUT-CLOUD.md` landed **locally verified
+only** — the cloud has published nothing since 26 November 16:45, so
+nothing after `d165792` has been compiled remotely: the Diagnostics
+screen and its report, the Part 2 fallbacks (context codec, single
+rows, host-driven focus, history gating, alerts kill switch), and the
+S-round Settings fixes. Everything else (through screens run 40)
+keeps its proven level. The first plain push when the cloud returns
+settles these rows.
+
 ## What works, and how sure we are
 
 Levels: **tested** (unit tests pass), **compiles** (built successfully on
@@ -74,6 +85,7 @@ GitHub's Mac with Xcode 26.6), **screenshot** (rendered in a simulator),
 | R14 | Optional per-app targets | tested (cleanup logic) + compiles (run 28) |
 | R15 | App detail screen | screenshot — week/month/hourly-Daily, focus, sheet (run 40) |
 | R16 | **Summary page** (ranked donut, share cards, period tabs, day pills, focus) | screenshot — all periods, day selection, end-scroll (run 40) |
+| R18 | Gate A diagnostics (debug) + fallbacks | **locally verified** (parse, preflight, Core logic tested 143) — unbuilt since 26 Nov; excluded from release |
 | R17 | Focus effect (donut segment ↔ card, centre cross-fade) | screenshot — focus1/focus4 markers, both appearances (run 40); Core logic tested |
 
 Plus: **124 unit tests** pass (locally and in the cloud).

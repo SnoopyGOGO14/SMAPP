@@ -4,6 +4,9 @@ One line per run list, newest first. Status at 25 November 2026.
 
 | List | What it covered | Status |
 | --- | --- | --- |
+| `12-NEXT-WITHOUT-CLOUD.md` | Work without the cloud, prepare Gate A (diagnostics, fallbacks, decisions, release materials, quality) | **closed** (27 Nov) — all locally verified; Part 0 waits for the cloud |
+| `11-VISUAL-REVIEW-ROUND4.md` | X1–X9 fixes | **closed** (26 Nov; the settings marker bug found and fixed in the Z round) |
+| `10-VISUAL-REVIEW-ROUND3.md` | W1–W14 fixes | **closed** (25–26 Nov) |
 | `09-AUDIT-AND-NEXT.md` | Audit after the build outage; B1 preflight, T0 probe, Track A (green build + core captures), Track B (records, tests, cheaper runs, build-Mac readiness) | **open — in progress 25 Nov**: B1, T0, A1 done; rest below |
 | `08-SUMMARY-PAGE-PLAN.md` | The Summary page (P1–P12) | **partly done**: P1–P8, P10, P11 built (uncompiled until the 25 Nov runs); P9 captures and P12 level updates ride on the 25 Nov runs |
 | `07-NEXT-TASKS.md` | Visual fixes V1–V10, demo states (Parts 1–4) | **partly done**: Parts 1–2 code complete; Part 3 tests done for Core; Part 4/level updates superseded by 09's B5 |

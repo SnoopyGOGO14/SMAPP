@@ -4,8 +4,19 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
 
 ## Todos — state at this handoff (25 November, after round-3 fixes)
 
-1. **S-ROUND DONE, CAPTURE RUN BLOCKED BY CLOUD SILENCE (27
-   November).** The round-6 review passed 36/36; the five Settings
+1. **THE NO-CLOUD ROUND IS DONE (27 November, Parts 1–6 of
+   `12-NEXT-WITHOUT-CLOUD.md`).** All locally verified: the
+   Diagnostics screen (Gate A in ~30 minutes), a fallback per Gate A
+   outcome (`Shared/FeatureSwitches.swift` +
+   `docs/gate-a-outcomes.md`), `DECISIONS.md` for the owner, the
+   release materials, and the quality pass (143 tests; the edge tests
+   caught a real codec padding mismatch). **The cloud has been silent
+   since 26 Nov 16:45** — check the Actions tab for the cause
+   (queued/billing/pre-publish error). When it answers: Part 0.2 —
+   plain push for green, one `[screens]` (core tier includes the
+   Settings fixes and detail-a11y), "READY FOR VISUAL REVIEW,
+   S-round". Until then everything after `d165792` is locally
+   verified only. The round-6 review passed 36/36; the five Settings
    tidy items (S1–S5) are fixed in `d34d3de` — preflight clean, 124
    tests, parse-checked — but the cloud has published **no verdict
    for that commit in 45+ minutes** (every recent run answered in
