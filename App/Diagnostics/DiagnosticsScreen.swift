@@ -14,7 +14,7 @@ import Core
 #if DEBUG
 struct DiagnosticsScreen: View {
 
-    @Environment(AppState.self) private var appState
+    @Environment(AppState.self) var appState
     @State var lastChecked: String = ""
     @State var hostEcho: Bool?
     @State var writtenTimestamp: String = ""
@@ -162,7 +162,7 @@ struct DiagnosticsScreen: View {
         diagnosticsCard("Monitoring") {
             valueRow("Activities", "\(activitiesCount)")
             valueRow("Last checkpoint", appState.settings.lastCheckpoint.map { "\($0.percent)% \($0.date)" } ?? "none")
-            valueRow("Last alert", appState.settings.lastAlert.map { "\($0.percent)% \($0.date)" } ?? "none")
+            valueRow("Last alert", appState.settings.lastAlert.map { "\($0.percent)% at \($0.intervalStart)" } ?? "none")
             valueRow("Last error", appState.settings.lastMonitoringError ?? "none")
         }
     }
