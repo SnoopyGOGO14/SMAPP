@@ -4,17 +4,25 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
 
 ## Todos — state at this handoff (25 November, after round-3 fixes)
 
-1. **THE PROJECT IS CLOSED AS FAR AS IT GOES WITHOUT HARDWARE
-   (26 November).** The full 36-capture manifest verified clean
-   (screens run 40, `d7083e7`); builds green through run 39; 124 Core
-   tests; rounds 3–6 of visual review passed. One last eye-check for
-   the owner: the settings pair, the hourly Daily chart, the a11y
-   pair and the noapps empty state (see PROGRESS's banner). After
-   that, every remaining item is the person's: the build Mac
-   (`tools/first-run.sh` day one, then `docs/gate-a-card.md`),
-   Developer Program + portal steps, the organisation identifier, and
-   the ASSUMED decisions. GLM resumes from Gate A results in
-   `PROGRESS.md`.
+1. **S-ROUND DONE, CAPTURE RUN BLOCKED BY CLOUD SILENCE (27
+   November).** The round-6 review passed 36/36; the five Settings
+   tidy items (S1–S5) are fixed in `d34d3de` — preflight clean, 124
+   tests, parse-checked — but the cloud has published **no verdict
+   for that commit in 45+ minutes** (every recent run answered in
+   2–3). Check the Actions tab: a queued run, a billing stop, or a
+   workflow error before the publish step all look identical from
+   `ci-logs`. **When the cloud answers:** `d34d3de` needs no re-push;
+   the next `[screens]` push delivers the round's captures (core tier
+   now includes settings ×2 and detail-a11y), then raise REVIEW.md
+   per NOTE.txt and the close below stands. Until then the S-fixes
+   are locally verified only.
+2. **Everything else is closed** (26 November): the full 36-capture
+   manifest verified clean (screens run 40); builds green through
+   run 39; rounds 3–6 of visual review passed. The remaining items
+   are the person's: the build Mac (`tools/first-run.sh` day one,
+   then `docs/gate-a-card.md`), Developer Program + portal steps, the
+   organisation identifier, and the ASSUMED decisions. GLM resumes
+   from Gate A results in `PROGRESS.md`.
 2. **The billing-exhaustion diagnosis was wrong — the cloud never lost
    minutes.** The probe (run 24) answered in 3 minutes. If runs go
    quiet again, check the Actions tab before assuming billing.
