@@ -1,13 +1,33 @@
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
+/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
+2026-11-27 22:45:48.130 appintentsmetadataprocessor[2052:9854] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+2026-11-27 22:46:03.588 appintentsmetadataprocessor[2238:10613] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-27 22:46:05.574 appintentsmetadataprocessor[2263:10730] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+** BUILD SUCCEEDED **
+/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
+/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
+2026-11-27 22:46:25.326 appintentsmetadataprocessor[2616:11877] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-27 22:46:29.829 appintentsmetadataprocessor[2643:12023] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+2026-11-27 22:46:39.338 appintentsmetadataprocessor[2960:12895] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+warning: All interface orientations must be supported unless the app requires full screen. (in target 'SocialTimeMonitor' from project 'SocialTimeMonitor')
+** BUILD SUCCEEDED **
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
-/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
-/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+2026-11-27 22:46:54.487 appintentsmetadataprocessor[3626:14779] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+2026-11-27 22:47:00.388 appintentsmetadataprocessor[3661:14943] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:100:9: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
+/Users/runner/work/SMAPP/SMAPP/App/Target/PerAppTargetsCard.swift:46:17: error: cannot find 'DemoTargetEditSheet' in scope
+/Users/runner/work/SMAPP/SMAPP/App/Target/PerAppTargetsCard.swift:56:40: error: reference to member 'medium' cannot be resolved without a contextual type
+/Users/runner/work/SMAPP/SMAPP/App/Target/PerAppTargetsCard.swift:100:58: error: cannot find 'DemoData' in scope
+/Users/runner/work/SMAPP/SMAPP/App/Target/PerAppTargetsCard.swift:101:17: error: cannot find 'DemoTile' in scope
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-2026-11-27 22:27:25.042 appintentsmetadataprocessor[2365:11124] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-27 22:27:25.076 appintentsmetadataprocessor[2366:11127] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-2026-11-27 22:27:27.789 appintentsmetadataprocessor[2477:11414] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-** BUILD SUCCEEDED **
-commit: 5bf632fbe4654052ede12ab1611ba495bb58582b status: success run: 45
+** BUILD FAILED **
+commit: 06e22bfbf1c5c85c7e95139237d330799a408169 status: success run: 46

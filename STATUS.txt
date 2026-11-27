@@ -1,2 +1,2 @@
-build: 5bf632fbe4654052ede12ab1611ba495bb58582b success 1m run:45
-screens: 19485a646b010344fa376692036560703afe7ac4 success 9m run:47
+build: 06e22bfbf1c5c85c7e95139237d330799a408169 success 2m run:46
+device-compile: 06e22bfbf1c5c85c7e95139237d330799a408169 debug=success release=failure run:46
