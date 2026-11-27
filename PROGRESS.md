@@ -68,6 +68,13 @@ or a workflow error before the publish step all look identical from
 (`d34d3de`); then the `[screens]` run (core tier now includes
 settings light+dark and detail-a11y), and the close below stands.
 
+## **SAFE TO MAKE PUBLIC** (the Part 2 verdict)
+
+The full-history scan found **no secrets** (`docs/public-readiness.md`
+for the detail and the three mild personal traces, none of which need
+fixing first). Making the repo public removes the Actions minutes
+limit: Settings → General → Danger Zone → Change visibility.
+
 ## THE CLOSE — everything possible without hardware is done
 
 **Commit `d7083e7`, screens run 40 (26 November, 12 m): the full

@@ -20,6 +20,7 @@ a one-line change for GLM (the file and line are named).
 | 10 | App colours: by row order or by rank? | **Row order** — one colour per app everywhere (your round-4 reversal) | By rank (largest app gets colour 1; changes with usage) | TikTok stays one colour across screens vs re-colouring per tab | `summary-weekly-focus1-dark` |
 | 11 | The mock's footer strip above the tab bar? | Left out | Shown | A small "Social Monitoring Stats" strip at the Summary's bottom | (not in any capture — off) |
 | 12 | Per-app alerts (each app gets its own 75%/100%)? | Out of scope for v1 | Later | Alert wording and thresholds per app | — |
+| 13 | Licence for the public repo? | **All rights reserved** (no LICENCE file) | MIT / Apache 2.0 | Anyone may view; reuse only with a licence | — |
 
 ## Where each answer lands (file and line)
 
