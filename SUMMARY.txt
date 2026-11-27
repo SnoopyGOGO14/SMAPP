@@ -1,8 +1,12 @@
-/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
 /Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/DiagnosticsLogic.swift:86:16: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/Packages/Core/Sources/Core/SummaryPeriod.swift:44:13: warning: code after 'return' will never be executed
 /Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
-/Users/runner/work/SMAPP/SMAPP/App/Summary/SummaryScreen.swift:36:24: error: cannot find 'showsHistoryCaption' in scope
+/Users/runner/work/SMAPP/SMAPP/App/Target/SettingsScreen.swift:77:32: warning: value 'error' was defined but never used; consider replacing with boolean test
+/Users/runner/work/SMAPP/SMAPP/App/Diagnostics/DiagnosticsScreen.swift:165:91: error: value of type 'AlertRecord' has no member 'date'
+/Users/runner/work/SMAPP/SMAPP/App/Diagnostics/DiagnosticsSupport.swift:45:9: error: 'appState' is inaccessible due to 'private' protection level
+/Users/runner/work/SMAPP/SMAPP/App/Diagnostics/DiagnosticsSupport.swift:47:20: error: 'appState' is inaccessible due to 'private' protection level
+/Users/runner/work/SMAPP/SMAPP/App/Home/HomeScreen.swift:97:13: warning: application of result builder 'ViewBuilder' disabled by explicit 'return' statement
 ** BUILD FAILED **
-commit: 978bb4de31c1bb43bda6a4e8e26f593df65785b3 status: failure run: 43
+commit: ce7fa67ba52f4fcf7045cd3647ec15244246e943 status: failure run: 44
