@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<!-- Re-checked against Apple's required-reason API list on
+     27 November 2026: UserDefaults CA92.1 (app's own defaults) and
+     1C8F.1 (same App Group) remain the correct, sufficient reasons.
+     No other required-reason APIs are used (no file timestamps,
+     no system boot time, no disk space queries). -->
 <dict>
 	<key>NSPrivacyTracking</key>
 	<false/>

@@ -48,3 +48,14 @@ If Screen Time data is unavailable in review (for example on a fresh
 simulator), demo mode renders the same screens from sample figures:
 build and run with the launch arguments `-demo -screen home`
 (debug builds only; App Store builds contain no demo code).
+
+## As built (checked 27 November 2026)
+
+Matches this document: authorisation and the sealed-report split are as
+described; the Stats tab is now the Summary page (ranked donut with
+app cards, drawn inside the report extension); App detail has an
+hourly Daily view; per-app targets exist (stored as tokens + minutes;
+drawn in the extension). A Diagnostics screen exists in DEBUG builds
+only (`#if DEBUG`; not compiled into release) and is used for the
+owner's own device testing — it draws no additional data beyond what
+the report extension already renders.

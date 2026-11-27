@@ -41,3 +41,27 @@ usage tracker, focus, self control, phone addiction, scroll less
 
 Open decision (see the review pack). Free with no in-app purchases is the
 simplest first release.
+
+## Category
+
+- Primary: Health & Fitness (or Lifestyle — owner's call)
+- Secondary: — (one primary only on the App Store)
+
+## Age rating answers (the app's own content)
+
+- No user-generated content, no gambling, no purchases, no unrestricted
+  web browsing. The only rating driver is the apps the *user* monitors;
+  answer for the app itself: 4+ (no objectionable content of its own).
+
+## URLs (placeholders — the owner supplies)
+
+- Support: (see `docs/AppStore/support.md`, hosted anywhere)
+- Marketing: optional, can be the same as support
+- Privacy policy: host `docs/AppStore/privacy-policy.md` at a public URL
+
+## Version 1 scope (as built, for the description's accuracy)
+
+Onboarding, Home, App detail (hourly Daily, week, month), Summary
+(donut, cards, day pills, focus), per-app targets, settings, zone
+alerts, recaps (off by default). Diagnostics is debug-only and
+excluded from release builds.
