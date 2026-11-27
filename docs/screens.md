@@ -31,6 +31,8 @@ sample figures from `design/reference/`.
 | `detail-focus4-dark.png` | Detail with day 4 focused (linked total) | R17 |
 | `detail-month-dark.png` | 30-day month chart, labels on 1/8/15/22/29 | R4, F3 |
 | `target-dark.png` | Daily/weekly selector, presets, master/alerts/recaps switches | R3, R6, V6, V7 |
+| `settings-{light,dark}.png` | Settings: amber slider, labelled week-start picker, access + monitoring rows, per-app targets with edit/remove, plain privacy words (S1–S4) | F6, H3, R14 |
+| `detail-a11y-dark.png` | Detail at accessibility-extra-large: one-line tabs with the 12 pt gutter, wrapping stat labels (S5/Z2) | J1 |
 | `onboarding-card{1,4}-dark.png` | First and last onboarding cards | R1, R11, V8 |
 
 ## Full manifest extras (`[screens-all]` only)
