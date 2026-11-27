@@ -118,7 +118,15 @@ for f in swift_files():
             failures.append(f"3 UsageMonitor disallowed imports {sorted(bad)} in {f}")
 
 # ---- 3c size + force unwraps
-for f in swift_files():
+# The 250-line rule covers the Core package's sources and tests too
+# (a 258-line test file slipped through when only targets were checked).
+def all_swift_files():
+    files = swift_files()
+    files += list((root / "Packages/Core/Sources/Core").glob("*.swift"))
+    files += list((root / "Packages/Core/Tests/CoreTests").glob("*.swift"))
+    return files
+
+for f in all_swift_files():
     n = len(f.read_text().splitlines())
     if n > 250:
         failures.append(f"3 size {f}: {n} lines (>250)")
