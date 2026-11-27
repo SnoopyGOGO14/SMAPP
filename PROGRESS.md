@@ -68,6 +68,21 @@ or a workflow error before the publish step all look identical from
 (`d34d3de`); then the `[screens]` run (core tier now includes
 settings light+dark and detail-a11y), and the close below stands.
 
+## READY FOR VISUAL REVIEW
+
+**Commit `19485a6`, screens run 47 (28 November, 9 m): 22 captures on
+`ci-logs/screenshots`, every marker matched — including `settings`
+(both appearances, first time proven), `diagnostics` (both, the Gate A
+checklist screen with demo values) and `detail-a11y` — no crashes,
+no duplicates, no mismatches.** The trimmed app is green (build run 45,
+Xcode 26.6) and 138 Core tests pass. Check the PNGs against
+`design/reference/` and `SKINS/` (GLM cannot view images); the list is
+in `docs/screens.md`.
+
+Then the owner's steps below — with the build green, the Developer
+Program enrolment is the only gate left before the app can run on the
+iPhone.
+
 ## THE OWNER'S NEXT STEPS (read this first)
 
 1. **Unblock the cloud** — the verdict below says the repo is

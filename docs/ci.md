@@ -60,4 +60,4 @@ details in `PROGRESS.md` (18 November section).
 | 47 (`978bb4d`) | build (run 43) | failure (0m) | one error: `showsHistoryCaption` lost with the parked legend |
 | 48 (`ce7fa67`) | build (run 44) | failure (1m) | three errors: `AlertRecord.date` (no such member — `intervalStart`), private `appState` for the support extension |
 | 49 (`5bf632f`) | build (run 45) | **success (1m)** | **GREEN** — the trimmed app compiles; four builds of the six budget |
-| 50 | screens | pending | the Part 3.3 capture run |
+| 50 (`19485a6`) | screens (run 47) | **success (9m) — 22 captures, every marker matched (settings and diagnostics included), no problems** | Part 3 closed: green build run 45 + this run; READY FOR VISUAL REVIEW |
