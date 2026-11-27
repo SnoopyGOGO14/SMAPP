@@ -10,27 +10,7 @@ import Core
 extension HomeScreen {
 
 
-    /// Part 2: the single-report rows with host-owned tap areas.
-    var singleRows: some View {
-        let enabled = appState.orderedTokens.filter { appState.isEnabled($0) }
-        return ZStack(alignment: .leading) {
-            DeviceActivityReport(
-                .appRows,
-                filter: Filters.appRows(enabled: enabled)
-            )
-            VStack(spacing: 0) {
-                ForEach(enabled, id: \.element) { token in
-                    NavigationLink(value: token) {
-                        Color.clear.frame(height: 64)
-}
-.buttonStyle(HomeRowStyle())
-}
-}
-}
-}
-
-
-#if DEBUG
+    #if DEBUG
 func demoRow(_ app: DemoData.DemoApp) -> some View {
     // W13/W14: the report (time + bar) spans the full row width;
     // the tile+name label sits over its first line. Demo rows are

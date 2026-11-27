@@ -1,9 +1,11 @@
 # Gate A outcomes — what a FAIL means and the one line that fixes it
 
-Part 2 of `12-NEXT-WITHOUT-CLOUD.md`. Work down the Diagnostics screen;
-for any FAIL, flip the switch below (all in `Shared/FeatureSwitches.swift`,
-settable in a debug build or via `-mode <name>` in demo captures) and
-rebuild. No check is a dead end.
+Work down the Diagnostics screen; for any FAIL, the table says what to
+do and rebuild. No check is a dead end. **Note (Part 1.4, the working-
+app push): the fallback code paths are parked in `parked/`** — the
+rings-app push cut everything a first run does not need; if a FAIL
+needs one, the file returns from `parked/` whole (one `git mv`), which
+is the "one line" below.
 
 | Diagnostics line | If PASS | If FAIL → switch | Switch value | What the fallback does |
 | --- | --- | --- | --- | --- |

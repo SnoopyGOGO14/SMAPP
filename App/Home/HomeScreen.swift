@@ -132,20 +132,6 @@ struct HomeScreen: View {
     }
 
     private var reportHomeCard: some View {
-        // Part 2: App Group fallback — the target and amber point ride
-        // the context name (Core.ContextCodec).
-        if FeatureSwitches.appGroupContextFallback,
-           let encoded = Core.ContextCodec.encode(
-               targetMinutes: appState.targetMinutes ?? 180,
-               amberPercent: Int((appState.settings.amberFraction * 100).rounded())
-           ) {
-            return DeviceActivityReport(
-                .init(encoded),
-                filter: Filters.homeTotal(enabled: appState.enabledTokens, mode: appState.targetMode)
-            )
-            .frame(height: 168)
-            .accessibilityLabel("Today's total")
-        }
         return DeviceActivityReport(
             .homeTotal,
             filter: Filters.homeTotal(enabled: appState.enabledTokens, mode: appState.targetMode)
@@ -183,19 +169,11 @@ struct HomeScreen: View {
                 ForEach(Array(DemoData.apps.enumerated()), id: \.offset) { _, app in
                     demoRow(app)
                 }
-            } else if FeatureSwitches.homeRowsMode == .single {
-                // Part 2: one report drawing every row, host-side tap
-                // areas in the same order.
-                singleRows
             } else {
                 tokensRows
             }
             #else
-            if FeatureSwitches.homeRowsMode == .single {
-                singleRows
-            } else {
-                tokensRows
-            }
+            tokensRows
             #endif
         }
         .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))

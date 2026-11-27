@@ -11,10 +11,8 @@ import Core
 
 struct SummaryScreen: View {
 
-    @Environment(AppState.self) var appState
-    @State var period: Core.SummaryPeriod = .weekly
-    /// Part 2: host-driven focus — the legend's selected row position.
-    @State var hostFocus: Int? = nil
+    @Environment(AppState.self) private var appState
+    @State private var period: Core.SummaryPeriod = .weekly
 
     /// The UK reference calendar (AppCalendar): day pills, "today" and
     /// elapsed fractions follow the UK day, not the device's zone.
@@ -39,9 +37,6 @@ struct SummaryScreen: View {
                         Text("Showing the last \(appState.settings.historyDays) days")
                             .font(.footnote)
                             .foregroundStyle(Color("SecondaryText"))
-                    }
-                    if FeatureSwitches.summaryFocusMode == .hostDriven {
-                        focusLegend
                     }
                     report
                     // X9: the anchor the `-scroll end` capture scrolls to.
@@ -98,9 +93,6 @@ struct SummaryScreen: View {
         if !FeatureSwitches.monthlyRequiresHistory || appState.settings.historyDays >= 28 {
             list.append(.monthly)
         }
-        if SummaryDefaults.showYearly {
-            list.append(.yearly)
-        }
         return list
     }
 
@@ -145,7 +137,6 @@ struct SummaryScreen: View {
         case .daily: return "Daily"
         case .weekly: return "Weekly"
         case .monthly: return "Monthly"
-        case .yearly: return "Yearly"
         }
     }
 
@@ -155,7 +146,7 @@ struct SummaryScreen: View {
             return Core.PeriodProgress.dayFraction(calendar: ukCalendar)
         case .weekly:
             return Core.PeriodProgress.weekFraction(weekStartsOn: appState.settings.weekStartsOn, calendar: ukCalendar)
-        case .monthly, .yearly:
+        case .monthly:
             return Core.PeriodProgress.monthFraction(calendar: ukCalendar)
         }
     }
@@ -215,21 +206,14 @@ struct SummaryScreen: View {
             return DemoData.summary(period: .week)
         case .monthly:
             return DemoData.summary(period: .month)
-        case .yearly:
-            return DemoData.summary(period: .week)
         }
     }
     #endif
 
     private var liveReport: some View {
         let count = max(appState.orderedTokens.count, 1)
-        // Part 2: host-driven focus — the context name carries the
-        // focused row position (summary.f0 … summary.f7).
-        let context = DeviceActivityReport.Context(
-            hostFocus.flatMap { Core.ContextCodec.summaryFocusContext(focus: $0) } ?? "summary"
-        )
         return DeviceActivityReport(
-            context,
+            .summary,
             filter: Filters.summary(
                 enabled: appState.enabledTokens,
                 period: period,

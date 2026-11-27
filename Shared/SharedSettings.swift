@@ -74,10 +74,6 @@ public final class SharedSettings {
         set { defaults.set(newValue, forKey: SettingsKeys.alertsEnabled) }
     }
 
-    public var recapsEnabled: Bool {
-        get { defaults.bool(forKey: SettingsKeys.recapsEnabled) }
-        set { defaults.set(newValue, forKey: SettingsKeys.recapsEnabled) }
-    }
 
     public var weekStartsOn: Int {
         get {

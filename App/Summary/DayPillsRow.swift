@@ -74,7 +74,7 @@ struct DayPillsRow: View {
                 return calendar.isDate(day, inSameDayAs: pillDate)
             }
             return index == todayIndex
-        case .weekly, .monthly, .yearly:
+        case .weekly, .monthly:
             return false
         }
     }

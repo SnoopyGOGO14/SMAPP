@@ -57,21 +57,6 @@ struct TargetScreen: View {
                         appState.settings.alertsEnabled = on
                     }
 
-                    Divider().overlay(Color("Divider"))
-
-                    Toggle(isOn: $state.recapsEnabled) {
-                        Text("Recaps")
-                            .font(.subheadline.weight(.semibold))
-                    }
-                    .tint(.green)
-                    .padding(16)
-                    .onChange(of: appState.recapsEnabled) { _, on in
-                        if on { NotificationManager.shared.requestPermissionIfNeeded() }
-                        appState.settings.recapsEnabled = on
-                    }
-
-                    Divider().overlay(Color("Divider"))
-
                     NavigationLink {
                         SettingsScreen()
                     } label: {

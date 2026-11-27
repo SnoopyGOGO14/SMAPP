@@ -97,8 +97,5 @@ final class ScaleEdgeTests: XCTestCase {
         XCTAssertEqual(Core.Checkpoint.thresholdMinutes(percent: 25, targetMinutes: 15), 4)
         XCTAssertEqual(Core.Checkpoint.thresholdMinutes(percent: 100, targetMinutes: 15), 15)
         XCTAssertEqual(Core.Checkpoint.thresholdMinutes(percent: 150, targetMinutes: 480), 720)
-        // 15-minute and 8-hour targets stay legal on the context grid.
-        XCTAssertEqual(Core.ContextCodec.encode(targetMinutes: 15, amberPercent: 75), "homeTotal.t015.a75")
-        XCTAssertEqual(Core.ContextCodec.encode(targetMinutes: 480, amberPercent: 75), "homeTotal.t480.a75")
     }
 }

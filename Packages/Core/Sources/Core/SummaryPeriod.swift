@@ -10,14 +10,12 @@ public enum SummaryPeriod: Equatable {
     case daily(day: Date?)
     case weekly
     case monthly
-    case yearly
 
     public var rawValueString: String {
         switch self {
         case .daily: return "daily"
         case .weekly: return "weekly"
         case .monthly: return "monthly"
-        case .yearly: return "yearly"
         }
     }
 
@@ -26,7 +24,6 @@ public enum SummaryPeriod: Equatable {
         case "daily": return .daily(day: day)
         case "weekly": return .weekly
         case "monthly": return .monthly
-        case "yearly": return .yearly
         default: return .weekly
         }
     }
@@ -44,7 +41,6 @@ public enum SummaryPeriod: Equatable {
         case .monthly:
             return calendar.dateInterval(of: .month, for: now)
                 ?? DateInterval(start: calendar.startOfDay(for: now), duration: 86_400)
-        case .yearly:
             return calendar.dateInterval(of: .year, for: now)
                 ?? DateInterval(start: calendar.startOfDay(for: now), duration: 86_400)
         }

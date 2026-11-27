@@ -13,10 +13,6 @@ public enum SummaryDefaults {
     /// (position) — an app keeps one colour on every screen and in
     /// every period. Rank colouring made TikTok change colour per tab.
     public static let colourByRank = false
-    /// Yearly tab hidden until a device proves a year of history.
-    public static let showYearly = false
-    /// The mock's footer strip above the tab bar (default: off).
-    public static let showFooterStrip = false
     /// Rank palette: `rank` = Rank1–8 (default); `donut` = the Home
     /// donut's categorical set.
     public static let palette: Palette = .rank

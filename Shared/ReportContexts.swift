@@ -17,6 +17,4 @@ extension DeviceActivityReport.Context {
     /// Diagnostics (debug): the extension's read-back of shared
     /// settings and the data path, for the Gate A checklist.
     public static let diagnostics = Self("diagnostics")
-    /// Part 2: one report drawing every Home row (fallback).
-    public static let appRows = Self("appRows")
 }

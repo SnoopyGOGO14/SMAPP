@@ -22,8 +22,6 @@ public enum SettingsKeys {
     public static let alertsEnabled = "alertsEnabled"
     /// Int — week start day, 1 (Sunday) … 7 (Saturday). Follows device locale.
     public static let weekStartsOn = "weekStartsOn"
-    /// Bool — evening and Sunday recap notifications.
-    public static let recapsEnabled = "recapsEnabled"
     /// String — last monitoring start error, written by the main app.
     public static let lastMonitoringError = "lastMonitoringError"
     /// String — the Diagnostics screen's write/read App Group echo.

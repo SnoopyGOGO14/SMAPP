@@ -9,7 +9,7 @@ then run the script to regenerate this page.
 | a day | `App/Onboarding/OnboardingFlow.swift:125` |
 | Add or remove apps | `App/Target/SettingsScreen.swift:108` |
 | Alerts paused: under test | `App/Target/SettingsScreen.swift:100` |
-| Choose apps | `App/Home/HomeScreen.swift:171` |
+| Choose apps | `App/Home/HomeScreen.swift:157` |
 | Choose my own | `App/Onboarding/OnboardingFlow.swift:139` |
 | Continue | `App/Onboarding/OnboardingFlow.swift:28` |
 | Copy report | `App/Diagnostics/DiagnosticsScreen.swift:188` |
@@ -26,13 +26,12 @@ then run the script to regenerate this page.
 | Mode | `App/Target/TargetScreen.swift:27` |
 | Monitor | `App/Demo/DemoDetailScreen.swift:67; App/Detail/AppDetailScreen.swift:42` |
 | Monitoring | `App/Target/SettingsScreen.swift:74; App/Target/TargetScreen.swift:38` |
-| No apps chosen | `App/Home/HomeScreen.swift:168` |
+| No apps chosen | `App/Home/HomeScreen.swift:154` |
 | No per-app targets | `App/Target/PerAppTargetsCard.swift:28` |
 | No time recorded | `SharedUI/PlaceholderViews.swift:29` |
 | Not running | `App/Target/SettingsScreen.swift:79` |
-| Paused | `App/Home/HomeScreen.swift:158` |
+| Paused | `App/Home/HomeScreen.swift:144` |
 | Privacy | `App/Target/SettingsScreen.swift:140` |
-| Recaps | `App/Target/TargetScreen.swift:63` |
 | Remove | `App/Target/PerAppTargetsCard.swift:116` |
 | Remove target | `App/Demo/DemoDetailScreen.swift:151; App/Target/PerAppTargetsCard.swift:180; App/Detail/AppTargetSheet.swift:43` |
 | Restart | `App/Diagnostics/DiagnosticsScreen.swift:134` |
@@ -41,12 +40,11 @@ then run the script to regenerate this page.
 | Screen Time access | `App/Target/SettingsScreen.swift:61` |
 | Send test alert (10 s) | `App/Diagnostics/DiagnosticsScreen.swift:173` |
 | Set a target | `App/Home/HomeScreen.swift:29; App/Onboarding/OnboardingFlow.swift:111` |
-| Settings | `App/Target/TargetScreen.swift:79` |
-| Social Monitoring Stats | `SharedUI/SummaryView.swift:111` |
+| Settings | `App/Target/TargetScreen.swift:64` |
 | Start stopwatch | `App/Diagnostics/DiagnosticsScreen.swift:128` |
 | Start the stopwatch, then watch the rows below fill in. | `App/Diagnostics/DiagnosticsScreen.swift:125` |
 | Stop | `App/Diagnostics/DiagnosticsScreen.swift:143` |
-| Summary | `App/Summary/SummaryScreen.swift:80` |
+| Summary | `App/Summary/SummaryScreen.swift:75` |
 | Target | `App/Target/TargetScreen.swift:22` |
 | Target 1h a day · Change | `App/Demo/DemoDetailScreen.swift:31` |
 | TikTok | `App/Demo/DemoDetailScreen.swift:52; App/Detail/AppDetailScreen.swift:65` |

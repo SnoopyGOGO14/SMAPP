@@ -215,7 +215,6 @@ final class SettingsKeysTests: XCTestCase {
         XCTAssertEqual(SettingsKeys.amberFraction, "amberFraction")
         XCTAssertEqual(SettingsKeys.alertsEnabled, "alertsEnabled")
         XCTAssertEqual(SettingsKeys.weekStartsOn, "weekStartsOn")
-        XCTAssertEqual(SettingsKeys.recapsEnabled, "recapsEnabled")
         XCTAssertEqual(SettingsKeys.lastCheckpoint, "lastCheckpoint")
         XCTAssertEqual(SettingsKeys.orderedTokens, "orderedTokens")
         XCTAssertEqual(SettingsKeys.appTargets, "appTargets")
@@ -231,12 +230,12 @@ final class SettingsKeysTests: XCTestCase {
         let all = [
             SettingsKeys.selection, SettingsKeys.enabledTokens, SettingsKeys.monitoringEnabled,
             SettingsKeys.targetMode, SettingsKeys.targetMinutes, SettingsKeys.amberFraction,
-            SettingsKeys.alertsEnabled, SettingsKeys.weekStartsOn, SettingsKeys.recapsEnabled,
+            SettingsKeys.alertsEnabled, SettingsKeys.weekStartsOn,
             SettingsKeys.lastCheckpoint, SettingsKeys.orderedTokens, SettingsKeys.appTargets,
             SettingsKeys.detailToken, SettingsKeys.statsPeriod, SettingsKeys.lastMonitoringError,
             SettingsKeys.lastAlert, SettingsKeys.summaryPeriod, SettingsKeys.summaryDay
         ]
-        XCTAssertEqual(Set(all).count, 18)
-        XCTAssertEqual(all.count, 18)
+        XCTAssertEqual(Set(all).count, 17)
+        XCTAssertEqual(all.count, 17)
     }
 }

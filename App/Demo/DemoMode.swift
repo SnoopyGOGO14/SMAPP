@@ -131,37 +131,6 @@ enum DemoMode {
         #endif
     }
 
-    /// Part 2's fallback demonstration mode (single value).
-    static var mode: String? {
-        #if DEBUG
-        return parsed.mode
-        #else
-        return nil
-        #endif
-    }
-
-    /// Applies `-mode` to the feature switches (2.3), so each fallback
-    /// can be captured later. Debug only.
-    static func applyModeSwitches() {
-        #if DEBUG
-        guard isEnabled else { return }
-        switch mode {
-        case "appGroupFallback":
-            FeatureSwitches.appGroupContextFallback = true
-        case "singleRows":
-            FeatureSwitches.homeRowsMode = .single
-        case "hostFocus":
-            FeatureSwitches.summaryFocusMode = .hostDriven
-        case "shortHistory":
-            FeatureSwitches.monthlyRequiresHistory = true
-        case "alertsOff":
-            FeatureSwitches.alertsKillSwitch = true
-        default:
-            break
-        }
-        #endif
-    }
-
     /// The marker a screen writes: "<screen>[/state][/period][/day]
     /// [/focus][/sheet][/scroll]". X1: the chosen day is in the marker
     /// so the workflow proves the argument took effect; X9: the scroll

@@ -99,24 +99,6 @@ public struct SummaryView: View {
             ForEach(configuration.items) { item in
                 AppShareCard(item: item, focusedRank: $focusedRank)
             }
-            footerStrip
-        }
-    }
-
-    /// B7: the mock's footer strip, off by default (one switch).
-    @ViewBuilder
-    private var footerStrip: some View {
-        if SummaryDefaults.showFooterStrip {
-            HStack {
-                Text("Social Monitoring Stats")
-                    .font(.caption2.weight(.medium))
-                    .tracking(1.2)
-                    .textCase(.uppercase)
-                    .foregroundStyle(Color("MutedText"))
-                Spacer()
-            }
-            .padding(.top, 8)
-            .accessibilityHidden(true)
         }
     }
 }

@@ -49,10 +49,6 @@ public struct SummaryConfiguration: Equatable {
     /// Total minutes over the period.
     public let totalMinutes: Double
     public let items: [SummaryItem]
-    /// Part 2 (host-driven focus): the rank pre-focused when the
-    /// context name carries it (summary.f0 … summary.f7).
-    public var initialFocus: Int? = nil
-
     public init(periodLabel: String, totalMinutes: Double, items: [SummaryItem]) {
         self.periodLabel = periodLabel
         self.totalMinutes = totalMinutes

@@ -24,9 +24,6 @@ public struct DemoArguments: Equatable {
     public let day: Int?
     /// "end": scroll the screen to its bottom (X9's bottom capture).
     public let scroll: String?
-    /// Part 2's fallback demonstrations: appGroupFallback, singleRows,
-    /// hostFocus, shortHistory, alertsOff.
-    public let mode: String?
     /// Flags that carried values outside the legal sets.
     public let invalid: [String]
 
@@ -36,7 +33,6 @@ public struct DemoArguments: Equatable {
     public static let states = ["default", "over", "comfortable", "paused", "noapps", "notarget", "noaccess"]
     public static let periods = ["today", "week", "month", "daily", "weekly", "monthly"]
     public static let sheets = ["target"]
-    public static let modes = ["appGroupFallback", "singleRows", "hostFocus", "shortHistory", "alertsOff"]
 
     /// Parses `-demo -screen home -state over -period weekly -focus 1
     /// -sheet target -card 2 -day 3` style arguments. Unknown flags are
@@ -50,7 +46,6 @@ public struct DemoArguments: Equatable {
         var card: Int?
         var day: Int?
         var scroll: String?
-        var mode: String?
         var invalid: [String] = []
         var enabled = false
 
@@ -118,13 +113,6 @@ public struct DemoArguments: Equatable {
                     invalid.append("scroll=\(value)")
                 }
                 index += 2
-            case "-mode":
-                if let value, Self.modes.contains(value) {
-                    mode = value
-                } else if let value {
-                    invalid.append("mode=\(value)")
-                }
-                index += 2
             default:
                 index += 1
             }
@@ -140,7 +128,6 @@ public struct DemoArguments: Equatable {
             card: card,
             day: day,
             scroll: scroll,
-            mode: mode,
             invalid: invalid
         )
     }
