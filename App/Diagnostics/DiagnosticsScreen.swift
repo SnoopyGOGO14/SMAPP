@@ -214,17 +214,5 @@ struct DiagnosticsScreen: View {
             commit: BuildInfo.commit
         )
     }
-
-    private var deviceModelName: String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let mirror = Mirror(reflecting: systemInfo.machine)
-        return mirror.children.reduce(into: "") { result, element in
-            guard let value = element.value as? Int8, value != 0 else { return }
-            result.append(Character(UnicodeScalar(UInt8(value))))
-        }
-    }
-
-
 }
 #endif
