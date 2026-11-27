@@ -68,6 +68,43 @@ or a workflow error before the publish step all look identical from
 (`d34d3de`); then the `[screens]` run (core tier now includes
 settings light+dark and detail-a11y), and the close below stands.
 
+## THE OWNER'S NEXT STEPS (read this first)
+
+1. **Unblock the cloud** — the verdict below says the repo is
+   **SAFE TO MAKE PUBLIC**: Settings → General → Danger Zone →
+   Change visibility. Then tell GLM "repo is public, re-run the probe".
+   (Private alternative: the Actions tab will show a billing banner;
+   minutes refill at the next cycle.)
+2. **Join the Apple Developer Program** (a day or two to approve).
+3. **Follow `docs/owner-steps.md`** — click by click: the API key, the
+   four repository secrets, registering the iPhone, running the device
+   build, installing, and sending back the Diagnostics report.
+
+## Run of 27–28 November — 13-WORKING-APP-PUSH (Parts 1–6)
+
+The cloud stayed silent for the whole push (probe 21:58, nothing
+published since 26 Nov 16:45 — Part 3.1 logged, Part 3.2/3.3 skipped
+as blocked). Everything below is **locally verified** (138 tests,
+preflight) and pushed:
+
+- **Part 1 — Ponytail adopted** (ruleset path; no hooks exist for this
+  harness — `docs/ponytail.md`); the audit ranked every file
+  (`docs/ponytail-audit.md`); the **cut deleted 423 lines**: parked in
+  `parked/` — the host-driven focus, single-rows and codec fallbacks,
+  recaps, Yearly, the footer strip, the `-mode` demos. Kept:
+  Diagnostics, the alerts kill switch, history gating, demo core.
+- **Part 2 — SAFE TO MAKE PUBLIC** (`docs/public-readiness.md`: no
+  secrets in the full history; three mild personal traces listed).
+- **Part 4 — the no-new-Mac route**: `device.yml` (4 secrets, never
+  printed; exits cleanly without them), `docs/device-route.md` (every
+  claim verified/assumed with sources; UDID registered in the portal
+  by hand, so no fifth secret), `docs/owner-steps.md`, `Config/org.txt`
+  + `tools/apply-org.sh` (the organisation id as one line).
+- **Part 5 — first-run trace**: no dead-ends
+  (`docs/first-run-trace.md`; two harmless notes).
+- **Part 6 — `docs/later.md`** (the parking ledger) and this close.
+- Budget: 1 build (the silent probe), 0 screenshots.
+
 ## **SAFE TO MAKE PUBLIC** (the Part 2 verdict)
 
 The full-history scan found **no secrets** (`docs/public-readiness.md`

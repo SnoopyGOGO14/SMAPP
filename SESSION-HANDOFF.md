@@ -4,8 +4,18 @@ Written 17 November 2026, 23:20 UK time; updated after each run. Read this first
 
 ## Todos — state at this handoff (25 November, after round-3 fixes)
 
-1. **THE NO-CLOUD ROUND IS DONE (27 November, Parts 1–6 of
-   `12-NEXT-WITHOUT-CLOUD.md`).** All locally verified: the
+1. **THE WORKING-APP PUSH IS DONE (27–28 November, Parts 1–6 of
+   `13-WORKING-APP-PUSH.md`); the cloud never answered** — the probe
+   (21:58) and every check before it published nothing since 26 Nov
+   16:45. The repo is **SAFE TO MAKE PUBLIC** (Part 2's scan). The
+   owner's moves, in order: make the repo public (or wait for the
+   minutes to refill) → tell GLM **"repo is public, re-run the
+   probe"** → then Part 3 resumes: fix-to-green (6-build budget), one
+   `[screens]`, READY. In parallel: join the Developer Program and
+   follow `docs/owner-steps.md` (the device build, the install, the
+   Diagnostics report back). The app targets are 423 lines smaller
+   (fallbacks parked in `parked/` with their triggers in
+   `docs/later.md`). All locally verified: the
    Diagnostics screen (Gate A in ~30 minutes), a fallback per Gate A
    outcome (`Shared/FeatureSwitches.swift` +
    `docs/gate-a-outcomes.md`), `DECISIONS.md` for the owner, the

@@ -4,6 +4,7 @@ One line per run list, newest first. Status at 25 November 2026.
 
 | List | What it covered | Status |
 | --- | --- | --- |
+| `13-WORKING-APP-PUSH.md` | Cut to the minimum, clear the repo for public, the no-new-Mac device route, the first-run trace | **closed** (27–28 Nov) — Part 3 (green build) blocked by the silent cloud; everything else done and pushed |
 | `12-NEXT-WITHOUT-CLOUD.md` | Work without the cloud, prepare Gate A (diagnostics, fallbacks, decisions, release materials, quality) | **closed** (27 Nov) — all locally verified; Part 0 waits for the cloud |
 | `11-VISUAL-REVIEW-ROUND4.md` | X1–X9 fixes | **closed** (26 Nov; the settings marker bug found and fixed in the Z round) |
 | `10-VISUAL-REVIEW-ROUND3.md` | W1–W14 fixes | **closed** (25–26 Nov) |
