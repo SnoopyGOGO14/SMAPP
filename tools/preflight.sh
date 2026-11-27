@@ -161,6 +161,28 @@ for f in swift_files():
         if name not in images:
             failures.append(f'5 Image("{name}") not in any catalogue (in {f})')
 
+# ---- 5a Unused assets (Part 5.3): every catalogue entry must be
+# referenced by a Swift string literal (dynamic patterns share a
+# prefix, e.g. Color("Rank\(n)")), or be on the allow-list.
+asset_allow = {"AppIcon"}
+# The referenced corpus includes Packages (Palette.names lists the
+# Donut* colours) and allows dynamic names like Color("Rank\(n)").
+referenced = "".join(f.read_text() for f in swift_files())
+for pkg in (root / "Packages/Core/Sources/Core").glob("*.swift"):
+    referenced += pkg.read_text()
+import re as _re
+for cat in root.rglob("*.xcassets"):
+    for child in cat.iterdir():
+        if child.suffix in (".colorset", ".imageset", ".appiconset"):
+            if child.stem in asset_allow:
+                continue
+            if child.stem in referenced:
+                continue
+            # dynamic pattern: Rank6 <- Color("Rank\(index + 1)")
+            m = _re.match(r"^([A-Za-z]+)\d+$", child.stem)
+            if m and (m.group(1) + "\\(") in referenced:
+                continue
+            failures.append(f"5a unused asset: {child.stem} (in {cat.name}) - remove it or reference it")
 # ---- 5b SF Symbol names (W3): every systemImage:/systemName: must be
 # on the allow-list in tools/sf-symbols.txt (verified for iOS 17.4).
 sf_allowed = set()

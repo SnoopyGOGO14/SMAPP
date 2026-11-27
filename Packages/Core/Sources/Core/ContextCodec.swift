@@ -20,12 +20,14 @@ public enum ContextCodec {
     }
 
     /// "homeTotal.t180.a75", or nil when a value is off its grid.
+    /// Targets are zero-padded to three digits (t015 … t480) so the
+    /// encoded names sort and match the extension's registrations.
     public static func encode(targetMinutes: Int, amberPercent: Int) -> String? {
         guard targetMinutes >= minimumTargetMinutes,
               targetMinutes <= maximumTargetMinutes,
               targetMinutes % targetStep == 0,
               amberPercent % amberStep == 0 else { return nil }
-        return "homeTotal.t\(targetMinutes).a\(amberPercent)"
+        return String(format: "homeTotal.t%03d.a%d", targetMinutes, amberPercent)
     }
 
     /// The values a context name carries, or nil when it carries none.
