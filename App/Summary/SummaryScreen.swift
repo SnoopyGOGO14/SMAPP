@@ -132,6 +132,17 @@ struct SummaryScreen: View {
     }
     #endif
 
+    /// Part 2 (kept in the cut): Monthly's caption when the
+    /// diagnostics-reported history is shorter than the month.
+    private var showsHistoryCaption: Bool {
+        guard FeatureSwitches.monthlyRequiresHistory else { return false }
+        if case .monthly = period {
+            let days = appState.settings.historyDays
+            return days > 0 && days < 35
+        }
+        return false
+    }
+
     private func title(_ period: Core.SummaryPeriod) -> String {
         switch period {
         case .daily: return "Daily"
