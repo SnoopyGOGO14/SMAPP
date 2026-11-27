@@ -5,6 +5,24 @@ GLM updates at the end of every session. Honesty levels (05-RUN-TO-REVIEW):
 succeeded), **screenshot** (rendered in the simulator), **unverified on
 device** (all Screen Time behaviour). Device gates A to D stay open.
 
+## Run of 27 November — S1–S5 (the Settings tidy) + cloud silence
+
+The round-6 review passed 36/36 with one tidy list, all fixed in
+`d34d3de` (S1 one title, S2 labelled week-start picker in PrimaryText,
+S3 per-app targets from demo data with edit/remove, S4 plain privacy
+words, S5 the 12 pt tab gutter). Preflight OK, 124 tests, parse-clean.
+
+**Blocked: the cloud has gone silent for `d34d3de`.** Pushed 27
+November; no build line on `ci-logs` after 45 minutes of polling
+(every recent run returned a verdict in 2–3 minutes; the last
+published runs are 39/40 from 26 November). No `gh` CLI on this Mac,
+so the queue/billing state is not visible from here. **The person
+should check the repo's Actions tab** — queued runs, a billing stop,
+or a workflow error before the publish step all look identical from
+`ci-logs`. If the cloud returns: one plain push is already in place
+(`d34d3de`); then the `[screens]` run (core tier now includes
+settings light+dark and detail-a11y), and the close below stands.
+
 ## THE CLOSE — everything possible without hardware is done
 
 **Commit `d7083e7`, screens run 40 (26 November, 12 m): the full
