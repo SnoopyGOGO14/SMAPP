@@ -107,4 +107,15 @@ enum Filters {
         )
         return make(segment: .daily(during: interval), tokens: enabled)
     }
+
+    /// Diagnostics (Part 1): a 35-day daily request over the enabled
+    /// apps — the report counts day segments (history depth) and
+    /// today's seconds from it.
+    static func diagnostics(enabled: [ApplicationToken]) -> DeviceActivityFilter {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let start = calendar.date(byAdding: .day, value: -34, to: today) ?? today
+        let interval = DateInterval(start: start, end: Date())
+        return make(segment: .daily(during: interval), tokens: enabled)
+    }
 }

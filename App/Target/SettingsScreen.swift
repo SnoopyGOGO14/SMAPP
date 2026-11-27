@@ -107,6 +107,25 @@ struct SettingsScreen: View {
 
                 PerAppTargetsCard()
 
+                #if DEBUG
+                NavigationLink {
+                    DiagnosticsScreen()
+                } label: {
+                    HStack {
+                        Text("Diagnostics (Gate A checklist)")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(Color("PrimaryText"))
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.footnote)
+                            .foregroundStyle(Color("SecondaryText"))
+                    }
+                    .padding(16)
+                    .contentShape(Rectangle())
+                }
+                .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
+                #endif
+
                 Text("Privacy")
                     .font(.headline)
                     .foregroundStyle(Color("PrimaryText"))

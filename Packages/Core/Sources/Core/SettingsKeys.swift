@@ -26,6 +26,11 @@ public enum SettingsKeys {
     public static let recapsEnabled = "recapsEnabled"
     /// String — last monitoring start error, written by the main app.
     public static let lastMonitoringError = "lastMonitoringError"
+    /// String — the Diagnostics screen's write/read App Group echo.
+    public static let diagnosticsTimestamp = "diagnosticsTimestamp"
+    /// Int — history depth the extension reported (set by the person
+    /// from Diagnostics; gates the Monthly tab, Part 2).
+    public static let historyDays = "historyDays"
     /// Data — encoded AlertRecord. Written by UsageMonitor only.
     public static let lastAlert = "lastAlert"
     /// Data — encoded Checkpoint. Written by UsageMonitor only; approximate

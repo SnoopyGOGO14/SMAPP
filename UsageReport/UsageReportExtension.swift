@@ -21,5 +21,11 @@ struct UsageReportExtension: DeviceActivityReportExtension {
         SummaryScene { configuration in
             SummaryView(configuration: configuration)
         }
+        #if DEBUG
+        // Diagnostics is debug-only: excluded from release builds.
+        DiagnosticsScene { configuration in
+            DiagnosticsReportView(configuration: configuration)
+        }
+        #endif
     }
 }

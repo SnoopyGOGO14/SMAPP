@@ -157,6 +157,26 @@ public final class SharedSettings {
 
     // MARK: - Monitoring health and alert ledger (F4/F6)
 
+    /// Diagnostics (Part 1): the host writes a timestamp, the report
+    /// reads it back — the App Group echo check.
+    public var diagnosticsTimestamp: String? {
+        get { defaults.string(forKey: SettingsKeys.diagnosticsTimestamp) }
+        set {
+            if let newValue {
+                defaults.set(newValue, forKey: SettingsKeys.diagnosticsTimestamp)
+            } else {
+                defaults.removeObject(forKey: SettingsKeys.diagnosticsTimestamp)
+            }
+        }
+    }
+
+    /// Diagnostics (Part 2): day segments the extension reported for
+    /// the 35-day ask; 0 = unknown. Gates the Monthly tab.
+    public var historyDays: Int {
+        get { defaults.object(forKey: SettingsKeys.historyDays) as? Int ?? 0 }
+        set { defaults.set(newValue, forKey: SettingsKeys.historyDays) }
+    }
+
     public var lastMonitoringError: String? {
         get { defaults.string(forKey: SettingsKeys.lastMonitoringError) }
         set {

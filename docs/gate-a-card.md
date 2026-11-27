@@ -1,58 +1,52 @@
-# Gate A card — one sitting, about an hour
+# Gate A card — with the Diagnostics screen (~30 minutes)
 
-Print this (or open it on the Mac) and do it on the phone after
-`tools/first-run.sh` succeeds and the app runs. Tick as you go; record
-anything unexpected in `PROGRESS.md`. The full detail behind each step
-is `docs/device-checks.md` (A1–A24).
+Run the app on the iPhone (after `tools/first-run.sh`), open
+**Settings → Diagnostics (Gate A checklist)** and work down this card.
+The screen shows most answers itself; the sealed report at its centre
+answers the rest. Copy the report at the end and paste it to GLM.
 
 ## Set up (5 min)
 
 1. Allow Screen Time access; tick the **Social** category + **YouTube**.
-2. Target: **1 hour a day**. Switch Monitoring on.
+2. Target: **1 hour a day**; Monitoring on.
 3. Use TikTok (or any chosen app) for about five minutes.
+4. Re-open Diagnostics so everything refreshes.
 
-## The essentials — the data path (15 min)
+## The checklist, in screen order
 
-- [ ] **Home total** matches Settings › Screen Time for those apps
-      within a minute or two. (A1)
-- [ ] **Each Home row** shows its own time; the rows roughly add up to
-      the total. (A2)
-- [ ] **Untick one app** in Settings › Edit app selection — its time
-      disappears everywhere. (A3)
-- [ ] **Change the target** — the bar recolours and the marker moves.
-      If the colour *and* the marker move, the report extension reads
-      the App Group (A4 + A8).
-- [ ] **Tap a row** — detail opens with the today card, bars and stats.
-      (A5, A10)
-- [ ] **Summary tab**: donut segments match each app's share; the
-      centre total matches; tapping a segment and a card focuses (gold
-      ring, centre text swaps, tap again clears). (A6, A14, A16)
-- [ ] **Bars rise from one baseline**; only over-target days cross the
-      dashed line. (A11)
-- [ ] **History depth**: how far back does Monthly go? Note it. (A15)
+| Screen line | You check | Gate A # |
+| --- | --- | --- |
+| Screen Time access = PASS | automatic | — |
+| Selection counts match what you picked | automatic | A1/A2 (setup) |
+| App Group host echo = match | automatic | — |
+| **Report's "App Group timestamp"** equals the host's Timestamp row | read the report | A8 |
+| **Report's "Target read"** = 60 min | read the report | A4/A7 |
+| **Report's "Today total"** ≈ your 5 minutes | read the report | A1 |
+| **Apps returned** = your app count | read the report | A2 |
+| **Day segments (35-day ask)** — note the number (history depth) | read the report | A15 |
+| **Tap test** counter rises when tapped | tap it | A14 |
+| Home rows: start the stopwatch, tap Stop when drawn | time by eye | A9 |
+| Monitoring activities ≥ 1 | automatic | F4 |
+| Notifications: send the test alert; it arrives in 10 s | tap + wait | — |
 
-## Alerts and weekly mode (20 min, can overlap with app use)
+## Beyond the screen (10 min)
 
-- [ ] Alerts on; pass 75% of target → **one** notification. Force-quit
-      and reopen the app several times → the 75% alert does not repeat.
-      (A12)
-- [ ] Set a weekly target + week start day: Home's weekly total matches
-      Settings › Screen Time for the same calendar week. (A13)
+- **Home total** vs Settings › Screen Time (A1): the Diagnostics
+  report's "Today total" is the same figure — compare once.
+- **Remove an app** in the picker: counts drop (A3).
+- **Alerts**: use an app past 75% of the 1-hour target; one alert
+  arrives; force-quit + reopen — no repeat (A12).
+- **Weekly mode**: set a weekly target; Home's week matches Screen
+  Time's Monday-to-Sunday (A13).
 
-## Behaviours worth one look each (10 min)
+## After the hour (well, 30 minutes)
 
-- [ ] PiP and backgrounded audio (A21): which, if either, accrues?
-- [ ] Note (no test needed): private tabs never count; browsers vary
-      (A18–A20 are for when web domains are enabled).
+1. Tap **Copy report**, fill in the `[____]` blanks from the report's
+   rows, and paste it into `PROGRESS.md` under a "Gate A" heading.
+2. For any FAIL: `docs/gate-a-outcomes.md` says which switch to flip —
+   a one-line change, not a redesign.
+3. The remaining device checks (A17–A24: time zones, browsers, PiP,
+   pickups, pulses) follow when those features matter.
 
-## If something fails
-
-- Blank charts: Settings › Screen Time › Apps With Screen Time Access
-  must be on for the app; relaunch once.
-- Wrong on one iOS version but right on another: note both.
-- App Group read fails (target change does nothing): stop and record —
-  the spec's fallback applies; tell GLM.
-
-**When done:** write the results (with iOS version) into
-`PROGRESS.md` under a "Gate A" heading — that opens or closes every
-device-dependent claim in `REVIEW.md`.
+**That's the gate.** Everything in `REVIEW.md` marked "unverified on
+device" moves to proven as this card's results land.

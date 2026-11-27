@@ -29,7 +29,7 @@ public struct DemoArguments: Equatable {
 
     /// The legal values. DemoMode.swift's enums must carry the same
     /// cases; `tools/preflight.sh` section 6 cross-checks the two.
-    public static let screens = ["home", "summary", "detail", "target", "onboarding", "settings"]
+    public static let screens = ["home", "summary", "detail", "target", "onboarding", "settings", "diagnostics"]
     public static let states = ["default", "over", "comfortable", "paused", "noapps", "notarget", "noaccess"]
     public static let periods = ["today", "week", "month", "daily", "weekly", "monthly"]
     public static let sheets = ["target"]

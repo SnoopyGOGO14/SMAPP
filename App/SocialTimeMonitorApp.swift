@@ -52,6 +52,13 @@ struct SocialTimeMonitorApp: App {
                 SettingsScreen()
             }
             .environment(appState)
+        #if DEBUG
+        case "diagnostics":
+            NavigationStack {
+                DiagnosticsScreen()
+            }
+            .environment(appState)
+        #endif
         default:
             demoRoot
         }

@@ -14,4 +14,7 @@ extension DeviceActivityReport.Context {
     public static let appDetail = Self("appDetail")
     /// Summary: ranked donut, centre text and app cards in one report.
     public static let summary = Self("summary")
+    /// Diagnostics (debug): the extension's read-back of shared
+    /// settings and the data path, for the Gate A checklist.
+    public static let diagnostics = Self("diagnostics")
 }
