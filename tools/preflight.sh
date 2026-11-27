@@ -19,6 +19,19 @@ FAILURES=0
 fail() { echo "FAIL $*"; FAILURES=$((FAILURES+1)); }
 pass() { echo "PASS $*"; }
 
+# ------------------------------------------------------- 1b copy table
+# Part 3.3: docs/copy.md must match the generated table (no drift).
+if bash tools/gen-copy.sh >/tmp/preflight-copy.log 2>&1; then
+    if git diff --quiet docs/copy.md 2>/dev/null; then
+        pass "1b copy table in sync"
+    else
+        fail "1b docs/copy.md drifted from the sources - regenerate and commit"
+        git checkout -- docs/copy.md 2>/dev/null || true
+    fi
+else
+    fail "1b gen-copy.sh failed"
+fi
+
 # ---------------------------------------------------------------- 1
 if [ "${1:-}" = "--skip-tests" ]; then
     echo "SKIP 1 core tests (requested)"
