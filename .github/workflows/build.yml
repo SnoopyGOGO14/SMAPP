@@ -56,6 +56,22 @@ jobs:
           xcodebuild build -project SocialTimeMonitor.xcodeproj -scheme SocialTimeMonitor \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO 2>&1 | tee ci-build-full.log
+
+      - name: Build for device, Debug (Part 1.1)
+        run: |
+          set -o pipefail
+          xcodebuild build -project SocialTimeMonitor.xcodeproj -scheme SocialTimeMonitor \
+            -destination 'generic/platform=iOS' \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee ci-device-debug.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" || true
+
+      - name: Build for device, Release (Part 1.2)
+        run: |
+          set -o pipefail
+          xcodebuild build -project SocialTimeMonitor.xcodeproj -scheme SocialTimeMonitor \
+            -destination 'generic/platform=iOS' \
+            -configuration Release \
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee ci-device-release.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" || true
       - name: Publish logs to ci-logs branch
         if: always()
         run: |
@@ -66,8 +82,11 @@ jobs:
           cp ci-*.log out/ 2>/dev/null || true
           grep -hE "error:|warning:|BUILD (SUCCEEDED|FAILED)|Executed .* tests|Unrecognized|not found" out/*.log > out/SUMMARY.txt 2>/dev/null || true
           echo "commit: $GITHUB_SHA status: ${{ job.status }} run: $GITHUB_RUN_NUMBER" >> out/SUMMARY.txt
+          if grep -q "BUILD SUCCEEDED" ci-device-debug.log 2>/dev/null; then ddbg=success; else ddbg=failure; fi
+          if grep -q "BUILD SUCCEEDED" ci-device-release.log 2>/dev/null; then drel=success; else drel=failure; fi
           minutes=$(( ( $(date +%s) - ${JOB_START_EPOCH:-$(date +%s)} ) / 60 ))
           echo "build: $GITHUB_SHA ${{ job.status }} ${minutes}m run:$GITHUB_RUN_NUMBER" >> out/STATUS.txt
+          echo "device-compile: $GITHUB_SHA debug=$ddbg release=$drel run:$GITHUB_RUN_NUMBER" >> out/STATUS.txt
           publish() {
             git clone -q --branch ci-logs --single-branch "$REPO" out_repo 2>/dev/null || { mkdir out_repo; cd out_repo; git init -q -b ci-logs; git remote add origin "$REPO"; cd ..; }
             mkdir -p out_repo
