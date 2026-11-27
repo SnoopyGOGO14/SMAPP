@@ -104,6 +104,18 @@ struct DiagnosticsScreen: View {
             Toggle("Demo values (no live report)", isOn: $showDemoReport)
                 .font(.footnote)
                 .tint(.green)
+            // Part 2: set this from the report's "Day segments" number;
+            // it gates the Monthly tab (monthlyRequiresHistory switch).
+            Stepper(
+                "Day segments seen: \(appState.settings.historyDays)",
+                value: Binding(
+                    get: { appState.settings.historyDays },
+                    set: { appState.settings.historyDays = $0 }
+                ),
+                in: 0...35
+            )
+            .font(.footnote)
+            .foregroundStyle(Color("SecondaryText"))
         }
     }
 

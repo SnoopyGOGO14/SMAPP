@@ -108,6 +108,11 @@ enum Filters {
         return make(segment: .daily(during: interval), tokens: enabled)
     }
 
+    /// Part 2: one report drawing every Home row — today, enabled apps.
+    static func appRows(enabled: [ApplicationToken]) -> DeviceActivityFilter {
+        return make(segment: .daily(during: interval(for: .day)), tokens: enabled)
+    }
+
     /// Diagnostics (Part 1): a 35-day daily request over the enabled
     /// apps — the report counts day segments (history depth) and
     /// today's seconds from it.

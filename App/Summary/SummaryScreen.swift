@@ -11,8 +11,10 @@ import Core
 
 struct SummaryScreen: View {
 
-    @Environment(AppState.self) private var appState
-    @State private var period: Core.SummaryPeriod = .weekly
+    @Environment(AppState.self) var appState
+    @State var period: Core.SummaryPeriod = .weekly
+    /// Part 2: host-driven focus — the legend's selected row position.
+    @State var hostFocus: Int? = nil
 
     /// The UK reference calendar (AppCalendar): day pills, "today" and
     /// elapsed fractions follow the UK day, not the device's zone.
@@ -32,6 +34,14 @@ struct SummaryScreen: View {
                     periodTabsControl
                     if showsDayPills {
                         dayPills
+                    }
+                    if showsHistoryCaption {
+                        Text("Showing the last \(appState.settings.historyDays) days")
+                            .font(.footnote)
+                            .foregroundStyle(Color("SecondaryText"))
+                    }
+                    if FeatureSwitches.summaryFocusMode == .hostDriven {
+                        focusLegend
                     }
                     report
                     // X9: the anchor the `-scroll end` capture scrolls to.
@@ -82,7 +92,12 @@ struct SummaryScreen: View {
     private var periods: [Core.SummaryPeriod] {
         // B7: Yearly is one switch — hidden until a device proves a
         // year of history (08 plan §11).
-        var list: [Core.SummaryPeriod] = [.daily(day: nil), .weekly, .monthly]
+        var list: [Core.SummaryPeriod] = [.daily(day: nil), .weekly]
+        // Part 2: Monthly hides when the diagnostics-reported history
+        // is shorter than a month.
+        if !FeatureSwitches.monthlyRequiresHistory || appState.settings.historyDays >= 28 {
+            list.append(.monthly)
+        }
         if SummaryDefaults.showYearly {
             list.append(.yearly)
         }
@@ -208,8 +223,13 @@ struct SummaryScreen: View {
 
     private var liveReport: some View {
         let count = max(appState.orderedTokens.count, 1)
+        // Part 2: host-driven focus — the context name carries the
+        // focused row position (summary.f0 … summary.f7).
+        let context = DeviceActivityReport.Context(
+            hostFocus.flatMap { Core.ContextCodec.summaryFocusContext(focus: $0) } ?? "summary"
+        )
         return DeviceActivityReport(
-            .summary,
+            context,
             filter: Filters.summary(
                 enabled: appState.enabledTokens,
                 period: period,

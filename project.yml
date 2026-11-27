@@ -80,6 +80,7 @@ targets:
       - UsageMonitor
       - Shared/SharedSettings.swift
       - Shared/ActivityNames.swift
+      - Shared/FeatureSwitches.swift
     dependencies:
       - package: Core
     info:

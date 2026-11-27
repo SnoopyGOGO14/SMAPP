@@ -94,6 +94,17 @@ struct SettingsScreen: View {
 
                     Divider().overlay(Color("Divider"))
 
+                    #if DEBUG
+                    if FeatureSwitches.alertsKillSwitch {
+                        Divider().overlay(Color("Divider"))
+                        Text("Alerts paused: under test")
+                            .font(.footnote)
+                            .foregroundStyle(Color("SecondaryText"))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(16)
+                    }
+                    #endif
+
                     Button("Add or remove apps") { showPicker = true }
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Color("PrimaryText"))

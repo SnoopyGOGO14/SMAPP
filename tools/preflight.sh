@@ -195,7 +195,7 @@ for line in app.splitlines():
     if stripped.startswith("case "):
         routed |= set(re.findall(r'"(\w+)"', stripped))
 routed |= {"home"}  # home = default tab
-known_flags = {"-demo", "-screen", "-state", "-period", "-sheet", "-focus", "-card", "-day", "-scroll"}
+known_flags = {"-demo", "-screen", "-state", "-period", "-sheet", "-focus", "-card", "-day", "-scroll", "-mode"}
 for line in screens_wf.splitlines():
     # In the raw workflow the third argument is either the literal
     # $appearance (the light/dark loop) or an explicit appearance.
@@ -248,6 +248,10 @@ for line in screens_wf.splitlines():
         elif flag == "-scroll":
             if val != "end":
                 failures.append(f"6 screens.yml -scroll {val} not handled in DemoMode ({name})")
+        elif flag == "-mode":
+            modes = {"appGroupFallback", "singleRows", "hostFocus", "shortHistory", "alertsOff"}
+            if val not in modes:
+                failures.append(f"6 screens.yml -mode {val} not a known fallback mode ({name})")
         i += 2
     # markerFor mirror: screen[/state][/period][/day][/focus][/sheet][/scroll]
     parts = [screen or "?"]

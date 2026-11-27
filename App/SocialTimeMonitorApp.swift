@@ -122,6 +122,9 @@ struct SocialTimeMonitorApp: App {
         .background(Color("Ground").ignoresSafeArea())
         .preferredColorScheme(nil)
         .task {
+            #if DEBUG
+            DemoMode.applyModeSwitches()
+            #endif
             appState.refreshAuthorizationStatus()
             appState.startDayRolloverWatch()
             // F4: no unconditional monitoring restart on launch; only

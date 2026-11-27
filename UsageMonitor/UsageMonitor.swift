@@ -59,6 +59,10 @@ final class UsageMonitor: DeviceActivityMonitor {
 
         guard settings.alertsEnabled, percent == 75 || percent == 100 else { return }
 
+        // Part 2: the kill switch — alerts off entirely while the
+        // thresholds are under test.
+        if FeatureSwitches.alertsKillSwitch { return }
+
         // F4: at most one alert per line per interval.
         guard Core.AlertLedger.shouldSend(
             last: settings.lastAlert,

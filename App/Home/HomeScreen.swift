@@ -132,7 +132,21 @@ struct HomeScreen: View {
     }
 
     private var reportHomeCard: some View {
-        DeviceActivityReport(
+        // Part 2: App Group fallback — the target and amber point ride
+        // the context name (Core.ContextCodec).
+        if FeatureSwitches.appGroupContextFallback,
+           let encoded = Core.ContextCodec.encode(
+               targetMinutes: appState.targetMinutes ?? 180,
+               amberPercent: Int((appState.settings.amberFraction * 100).rounded())
+           ) {
+            return DeviceActivityReport(
+                .init(encoded),
+                filter: Filters.homeTotal(enabled: appState.enabledTokens, mode: appState.targetMode)
+            )
+            .frame(height: 168)
+            .accessibilityLabel("Today's total")
+        }
+        return DeviceActivityReport(
             .homeTotal,
             filter: Filters.homeTotal(enabled: appState.enabledTokens, mode: appState.targetMode)
         )
@@ -169,11 +183,19 @@ struct HomeScreen: View {
                 ForEach(Array(DemoData.apps.enumerated()), id: \.offset) { _, app in
                     demoRow(app)
                 }
+            } else if FeatureSwitches.homeRowsMode == .single {
+                // Part 2: one report drawing every row, host-side tap
+                // areas in the same order.
+                singleRows
             } else {
                 tokensRows
             }
             #else
-            tokensRows
+            if FeatureSwitches.homeRowsMode == .single {
+                singleRows
+            } else {
+                tokensRows
+            }
             #endif
         }
         .background(Color("Card"), in: RoundedRectangle(cornerRadius: 24))
@@ -187,31 +209,6 @@ struct HomeScreen: View {
             AppUsageRow(token: token, dimmed: !appState.isEnabled(token) || !appState.monitoringEnabled)
         }
     }
-
-    #if DEBUG
-    private func demoRow(_ app: DemoData.DemoApp) -> some View {
-        // W13/W14: the report (time + bar) spans the full row width;
-        // the tile+name label sits over its first line. Demo rows are
-        // in descending usage order, so the row index is the rank —
-        // the tile colour matches the Summary's rank colours.
-        AppRowShell {
-            HStack(spacing: 10) {
-                // Y1: the tile takes the app's row-order colour — the
-                // same one its Summary dot uses.
-                DemoTile(position: demoRowIndex(of: app), initials: app.initials)
-                Text(app.name)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(Color("PrimaryText"))
-            }
-        } report: {
-            AppRowReportView(configuration: DemoData.appRow(app))
-        }
-    }
-
-    private func demoRowIndex(of app: DemoData.DemoApp) -> Int {
-        return DemoData.apps.firstIndex(where: { $0.name == app.name }) ?? 0
-    }
-    #endif
 
     static var dateLine: String {
         let formatter = DateFormatter()
