@@ -205,6 +205,9 @@ jobs:
           # detail (S5's tab gutter).
           capture settings settings-light light -screen settings
           capture settings settings-dark dark -screen settings
+          # Part 3.3: the Gate A checklist screen (demo values).
+          capture diagnostics diagnostics-light light -screen diagnostics
+          capture diagnostics diagnostics-dark dark -screen diagnostics
           if xcrun simctl ui "$UDID" content_size accessibility-extra-large 2>>ci-screens-build.log; then
             capture detail detail-a11y-dark dark -screen detail
             xcrun simctl ui "$UDID" content_size large || true

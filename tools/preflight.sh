@@ -1,6 +1,6 @@
 #!/bin/bash
 # preflight.sh — run before every push (09-AUDIT-AND-NEXT.md B1).
-# probe-13: this line exists so the Part 3 cloud probe has a non-md file to carry.
+# probe-14: the repo is public; the minutes limit is gone.
 # Catches, without a full Xcode build, the failure classes this project
 # has actually met. Exit non-zero on any failure.
 #
